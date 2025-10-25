@@ -14,6 +14,10 @@ export const englishAPI = {
   translateWord: async (word: string) => {
     return apiClient.post('/webhook/english/translate', { word })
   },
+  // 分析文本
+  analyzeText: async (text: string) => {
+    return apiClient.post('/webhook/english/analyze', { text })
+  },
   // 生成朗读音频
   generateAudio: async (text: string) => {
     return apiClient.post('/webhook/english/generate-audio', { text })

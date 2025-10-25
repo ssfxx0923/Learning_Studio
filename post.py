@@ -3,7 +3,7 @@ import json
 import uuid
 
 # === 配置区 ===
-WEBHOOK_URL = "http://a.ssfxx.cloud:5678/webhook-test/e155b53a-e6bc-4d80-a7ac-b4ec8d525119"  # 你的 n8n webhook URL
+WEBHOOK_URL = "http://a.ssfxx.cloud:5678/webhook/english/generate"  # 你的 n8n webhook URL
 METHOD = "POST"  # 可改成 "GET" 如果你的 webhook 只支持 GET
 
 def send_message_to_n8n(message: str):

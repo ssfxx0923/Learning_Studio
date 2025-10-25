@@ -3,16 +3,16 @@
     {
       "parameters": {
         "operation": "write",
-        "fileName": "=/root/AL_CLP/{{ $('Webhook').item.json.body.request_id }}.mp3",
+        "fileName": "=/root/Learning_Studio/public/data/english/artikel/{{ $('Webhook').item.json.body.request_id }}/audio.mp3",
         "options": {}
       },
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        -11552,
-        -5184
+        1056,
+        -1168
       ],
-      "id": "a414d030-a2e4-4193-9ec1-1b478b624b22",
+      "id": "6a936525-8d2e-4e56-b79b-e2c39b20a9df",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -60,10 +60,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -11968,
-        -5184
+        640,
+        -1168
       ],
-      "id": "cfa3c387-935c-4728-a718-bac507baa072",
+      "id": "35275fb1-cfe2-454c-9764-ea2ce9e0a90b",
       "name": "语音生成"
     },
     {
@@ -92,7 +92,7 @@
             },
             {
               "name": "size",
-              "value": "1024x1024"
+              "value": "1792x1024"
             }
           ]
         },
@@ -101,10 +101,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -11968,
-        -5584
+        640,
+        -1568
       ],
-      "id": "2451b314-ca26-4819-a9cc-90a3f7327105",
+      "id": "8cf8deb1-d1ac-4b84-8669-66f392f3b148",
       "name": "图片生成"
     },
     {
@@ -119,10 +119,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -12896,
-        -5408
+        -304,
+        -1392
       ],
-      "id": "b8051e59-8457-43cc-9b58-159f5faa0410",
+      "id": "95213371-5ab6-42bc-9450-6fe35131bbba",
       "name": "AI Agent"
     },
     {
@@ -138,10 +138,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -12896,
-        -5200
+        -304,
+        -1184
       ],
-      "id": "a11924b5-d220-4cfc-a1c7-2d036c9b4fbd",
+      "id": "55d5465b-a5da-499a-a63e-2a9b63be26f0",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -157,10 +157,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -12752,
-        -5200
+        -160,
+        -1184
       ],
-      "id": "5123aa0a-01c0-466c-a490-d7c555bf3b24",
+      "id": "996a89b2-5124-4801-9376-038fabdf4987",
       "name": "Structured Output Parser"
     },
     {
@@ -189,7 +189,7 @@
             },
             {
               "name": "size",
-              "value": "1024x1024"
+              "value": "1792x1024"
             }
           ]
         },
@@ -198,10 +198,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -11936,
-        -5824
+        672,
+        -1808
       ],
-      "id": "9b8d4351-978e-41cf-a135-52c4af3b0677",
+      "id": "9b1eeb45-daa0-4ac4-bd67-9514130c4fd0",
       "name": "图片生成1"
     },
     {
@@ -218,10 +218,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -11728,
-        -5824
+        880,
+        -1808
       ],
-      "id": "02b7f5f0-3364-4f2e-b25f-51cf0109b16b",
+      "id": "af286e9c-ef3e-42ca-94de-380abeb7d3fe",
       "name": "HTTP Request"
     },
     {
@@ -232,16 +232,16 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -11760,
-        -5584
+        848,
+        -1568
       ],
-      "id": "2d52fe10-4fa4-4a35-9d55-88039059c8c7",
+      "id": "d7423987-327b-427d-98ed-623a8647ec2a",
       "name": "HTTP Request1"
     },
     {
       "parameters": {
         "operation": "write",
-        "fileName": "=/root/AL_CLP/{{ $('Webhook').item.json.body.request_id }}_middle.png",
+        "fileName": "=/root/Learning_Studio/public/data/english/artikel/{{ $('Webhook').item.json.body.request_id }}/middle.png",
         "options": {
           "append": false
         }
@@ -249,16 +249,16 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        -11520,
-        -5824
+        1088,
+        -1808
       ],
-      "id": "ac816cc6-eff5-47fe-9b3d-925994063b9a",
+      "id": "8fe93522-ae8f-48bc-93fd-c4dcff3adc8c",
       "name": "Read/Write Files from Disk1"
     },
     {
       "parameters": {
         "operation": "write",
-        "fileName": "=/root/AL_CLP/{{ $('Webhook').item.json.body.request_id }}_cover.png",
+        "fileName": "=/root/Learning_Studio/public/data/english/artikel/{{ $('Webhook').item.json.body.request_id }}/cover.png",
         "options": {
           "append": false
         }
@@ -266,58 +266,219 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        -11536,
-        -5584
+        1072,
+        -1568
       ],
-      "id": "4f6ef80c-70a0-48a7-b622-b8b0d1be2c2a",
+      "id": "168ef645-5669-4675-aa75-aa8903a1f59f",
       "name": "Read/Write Files from Disk2"
     },
     {
       "parameters": {
+        "content": "# 使用AI，实现单词到短文的生成。\n\n# 执行这个url会生成两张图片和一份音频，用于搭建阅读模板",
+        "height": 1696,
+        "width": 2448,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1056,
+        -2144
+      ],
+      "typeVersion": 1,
+      "id": "39601f66-0317-49e4-afb6-da9cdf824cc2",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
         "httpMethod": "POST",
-        "path": "e155b53a-e6bc-4d80-a7ac-b4ec8d525119",
+        "path": "english/generate",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -13168,
-        -5408
+        -576,
+        -1392
       ],
-      "id": "ca4b0d65-728f-4669-8446-f4235db8ef26",
+      "id": "d394b291-5222-469b-9ce5-59eff907828a",
       "name": "Webhook",
       "webhookId": "e155b53a-e6bc-4d80-a7ac-b4ec8d525119"
     },
     {
       "parameters": {
         "operation": "write",
-        "fileName": "=/root/AL_CLP/{{ $('Webhook').item.json.body.request_id }}.txt",
+        "fileName": "=/root/Learning_Studio/public/data/english/artikel/{{ $('Webhook').item.json.body.request_id }}/content.json",
         "dataPropertyName": "=data",
         "options": {}
       },
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        -11536,
-        -5376
+        1072,
+        -1360
       ],
-      "id": "596df2bc-dae6-4645-b2f0-7380dac801f8",
+      "id": "58a1a79e-11e6-4bc1-9522-fe6b439873d9",
       "name": "Read/Write Files from Disk3"
     },
     {
       "parameters": {
-        "operation": "toText",
-        "sourceProperty": "output",
+        "operation": "toJson",
         "options": {}
       },
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -11968,
-        -5376
+        640,
+        -1360
       ],
-      "id": "ded1e70c-ea8c-4f23-af80-a49ef157b730",
+      "id": "9a818531-d32b-4032-b413-2e895fea4b4d",
       "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "english/translate",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -800,
+        -352
+      ],
+      "id": "b9908e20-3c78-4499-8e49-74549ed6417b",
+      "name": "Webhook_Translate",
+      "webhookId": "6a373184-55f7-42fb-978d-dc92de20223f"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.word }}",
+        "options": {
+          "systemMessage": "你是一个专业的英语翻译助手。请将用户提供的英文文本翻译成简洁、准确的中文。只返回翻译结果，不要添加任何解释。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -464,
+        -352
+      ],
+      "id": "af6d82ad-b293-438d-acf6-2bbbb755cc17",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -464,
+        -160
+      ],
+      "id": "ed17c370-374e-452c-b59c-9b917be7299d",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 划词翻译",
+        "height": 560,
+        "width": 1616
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1056,
+        -416
+      ],
+      "typeVersion": 1,
+      "id": "13bc970b-5bd7-49e3-aff3-58b600f79d02",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "english/analyze",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -800,
+        320
+      ],
+      "id": "2e6aa8e4-b272-49e3-9de4-12b759552853",
+      "name": "Webhook_Analyze",
+      "webhookId": "8f9e3d21-4c85-44ff-b256-9a8e7f8d6c3e"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.text }}",
+        "options": {
+          "systemMessage": "你是一个专业的英语教学助手。请分析用户提供的英文文本，包括：\n1. 语法结构分析\n2. 重点词汇解释\n3. 句子含义和用法\n4. 相关例句（如适用）\n请用简洁、易懂的中文回答，帮助学习者更好地理解这段文本。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -448,
+        320
+      ],
+      "id": "c6971926-f0d9-43ad-a3b3-44b0ff83a8ec",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -448,
+        512
+      ],
+      "id": "d0053527-6db4-4c2b-8dd3-b1164b1c9889",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 划词解析\n",
+        "height": 560,
+        "width": 1616
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1056,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "af1bd319-03fe-4c9f-abe3-ef03ae075eea",
+      "name": "Sticky Note2"
     },
     {
       "parameters": {
@@ -331,10 +492,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -12368,
-        -5744
+        240,
+        -1728
       ],
-      "id": "9b5dfa9c-4569-4a6c-96c6-0ba340186d86",
+      "id": "7de8066a-d9f1-4a18-b423-261955bed33e",
       "name": "AI Agent3"
     },
     {
@@ -349,10 +510,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -12368,
-        -5536
+        240,
+        -1520
       ],
-      "id": "f2069a58-6b5f-4e34-a0fa-4719598beb51",
+      "id": "db0848e0-01ce-4e6a-b9d5-9d15ed0f3be3",
       "name": "OpenAI Chat Model2",
       "credentials": {
         "openAiApi": {
@@ -368,10 +529,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -12224,
-        -5536
+        384,
+        -1520
       ],
-      "id": "b4b4f1c1-d175-46b4-b40c-c3b35fcd416f",
+      "id": "4154ffa3-3786-4ccd-9bc2-bca9309d5950",
       "name": "Structured Output Parser1"
     }
   ],
@@ -491,6 +652,50 @@
           {
             "node": "Read/Write Files from Disk3",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook_Translate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook_Analyze": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]

@@ -7,10 +7,10 @@ import type { N8nWebhookPayload, N8nWebhookResponse } from '../types/index.js';
  */
 export class N8nService {
   private client: AxiosInstance;
-  private webhookUrl: string;
+  private baseUrl: string;
 
   constructor() {
-    this.webhookUrl = CONFIG.n8n.webhookUrl;
+    this.baseUrl = CONFIG.n8n.baseUrl;
     this.client = axios.create({
       timeout: CONFIG.n8n.timeout,
       headers: {
@@ -31,12 +31,14 @@ export class N8nService {
       request_id: requestId,
     };
 
-    console.log(`→ Calling n8n webhook with request_id: ${requestId}`);
+    const url = `${this.baseUrl}/english/generate`;
+    console.log(`→ Calling n8n webhook: ${url}`);
+    console.log(`→ Request ID: ${requestId}`);
     console.log(`→ Message: ${message}`);
 
     try {
       const response = await this.client.post<N8nWebhookResponse>(
-        this.webhookUrl,
+        url,
         payload
       );
 
@@ -62,8 +64,8 @@ export class N8nService {
    */
   async validateWebhook(): Promise<boolean> {
     try {
-      // 尝试发送一个测试请求
-      await this.client.head(this.webhookUrl, { timeout: 5000 });
+      const url = `${this.baseUrl}/english/generate`;
+      await this.client.head(url, { timeout: 5000 });
       return true;
     } catch {
       return false;

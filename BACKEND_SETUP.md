@@ -49,8 +49,8 @@ npm install
 PORT=3001
 NODE_ENV=development
 
-# n8n Webhook 配置
-N8N_WEBHOOK_URL=http://a.ssfxx.cloud:5678/webhook-test/e155b53a-e6bc-4d80-a7ac-b4ec8d525119
+# n8n Webhook 配置（只需要基础 URL，不含具体路径）
+N8N_BASE_URL=http://a.ssfxx.cloud:5678/webhook-test
 N8N_TIMEOUT=300000
 
 # 文件存储配置
