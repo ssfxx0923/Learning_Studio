@@ -1,0 +1,543 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/root/AL_CLP/{{ $('Webhook').item.json.body.request_id }}.mp3",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -11552,
+        -5184
+      ],
+      "id": "a414d030-a2e4-4193-9ec1-1b478b624b22",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.fish.audio/v1/tts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "s1"
+            },
+            {
+              "name": "Accept",
+              "value": "audio/mpeg"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer bc3c9c4104974d28bbd8ee0600d25fbd"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "= {{ $json.output.Body }}"
+            },
+            {
+              "name": "format",
+              "value": "mp3"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -11968,
+        -5184
+      ],
+      "id": "cfa3c387-935c-4728-a718-bac507baa072",
+      "name": "语音生成"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://open.bigmodel.cn/api/paas/v4/images/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 02c67b1b817747ec8cf94cce25bad339.rnRLhNg7slZOwT4K"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "cogView-4-250304"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ $json.output.cover }}"
+            },
+            {
+              "name": "size",
+              "value": "1024x1024"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -11968,
+        -5584
+      ],
+      "id": "2451b314-ca26-4819-a9cc-90a3f7327105",
+      "name": "图片生成"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=你是一个英语学习辅助助手。用户会输入若干英文单词，请写一篇约 100 词的有趣英文短文，兼顾流畅度和单词使用量。\n你只需要返回纯粹的json。格式，不要附带任何解释和说明。\njson格式如下:\n{\"Title\": \"California\", \"Body\": \"Your English essay related to the keyword\", \"Words\": [\"word1\", \"word2\", \"word3\"]}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -12896,
+        -5408
+      ],
+      "id": "b8051e59-8457-43cc-9b58-159f5faa0410",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "glm-4.5",
+          "mode": "list",
+          "cachedResultName": "glm-4.5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -12896,
+        -5200
+      ],
+      "id": "a11924b5-d220-4cfc-a1c7-2d036c9b4fbd",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "yK0fgk8FcJgoqsnQ",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\"Title\": \"California\", \"Body\": \"Your English essay related to the keyword\", \"Words\": [\"word1\", \"word2\", \"word3\"]}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -12752,
+        -5200
+      ],
+      "id": "5123aa0a-01c0-466c-a490-d7c555bf3b24",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://open.bigmodel.cn/api/paas/v4/images/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 02c67b1b817747ec8cf94cce25bad339.rnRLhNg7slZOwT4K"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "cogView-4-250304"
+            },
+            {
+              "name": "prompt",
+              "value": "={{ $json.output.middle }}"
+            },
+            {
+              "name": "size",
+              "value": "1024x1024"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -11936,
+        -5824
+      ],
+      "id": "9b8d4351-978e-41cf-a135-52c4af3b0677",
+      "name": "图片生成1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data[0].url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -11728,
+        -5824
+      ],
+      "id": "02b7f5f0-3364-4f2e-b25f-51cf0109b16b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data[0].url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -11760,
+        -5584
+      ],
+      "id": "2d52fe10-4fa4-4a35-9d55-88039059c8c7",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/root/AL_CLP/{{ $('Webhook').item.json.body.request_id }}_middle.png",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -11520,
+        -5824
+      ],
+      "id": "ac816cc6-eff5-47fe-9b3d-925994063b9a",
+      "name": "Read/Write Files from Disk1"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/root/AL_CLP/{{ $('Webhook').item.json.body.request_id }}_cover.png",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -11536,
+        -5584
+      ],
+      "id": "4f6ef80c-70a0-48a7-b622-b8b0d1be2c2a",
+      "name": "Read/Write Files from Disk2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e155b53a-e6bc-4d80-a7ac-b4ec8d525119",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -13168,
+        -5408
+      ],
+      "id": "ca4b0d65-728f-4669-8446-f4235db8ef26",
+      "name": "Webhook",
+      "webhookId": "e155b53a-e6bc-4d80-a7ac-b4ec8d525119"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/root/AL_CLP/{{ $('Webhook').item.json.body.request_id }}.txt",
+        "dataPropertyName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -11536,
+        -5376
+      ],
+      "id": "596df2bc-dae6-4645-b2f0-7380dac801f8",
+      "name": "Read/Write Files from Disk3"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -11968,
+        -5376
+      ],
+      "id": "ded1e70c-ea8c-4f23-af80-a49ef157b730",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=你是一个专业的ai绘图师，你的任务就是深入理解用户提供的短文。为其生专业的ai绘画提示词。对应一篇文章，你要描述两个图片。\n1.封面图(cover)：阅读整篇文章根据文章内容，描绘一幅紧扣文章主题的封面图。\n2.中间图(middle)：另外选择一个最有趣画面进行描述，生成一个中间配图。\n你需要返回严格的单行json。格式，不要附带任何解释和说明。json格式如下:\n{\"cover\": \"California\", \"middle\": \"California\"}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -12368,
+        -5744
+      ],
+      "id": "9b5dfa9c-4569-4a6c-96c6-0ba340186d86",
+      "name": "AI Agent3"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -12368,
+        -5536
+      ],
+      "id": "f2069a58-6b5f-4e34-a0fa-4719598beb51",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"cover\": \"California\",\n\t\"middle\": \"California\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -12224,
+        -5536
+      ],
+      "id": "b4b4f1c1-d175-46b4-b40c-c3b35fcd416f",
+      "name": "Structured Output Parser1"
+    }
+  ],
+  "connections": {
+    "语音生成": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "图片生成": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "语音生成",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "图片生成1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent3": {
+      "main": [
+        [
+          {
+            "node": "图片生成1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "图片生成",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1eed45ddd9333e8c5f9a70a2fae0ffba743218818c24507da9d021fdaa9893e1"
+  }
+}
