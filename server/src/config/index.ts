@@ -15,7 +15,7 @@ export const CONFIG = {
 
   // n8n 配置
   n8n: {
-    baseUrl: process.env.N8N_BASE_URL || 'http://localhost:5678/webhook-test',
+    webhookUrl: process.env.N8N_WEBHOOK_URL || 'http://localhost:5678/webhook-test/your-webhook-id',
     timeout: parseInt(process.env.N8N_TIMEOUT || '300000', 10), // 5分钟
   },
 

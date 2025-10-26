@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Sparkles, Plus, X, BookOpen, Languages, Trash2, Play, Pause, RefreshCw, FileSearch } from 'lucide-react'
+import { Sparkles, Plus, X, BookOpen, Volume2, Languages, Trash2, Play, Pause, RefreshCw } from 'lucide-react'
 import { englishAPI } from '@/services/api'
 import { loadLocalArticles, reloadArticles, deleteArticle as deleteLocalArticle } from '@/services/localArticles'
 import { ThemeToggle } from '@/components/ThemeToggle'
@@ -33,28 +33,16 @@ export default function EnglishLearning() {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
   const [selectedText, setSelectedText] = useState('')
   const [translation, setTranslation] = useState('')
-  const [analysis, setAnalysis] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null)
   const [toolbarPosition, setToolbarPosition] = useState<{ top: number; left: number } | null>(null)
   const [isWordsExpanded, setIsWordsExpanded] = useState(false)
   const [isLoadingArticles, setIsLoadingArticles] = useState(true)
-  const [generatingStatus, setGeneratingStatus] = useState<string | null>(null)
-  const [checkIntervalId, setCheckIntervalId] = useState<number | null>(null)
 
   // 加载本地文章数据
   useEffect(() => {
     loadArticles()
   }, [])
-
-  // 清理定时器
-  useEffect(() => {
-    return () => {
-      if (checkIntervalId) {
-        clearInterval(checkIntervalId)
-      }
-    }
-  }, [checkIntervalId])
 
   const loadArticles = async () => {
     setIsLoadingArticles(true)
@@ -77,65 +65,25 @@ export default function EnglishLearning() {
     if (!inputText.trim()) return
 
     setIsGenerating(true)
-    const userInput = inputText.trim()
-    const initialArticleCount = articles.length
-    
-    // 立即关闭对话框并返回列表页
-    setInputText('')
-    setIsDialogOpen(false)
-    
-    // 显示生成状态
-    setGeneratingStatus('正在提交生成请求...')
-    
     try {
       // 调用后端 API 生成文章
-      await englishAPI.generateArticle(userInput)
+      await englishAPI.generateArticle(inputText.trim())
       
-      setGeneratingStatus('AI 正在创作中，预计需要 2-3 分钟...')
+      // 生成成功后提示用户
+      alert('文章生成请求已提交！\n\nn8n 工作流正在生成文章，请稍等片刻后点击"刷新"按钮查看新文章。')
       
-      // 启动轮询检查文章是否生成完成
-      let attempts = 0
-      const maxAttempts = 36 // 36次 * 5秒 = 3分钟
+      setInputText('')
+      setIsDialogOpen(false)
       
-      const checkInterval = setInterval(async () => {
-        attempts++
-        
-        // 刷新文章列表
-        await refreshArticles()
-        
-        // 检查是否有新文章生成
-        const currentArticles = await loadLocalArticles()
-        if (currentArticles.length > initialArticleCount) {
-          clearInterval(checkInterval)
-          setCheckIntervalId(null)
-          setGeneratingStatus('✅ 生成完成！新文章已添加到列表中')
-          setTimeout(() => setGeneratingStatus(null), 3000)
-          setIsGenerating(false)
-          return
-        }
-        
-        const elapsed = attempts * 5
-        const minutes = Math.floor(elapsed / 60)
-        const seconds = elapsed % 60
-        setGeneratingStatus(`AI 正在创作中... 已等待 ${minutes}分${seconds}秒`)
-        
-        // 超过最大尝试次数后停止
-        if (attempts >= maxAttempts) {
-          clearInterval(checkInterval)
-          setCheckIntervalId(null)
-          setGeneratingStatus('⏰ 生成时间较长，请稍后手动刷新查看')
-          setTimeout(() => setGeneratingStatus(null), 8000)
-          setIsGenerating(false)
-        }
-      }, 5000) // 每5秒检查一次
-      
-      setCheckIntervalId(checkInterval)
-      
+      // 3秒后自动刷新
+      setTimeout(() => {
+        refreshArticles()
+      }, 3000)
     } catch (error: any) {
       console.error('生成文章失败:', error)
       const errorMsg = error.response?.data?.error || error.message || '未知错误'
-      setGeneratingStatus(`❌ 生成失败: ${errorMsg}`)
-      setTimeout(() => setGeneratingStatus(null), 8000)
+      alert(`文章生成失败：${errorMsg}\n\n请检查：\n1. 后端服务是否运行（http://localhost:3001）\n2. n8n 工作流是否正确配置\n3. 网络连接是否正常`)
+    } finally {
       setIsGenerating(false)
     }
   }
@@ -156,7 +104,6 @@ export default function EnglishLearning() {
     if (text && text.trim()) {
       setSelectedText(text.trim())
       setTranslation('')
-      setAnalysis('')
       
       // 获取选中文本的位置
       const range = selection?.getRangeAt(0)
@@ -170,32 +117,30 @@ export default function EnglishLearning() {
     } else {
       setSelectedText('')
       setTranslation('')
-      setAnalysis('')
       setToolbarPosition(null)
     }
   }
 
   const translateText = async () => {
     if (!selectedText) return
-    setTranslation('正在翻译中...')
     try {
       const response: any = await englishAPI.translateWord(selectedText)
-      setTranslation(response.output || response.translation || response.text || `${selectedText} 的翻译`)
+      setTranslation(response.translation || `${selectedText} 的翻译`)
     } catch (error) {
       console.error('翻译失败:', error)
-      setTranslation('翻译功能暂时不可用，请稍后再试')
+      setTranslation(`示例翻译: ${selectedText} → (需要配置后端)`)
     }
   }
 
-  const analyzeText = async () => {
+  const playAudio = async () => {
     if (!selectedText) return
-    setAnalysis('正在解析中...')
     try {
-      const response: any = await englishAPI.analyzeText(selectedText)
-      setAnalysis(response.output || response.text || `📖 "${selectedText}" 的深度解析`)
+      const response: any = await englishAPI.generateAudio(selectedText)
+      const audio = new Audio(response.audioUrl)
+      audio.play()
     } catch (error) {
-      console.error('解析失败:', error)
-      setAnalysis('解析功能暂时不可用，请稍后再试')
+      console.error('生成音频失败:', error)
+      alert('音频生成功能需要配置n8n后端')
     }
   }
 
@@ -254,7 +199,6 @@ export default function EnglishLearning() {
       if (selectedText && !target.closest('.prose') && !target.closest('[data-toolbar]')) {
         setSelectedText('')
         setTranslation('')
-        setAnalysis('')
         setToolbarPosition(null)
       }
     }
@@ -428,7 +372,6 @@ export default function EnglishLearning() {
                       onClick={() => {
                         setSelectedText('')
                         setTranslation('')
-                        setAnalysis('')
                         setToolbarPosition(null)
                       }}
                       variant="ghost"
@@ -450,13 +393,13 @@ export default function EnglishLearning() {
                       翻译
                     </Button>
                     <Button 
-                      onClick={analyzeText} 
+                      onClick={playAudio} 
                       variant="outline" 
                       size="sm"
                       className="flex-1 gap-2 border-2"
                     >
-                      <FileSearch className="h-4 w-4" />
-                      解析
+                      <Volume2 className="h-4 w-4" />
+                      朗读
                     </Button>
                   </div>
 
@@ -465,14 +408,6 @@ export default function EnglishLearning() {
                     <div className="pt-3 border-t">
                       <p className="text-xs font-semibold mb-2 text-primary">翻译结果</p>
                       <p className="text-sm leading-relaxed text-foreground/90">{translation}</p>
-                    </div>
-                  )}
-
-                  {/* 解析结果 */}
-                  {analysis && (
-                    <div className="pt-3 border-t">
-                      <p className="text-xs font-semibold mb-2 text-primary">深度解析</p>
-                      <p className="text-sm leading-relaxed text-foreground/90 whitespace-pre-line">{analysis}</p>
                     </div>
                   )}
                 </div>
@@ -517,29 +452,12 @@ export default function EnglishLearning() {
             <Button
               onClick={() => setIsDialogOpen(true)}
               className="gap-2 shadow-lg shadow-primary/30"
-              disabled={isGenerating}
             >
               <Plus className="h-4 w-4" />
               创建文章
             </Button>
           </div>
         </div>
-
-        {/* 生成状态提示 */}
-        {generatingStatus && (
-          <Card className="border-2 border-primary/50 bg-gradient-to-r from-primary/5 to-pink-500/5">
-            <CardContent className="flex items-center gap-4 py-4">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
-                <Sparkles className="h-6 w-6 text-primary animate-pulse" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-lg mb-1">AI 创作进行中</h3>
-                <p className="text-muted-foreground">{generatingStatus}</p>
-              </div>
-              <RefreshCw className="h-5 w-5 text-primary animate-spin" />
-            </CardContent>
-          </Card>
-        )}
 
         {isLoadingArticles ? (
           <Card className="border-2">
@@ -635,10 +553,10 @@ export default function EnglishLearning() {
 
       {/* 生成文章对话框 */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-2xl">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle className="text-2xl">生成文章</DialogTitle>
-            <DialogDescription className="text-base">
+            <DialogTitle>生成文章</DialogTitle>
+            <DialogDescription>
               输入你想学习的内容，AI 将为你生成一篇有趣的文章
             </DialogDescription>
           </DialogHeader>
@@ -649,19 +567,19 @@ export default function EnglishLearning() {
                 placeholder="例如：输入单词列表（adventure, mystery, journey）或描述你想学习的主题（我想学习关于太空探险的英语表达）"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="min-h-[180px] border-2 focus-visible:ring-primary resize-none text-base"
+                className="min-h-[120px] border-2 focus-visible:ring-primary resize-none"
               />
               <p className="text-xs text-muted-foreground">
                 提示：你可以输入单词列表、短语或描述，AI 会智能解析并生成合适的文章
               </p>
             </div>
 
-            <div className="bg-gradient-to-r from-primary/10 to-pink-500/10 border border-primary/20 rounded-lg p-5">
-              <div className="flex items-start gap-3">
-                <Sparkles className="h-6 w-6 text-primary shrink-0 mt-0.5" />
-                <div className="space-y-2 text-base">
+            <div className="bg-gradient-to-r from-primary/10 to-pink-500/10 border border-primary/20 rounded-lg p-4">
+              <div className="flex items-start gap-2">
+                <Sparkles className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                <div className="space-y-1 text-sm">
                   <p className="font-medium text-foreground">示例输入：</p>
-                  <ul className="text-muted-foreground space-y-1.5">
+                  <ul className="text-muted-foreground space-y-1">
                     <li>• whisper, lantern, horizon, puzzle</li>
                     <li>• 我想学习关于旅行的英语单词</li>
                     <li>• 生成一篇包含科技词汇的文章</li>

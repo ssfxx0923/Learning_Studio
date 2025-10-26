@@ -20,6 +20,3 @@ dist-ssr
 .env.local
 .env.production.local
 .env.development.local
-
-# 数据
-public/data

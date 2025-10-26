@@ -27,10 +27,6 @@ app.use(express.urlencoded({ extended: true }));
 // API 路由
 app.use('/api', routes);
 
-// Webhook 路由 (直接导入，不通过 /api 前缀)
-import webhookRoutes from './routes/webhookRoutes.js';
-app.use('/webhook', webhookRoutes);
-
 // 根路径
 app.get('/', (req, res) => {
   res.json({
@@ -53,7 +49,7 @@ const server = app.listen(CONFIG.port, () => {
   console.log('');
   console.log(`🚀 Server running on: http://localhost:${CONFIG.port}`);
   console.log(`📝 Environment: ${CONFIG.nodeEnv}`);
-  console.log(`🔗 n8n Base URL: ${CONFIG.n8n.baseUrl}`);
+  console.log(`🔗 n8n Webhook: ${CONFIG.n8n.webhookUrl}`);
   console.log(`📁 Articles Path: ${CONFIG.storage.articlesBasePath}`);
   console.log('');
   console.log('Available endpoints:');
@@ -62,8 +58,6 @@ const server = app.listen(CONFIG.port, () => {
   console.log(`  POST /api/articles/generate - Generate article`);
   console.log(`  GET  /api/articles - Get articles list`);
   console.log(`  DELETE /api/articles/:id - Delete article`);
-  console.log(`  POST /webhook/english/translate - Translate text (proxy to n8n)`);
-  console.log(`  POST /webhook/english/analyze - Analyze text (proxy to n8n)`);
   console.log('');
 });
 
