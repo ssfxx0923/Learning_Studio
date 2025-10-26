@@ -28,28 +28,8 @@ import {
   ListOrdered,
   Target,
 } from 'lucide-react'
-import { n8nClient } from '@/services/api'
-
-interface Task {
-  id: string
-  title: string
-  priority: number
-  completed: boolean
-  dueDate?: string
-  createdAt: string
-}
-
-interface Plan {
-  id: string
-  title: string
-  description: string
-  priority: number
-  tasks: Task[]
-  progress: number
-  dueDate?: string
-  createdAt: string
-  aiSuggestion?: string
-}
+import { n8nClient, backendAPI, type Plan, type Task } from '@/services/api'
+import { AIGreeting } from '@/components/AIGreeting'
 
 type SortOption = 'createdAt' | 'dueDate' | 'priority'
 
@@ -63,44 +43,44 @@ export default function Planning() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [newPlanTitle, setNewPlanTitle] = useState('')
   const [newPlanDesc, setNewPlanDesc] = useState('')
-  const [newPlanPriority, setNewPlanPriority] = useState('5')
+  const [newPlanPriority, setNewPlanPriority] = useState('3')
   const [newPlanDueDate, setNewPlanDueDate] = useState('')
   
   // 创建任务对话框
   const [isTaskDialogOpen, setIsTaskDialogOpen] = useState(false)
   const [newTaskTitle, setNewTaskTitle] = useState('')
-  const [newTaskPriority, setNewTaskPriority] = useState('5')
+  const [newTaskPriority, setNewTaskPriority] = useState('3')
   const [newTaskDueDate, setNewTaskDueDate] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  // 从本地存储加载数据
+  // 从后端加载数据
   useEffect(() => {
-    const savedPlans = localStorage.getItem('learning-plans')
-    if (savedPlans) {
-      const parsed = JSON.parse(savedPlans)
-      setPlans(parsed)
-      if (parsed.length > 0 && !selectedPlan) {
-        setSelectedPlan(parsed[0])
-      }
-    }
+    loadPlans()
   }, [])
 
-  // 保存到本地存储
-  useEffect(() => {
-    if (plans.length > 0) {
-      localStorage.setItem('learning-plans', JSON.stringify(plans))
+  const loadPlans = async () => {
+    try {
+      setIsLoading(true)
+      const loadedPlans = await backendAPI.getAllPlans()
+      setPlans(loadedPlans)
+      if (loadedPlans.length > 0 && !selectedPlan) {
+        setSelectedPlan(loadedPlans[0])
+      }
+    } catch (error) {
+      console.error('加载计划失败:', error)
+    } finally {
+      setIsLoading(false)
     }
-  }, [plans])
+  }
 
   const getPriorityColor = (priority: number) => {
-    if (priority >= 8) return 'destructive'
-    if (priority >= 5) return 'default'
+    if (priority >= 4) return 'destructive'
+    if (priority >= 3) return 'default'
     return 'secondary'
   }
 
   const getPriorityLabel = (priority: number) => {
-    if (priority >= 8) return '高优先级'
-    if (priority >= 5) return '中优先级'
-    return '低优先级'
+    return `优先级 ${priority}`
   }
 
   const sortPlans = (plansToSort: Plan[]) => {
@@ -123,8 +103,7 @@ export default function Planning() {
   const createPlan = async () => {
     if (!newPlanTitle.trim()) return
 
-    const newPlan: Plan = {
-      id: Date.now().toString(),
+    const planData = {
       title: newPlanTitle,
       description: newPlanDesc,
       priority: parseInt(newPlanPriority),
@@ -135,30 +114,50 @@ export default function Planning() {
     }
 
     try {
-      await n8nClient.post('/planning/create', newPlan)
-    } catch (error) {
-      console.error('创建计划失败:', error)
-    }
-
-    setPlans([...plans, newPlan])
-    setSelectedPlan(newPlan)
-    
+      setIsLoading(true)
+      const newPlan = await backendAPI.createPlan(planData)
+      setPlans([...plans, newPlan])
+      setSelectedPlan(newPlan)
+      
+      // 通知 n8n
+      try {
+        await n8nClient.post('/planning/create', newPlan)
+      } catch (error) {
+        console.error('n8n 通知失败:', error)
+      }
+      
     // 重置表单
     setNewPlanTitle('')
     setNewPlanDesc('')
-    setNewPlanPriority('5')
+    setNewPlanPriority('3')
     setNewPlanDueDate('')
     setIsCreateDialogOpen(false)
+    } catch (error) {
+      console.error('创建计划失败:', error)
+      alert('创建计划失败，请重试')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const deletePlan = (planId: string) => {
+  const deletePlan = async (planId: string) => {
     if (!confirm('确定要删除这个计划吗？')) return
     
-    const updatedPlans = plans.filter(p => p.id !== planId)
-    setPlans(updatedPlans)
-    
-    if (selectedPlan?.id === planId) {
-      setSelectedPlan(updatedPlans.length > 0 ? updatedPlans[0] : null)
+    try {
+      setIsLoading(true)
+      await backendAPI.deletePlan(planId)
+      
+      const updatedPlans = plans.filter(p => p.id !== planId)
+      setPlans(updatedPlans)
+      
+      if (selectedPlan?.id === planId) {
+        setSelectedPlan(updatedPlans.length > 0 ? updatedPlans[0] : null)
+      }
+    } catch (error) {
+      console.error('删除计划失败:', error)
+      alert('删除计划失败，请重试')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -183,7 +182,7 @@ export default function Planning() {
     
     // 重置表单
     setNewTaskTitle('')
-    setNewTaskPriority('5')
+    setNewTaskPriority('3')
     setNewTaskDueDate('')
     setIsTaskDialogOpen(false)
   }
@@ -229,12 +228,19 @@ export default function Planning() {
     updatePlan(updatedPlan)
   }
 
-  const updatePlan = (updatedPlan: Plan) => {
-    const updatedPlans = plans.map((p) =>
-      p.id === updatedPlan.id ? updatedPlan : p
-    )
-    setPlans(updatedPlans)
-    setSelectedPlan(updatedPlan)
+  const updatePlan = async (updatedPlan: Plan) => {
+    try {
+      await backendAPI.updatePlan(updatedPlan.id, updatedPlan)
+      
+      const updatedPlans = plans.map((p) =>
+        p.id === updatedPlan.id ? updatedPlan : p
+      )
+      setPlans(updatedPlans)
+      setSelectedPlan(updatedPlan)
+    } catch (error) {
+      console.error('更新计划失败:', error)
+      alert('更新计划失败，请重试')
+    }
   }
 
   const getAISuggestion = async () => {
@@ -281,8 +287,8 @@ export default function Planning() {
       {/* 左侧：计划详情 */}
       <div className={`flex-1 overflow-auto space-y-6 transition-all duration-300 ${
         isRightPanelCollapsed ? 'pr-6' : 'pr-6'
-      }`}>
-        <div>
+        }`}>
+        <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-3">
               <Calendar className="h-8 w-8 text-primary" />
@@ -292,9 +298,18 @@ export default function Planning() {
               制定学习计划,AI将帮你优化并监督执行
             </p>
           </div>
+
+          {/* AI问候组件 */}
+          <AIGreeting />
         </div>
 
-        {selectedPlan ? (
+        {isLoading && plans.length === 0 ? (
+          <Card>
+            <CardContent className="py-12 text-center">
+              <p className="text-muted-foreground">加载中...</p>
+            </CardContent>
+          </Card>
+        ) : selectedPlan ? (
           <div className="space-y-6">
             {/* 计划信息卡片 */}
             <Card>
@@ -303,9 +318,9 @@ export default function Planning() {
                   <div className="space-y-2 flex-1">
                     <div className="flex items-center gap-3">
                       <CardTitle className="text-2xl">{selectedPlan.title}</CardTitle>
-                      <Badge variant={getPriorityColor(selectedPlan.priority)}>
+                      <Badge variant={getPriorityColor(selectedPlan.priority)} className="opacity-50">
                         <Flag className="h-3 w-3 mr-1" />
-                        {getPriorityLabel(selectedPlan.priority)} ({selectedPlan.priority})
+                        {getPriorityLabel(selectedPlan.priority)}
                       </Badge>
                     </div>
                     <CardDescription>{selectedPlan.description || '暂无描述'}</CardDescription>
@@ -385,7 +400,7 @@ export default function Planning() {
                           <div className="flex items-center gap-3 mt-1">
                             <Badge
                               variant={getPriorityColor(task.priority)}
-                              className="text-xs"
+                              className="text-xs opacity-50"
                             >
                               P{task.priority}
                             </Badge>
@@ -529,7 +544,7 @@ export default function Planning() {
                         variant={
                           selectedPlan?.id === plan.id ? 'outline' : getPriorityColor(plan.priority)
                         }
-                        className="text-xs"
+                        className="text-xs opacity-50"
                       >
                         P{plan.priority}
                       </Badge>
@@ -601,15 +616,15 @@ export default function Planning() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="plan-priority">优先级 (0-10)</Label>
+                <Label htmlFor="plan-priority">优先级 (1-5)</Label>
                 <Select value={newPlanPriority} onValueChange={setNewPlanPriority}>
                   <SelectTrigger id="plan-priority">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {[...Array(11)].map((_, i) => (
-                      <SelectItem key={i} value={i.toString()}>
-                        {i} - {i >= 8 ? '高' : i >= 5 ? '中' : '低'}
+                    {[...Array(5)].map((_, i) => (
+                      <SelectItem key={i + 1} value={(i + 1).toString()}>
+                        {i + 1}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -622,6 +637,7 @@ export default function Planning() {
                   type="date"
                   value={newPlanDueDate}
                   onChange={(e) => setNewPlanDueDate(e.target.value)}
+                  className="cursor-pointer"
                 />
               </div>
             </div>
@@ -656,15 +672,15 @@ export default function Planning() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="task-priority">优先级 (0-10)</Label>
+                <Label htmlFor="task-priority">优先级 (1-5)</Label>
                 <Select value={newTaskPriority} onValueChange={setNewTaskPriority}>
                   <SelectTrigger id="task-priority">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {[...Array(11)].map((_, i) => (
-                      <SelectItem key={i} value={i.toString()}>
-                        {i} - {i >= 8 ? '高' : i >= 5 ? '中' : '低'}
+                    {[...Array(5)].map((_, i) => (
+                      <SelectItem key={i + 1} value={(i + 1).toString()}>
+                        {i + 1}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -677,6 +693,7 @@ export default function Planning() {
                   type="date"
                   value={newTaskDueDate}
                   onChange={(e) => setNewTaskDueDate(e.target.value)}
+                  className="cursor-pointer"
                 />
               </div>
             </div>

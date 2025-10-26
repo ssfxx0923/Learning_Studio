@@ -16,6 +16,7 @@ export const CONFIG = {
   // 文件存储配置
   storage: {
     articlesBasePath: process.env.ARTICLES_BASE_PATH || join(__dirname, '../../../public/data/english/artikel'),
+    plansBasePath: process.env.PLANS_BASE_PATH || join(__dirname, '../../../public/data/plan'),
     // 索引同步间隔（秒）
     indexSyncInterval: parseInt(process.env.INDEX_SYNC_INTERVAL || '10', 10),
   },

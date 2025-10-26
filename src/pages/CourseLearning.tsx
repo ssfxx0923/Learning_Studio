@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog'
 import { Video, BookText, Plus, Sparkles, PlayCircle, FileText, X } from 'lucide-react'
 import { n8nClient } from '@/services/api'
+import { AIGreeting } from '@/components/AIGreeting'
 
 interface Course {
   id: string
@@ -102,11 +103,16 @@ export default function CourseLearning() {
 
   return (
     <div className="space-y-6 relative">
-      <div>
-        <h1 className="text-3xl font-bold">课程学习</h1>
-        <p className="text-muted-foreground mt-2">
-          添加B站视频或书本,AI将帮你分析课程内容并制定学习规划
-        </p>
+      <div className="space-y-4">
+        <div>
+          <h1 className="text-3xl font-bold">课程学习</h1>
+          <p className="text-muted-foreground mt-2">
+            添加B站视频或书本,AI将帮你分析课程内容并制定学习规划
+          </p>
+        </div>
+        
+        {/* AI问候组件 */}
+        <AIGreeting />
       </div>
 
       {/* 课程展示区 */}

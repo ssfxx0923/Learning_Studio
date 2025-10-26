@@ -1,6 +1,31 @@
 import apiClient from '@/lib/api'
 
 // ============================================
+// 类型定义
+// ============================================
+
+export interface Task {
+  id: string
+  title: string
+  priority: number
+  completed: boolean
+  dueDate?: string
+  createdAt: string
+}
+
+export interface Plan {
+  id: string
+  title: string
+  description: string
+  priority: number
+  tasks: Task[]
+  progress: number
+  dueDate?: string
+  createdAt: string
+  aiSuggestion?: string
+}
+
+// ============================================
 // Backend API - 纯文件系统服务
 // ============================================
 
@@ -23,6 +48,44 @@ export const backendAPI = {
   // 健康检查
   healthCheck: async () => {
     return apiClient.get('/api/health')
+  },
+
+  // ============================================
+  // 计划相关 API
+  // ============================================
+
+  // 获取所有计划
+  getAllPlans: async (): Promise<Plan[]> => {
+    const response = await apiClient.get('/api/plans')
+    return response.data
+  },
+
+  // 获取单个计划
+  getPlan: async (planId: string): Promise<Plan> => {
+    const response = await apiClient.get(`/api/plans/${planId}`)
+    return response.data
+  },
+
+  // 创建计划
+  createPlan: async (planData: Omit<Plan, 'id'>): Promise<Plan> => {
+    const response = await apiClient.post('/api/plans', planData)
+    return response.data
+  },
+
+  // 更新计划
+  updatePlan: async (planId: string, planData: Plan): Promise<Plan> => {
+    const response = await apiClient.put(`/api/plans/${planId}`, planData)
+    return response.data
+  },
+
+  // 删除计划
+  deletePlan: async (planId: string): Promise<void> => {
+    await apiClient.delete(`/api/plans/${planId}`)
+  },
+
+  // 同步计划索引
+  syncPlansIndex: async () => {
+    return apiClient.post('/api/plans/sync-index')
   },
 }
 

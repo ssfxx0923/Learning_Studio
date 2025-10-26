@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Heart, Send, Sparkles } from 'lucide-react'
 import { n8nClient } from '@/services/api'
+import { AIGreeting } from '@/components/AIGreeting'
 
 interface Message {
   id: string
@@ -79,14 +80,19 @@ export default function MentalHealth() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold flex items-center gap-2">
-          <Heart className="h-8 w-8 text-primary" />
-          心理健康
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          与AI心理助手交流,缓解压力,促进身心健康
-        </p>
+      <div className="space-y-4">
+        <div>
+          <h1 className="text-3xl font-bold flex items-center gap-2">
+            <Heart className="h-8 w-8 text-primary" />
+            心理健康
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            与AI心理助手交流,缓解压力,促进身心健康
+          </p>
+        </div>
+        
+        {/* AI问候组件 */}
+        <AIGreeting />
       </div>
 
       <Card className="max-w-4xl mx-auto">

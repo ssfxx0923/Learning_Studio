@@ -74,3 +74,120 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 自定义滚动条样式 */
+@layer utilities {
+  /* Webkit 浏览器（Chrome, Safari, Edge）滚动条样式 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background: hsl(var(--primary) / 0.7);
+  }
+
+  /* 暗色模式下的滚动条 */
+  .dark *::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.4);
+  }
+
+  .dark *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.6);
+  }
+
+  .dark *::-webkit-scrollbar-thumb:active {
+    background: hsl(var(--primary) / 0.8);
+  }
+
+  /* Firefox 滚动条样式 */
+  .dark * {
+    scrollbar-color: hsl(var(--primary) / 0.4) transparent;
+  }
+
+  /* 日期选择器自定义样式 */
+  input[type="date"] {
+    position: relative;
+    color-scheme: light;
+  }
+
+  .dark input[type="date"] {
+    color-scheme: dark;
+  }
+
+  /* 日期输入框图标颜色 */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+  }
+
+  /* 自定义日期图标为粉色 */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(68%) sepia(49%) saturate(1285%) hue-rotate(291deg) brightness(104%) contrast(94%);
+  }
+
+  .dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(75%) sepia(30%) saturate(1051%) hue-rotate(283deg) brightness(102%) contrast(93%);
+  }
+
+  /* AI 机器人 Q弹动画 */
+  @keyframes bounce-subtle {
+    0%, 100% {
+      transform: scale(1) translateY(0);
+    }
+    25% {
+      transform: scale(1.05, 0.95) translateY(2px);
+    }
+    50% {
+      transform: scale(0.95, 1.05) translateY(-3px);
+    }
+    75% {
+      transform: scale(1.02, 0.98) translateY(1px);
+    }
+  }
+
+  @keyframes wiggle {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-2deg);
+    }
+    75% {
+      transform: rotate(2deg);
+    }
+  }
+
+  .animate-bounce-subtle {
+    animation: bounce-subtle 2s ease-in-out infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 3s ease-in-out infinite;
+  }
+}

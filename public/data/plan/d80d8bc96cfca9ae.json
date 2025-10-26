@@ -1,0 +1,26 @@
+{
+  "title": "1s",
+  "description": "",
+  "priority": 2,
+  "tasks": [
+    {
+      "id": "1761460220495",
+      "title": "2wds",
+      "priority": 3,
+      "completed": true,
+      "createdAt": "2025-10-26T06:30:20.495Z"
+    },
+    {
+      "id": "1761463240140",
+      "title": "we",
+      "priority": 3,
+      "completed": false,
+      "dueDate": "2025-10-22",
+      "createdAt": "2025-10-26T07:20:40.140Z"
+    }
+  ],
+  "progress": 100,
+  "createdAt": "2025-10-26T06:29:15.291Z",
+  "id": "d80d8bc96cfca9ae",
+  "aiSuggestion": "建议将高优先级任务优先完成，合理安排时间，保持学习节奏。可以将大任务分解为小任务，逐步完成。"
+}

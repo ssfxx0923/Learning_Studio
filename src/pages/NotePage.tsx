@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog'
 import { FileText, Plus, Sparkles, Upload, Lightbulb, Save, Trash2, Clock } from 'lucide-react'
 import { n8nClient } from '@/services/api'
+import { AIGreeting } from '@/components/AIGreeting'
 
 interface Note {
   id: string
@@ -159,11 +160,16 @@ export default function NotePage() {
 
   return (
     <div className="space-y-6 relative">
-      <div>
-        <h1 className="text-3xl font-bold">笔记</h1>
-        <p className="text-muted-foreground mt-2">
-          智能笔记编辑器,支持AI优化和手写笔记识别
-        </p>
+      <div className="space-y-4">
+        <div>
+          <h1 className="text-3xl font-bold">笔记</h1>
+          <p className="text-muted-foreground mt-2">
+            智能笔记编辑器,支持AI优化和手写笔记识别
+          </p>
+        </div>
+        
+        {/* AI问候组件 */}
+        <AIGreeting />
       </div>
 
       {/* 笔记展示区 */}

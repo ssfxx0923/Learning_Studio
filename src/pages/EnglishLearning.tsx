@@ -13,6 +13,7 @@ import { Sparkles, Plus, X, BookOpen, Languages, Trash2, Play, Pause, RefreshCw 
 import { backendAPI, n8nClient } from '@/services/api'
 import { loadLocalArticles, reloadArticles } from '@/services/localArticles'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { AIGreeting } from '@/components/AIGreeting'
 import { v4 as uuidv4 } from 'uuid'
 
 interface Article {
@@ -458,16 +459,21 @@ export default function EnglishLearning() {
   return (
     <div className="space-y-6 pb-20">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold flex items-center gap-3">
-            <BookOpen className="h-8 w-8 text-primary" />
-            英语学习
-          </h1>
-          <p className="text-muted-foreground">
-            输入你想要学习的单词,我们将为你生成包含这些单词的文章
-          </p>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <h1 className="text-3xl font-bold flex items-center gap-3">
+              <BookOpen className="h-8 w-8 text-primary" />
+              英语学习
+            </h1>
+            <p className="text-muted-foreground">
+              输入你想要学习的单词,我们将为你生成包含这些单词的文章
+            </p>
+          </div>
         </div>
+        
+        {/* AI问候组件 */}
+        <AIGreeting />
       </div>
 
       {/* 文章列表 */}

@@ -14,6 +14,7 @@ import {
   Sparkles,
   MoreHorizontal,
 } from 'lucide-react'
+import { AIGreeting } from '@/components/AIGreeting'
 
 const features = [
   {
@@ -68,12 +69,17 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
-      <div className="space-y-2">
-        <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-3">
-          <Sparkles className="h-8 w-8 text-primary" />
-          欢迎回来!
-        </h1>
-        <p className="text-muted-foreground text-lg">继续你的学习旅程,让AI助你一臂之力</p>
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <h1 className="text-3xl lg:text-4xl font-bold flex items-center gap-3">
+            <Sparkles className="h-8 w-8 text-primary" />
+            欢迎回来!
+          </h1>
+          <p className="text-muted-foreground text-lg">继续你的学习旅程,让AI助你一臂之力</p>
+        </div>
+        
+        {/* AI问候组件 */}
+        <AIGreeting />
       </div>
 
       {/* Stats Cards */}
