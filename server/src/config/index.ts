@@ -10,18 +10,14 @@ config();
 
 export const CONFIG = {
   // 服务器配置
-  port: parseInt(process.env.PORT || '3001', 10),
+  port: parseInt(process.env.PORT || '3002', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
-
-  // n8n 配置
-  n8n: {
-    webhookUrl: process.env.N8N_WEBHOOK_URL || 'http://localhost:5678/webhook-test/your-webhook-id',
-    timeout: parseInt(process.env.N8N_TIMEOUT || '300000', 10), // 5分钟
-  },
 
   // 文件存储配置
   storage: {
     articlesBasePath: process.env.ARTICLES_BASE_PATH || join(__dirname, '../../../public/data/english/artikel'),
+    // 索引同步间隔（秒）
+    indexSyncInterval: parseInt(process.env.INDEX_SYNC_INTERVAL || '10', 10),
   },
 
   // CORS 配置

@@ -276,12 +276,12 @@
       "parameters": {
         "content": "# 使用AI，实现单词到短文的生成。\n\n# 执行这个url会生成两张图片和一份音频，用于搭建阅读模板",
         "height": 1696,
-        "width": 2448,
+        "width": 2720,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -12336,
+        -12320,
         -4240
       ],
       "typeVersion": 1,
@@ -537,6 +537,11 @@
     }
   ],
   "connections": {
+    "Read/Write Files from Disk": {
+      "main": [
+        []
+      ]
+    },
     "语音生成": {
       "main": [
         [

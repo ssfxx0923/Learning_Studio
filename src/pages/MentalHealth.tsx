@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Heart, Send, Sparkles } from 'lucide-react'
-import { mentalHealthAPI } from '@/services/api'
+import { n8nClient } from '@/services/api'
 
 interface Message {
   id: string
@@ -29,7 +29,7 @@ export default function MentalHealth() {
 
   const startSession = async () => {
     try {
-      const response: any = await mentalHealthAPI.startConversation()
+      const response: any = await n8nClient.post('/mental-health/start')
       setSessionId(response.sessionId)
 
       const welcomeMessage: Message = {
@@ -60,7 +60,7 @@ export default function MentalHealth() {
     setIsTyping(true)
 
     try {
-      const response: any = await mentalHealthAPI.sendMessage(inputMessage, sessionId)
+      const response: any = await n8nClient.post('/mental-health/message', { message: inputMessage, sessionId })
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),

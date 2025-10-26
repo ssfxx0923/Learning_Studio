@@ -9,10 +9,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Sparkles, Plus, X, BookOpen, Volume2, Languages, Trash2, Play, Pause, RefreshCw } from 'lucide-react'
-import { englishAPI } from '@/services/api'
-import { loadLocalArticles, reloadArticles, deleteArticle as deleteLocalArticle } from '@/services/localArticles'
+import { Sparkles, Plus, X, BookOpen, Languages, Trash2, Play, Pause, RefreshCw } from 'lucide-react'
+import { backendAPI, n8nClient } from '@/services/api'
+import { loadLocalArticles, reloadArticles } from '@/services/localArticles'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { v4 as uuidv4 } from 'uuid'
 
 interface Article {
   id: string
@@ -66,8 +67,17 @@ export default function EnglishLearning() {
 
     setIsGenerating(true)
     try {
-      // 调用后端 API 生成文章
-      await englishAPI.generateArticle(inputText.trim())
+      // 生成UUID
+      const requestId = uuidv4().replace(/-/g, '').substring(0, 16)
+      
+      // 步骤1: 创建文件夹
+      await backendAPI.createArticleFolder(requestId)
+      
+      // 步骤2: 调用n8n生成内容
+      await n8nClient.post('/english/generate', {
+        message: inputText.trim(),
+        request_id: requestId,
+      })
       
       // 生成成功后提示用户
       alert('文章生成请求已提交！\n\nn8n 工作流正在生成文章，请稍等片刻后点击"刷新"按钮查看新文章。')
@@ -88,13 +98,29 @@ export default function EnglishLearning() {
     }
   }
 
-  const deleteArticle = (id: string) => {
-    if (confirm('确定要删除这篇文章吗？\n\n注意：你需要手动：\n1. 删除文件夹 public/data/english/artikel/' + id + '\n2. 从 index.json 中移除该文章ID\n3. 点击刷新按钮')) {
-      deleteLocalArticle(id)
+  const deleteArticle = async (id: string) => {
+    if (!confirm('确定要删除这篇文章吗？')) {
+      return
+    }
+
+    try {
+      // 调用后端API删除文章
+      await backendAPI.deleteArticle(id)
+      
+      // 从本地状态中移除
       setArticles(articles.filter((a) => a.id !== id))
       if (selectedArticle?.id === id) {
         setSelectedArticle(null)
       }
+      
+      // 清除缓存并刷新
+      reloadArticles()
+      
+      alert('文章删除成功！')
+    } catch (error: any) {
+      console.error('删除文章失败:', error)
+      const errorMsg = error.response?.data?.error || error.message || '未知错误'
+      alert(`删除失败：${errorMsg}`)
     }
   }
 
@@ -123,24 +149,33 @@ export default function EnglishLearning() {
 
   const translateText = async () => {
     if (!selectedText) return
+    setTranslation('翻译中...')
     try {
-      const response: any = await englishAPI.translateWord(selectedText)
-      setTranslation(response.translation || `${selectedText} 的翻译`)
-    } catch (error) {
+      const response: any = await n8nClient.post('/english/translate', { word: selectedText })
+      console.log('翻译响应:', response)
+      
+      // n8n 可能直接返回文本，或者包装在不同字段中
+      const translation = response.output || response.translation || response.text || response
+      setTranslation(typeof translation === 'string' ? translation : JSON.stringify(translation, null, 2))
+    } catch (error: any) {
       console.error('翻译失败:', error)
-      setTranslation(`示例翻译: ${selectedText} → (需要配置后端)`)
+      setTranslation(`翻译失败: ${error.message || '未知错误'}`)
     }
   }
 
-  const playAudio = async () => {
+  const analyzeText = async () => {
     if (!selectedText) return
+    setTranslation('解析中...')
     try {
-      const response: any = await englishAPI.generateAudio(selectedText)
-      const audio = new Audio(response.audioUrl)
-      audio.play()
-    } catch (error) {
-      console.error('生成音频失败:', error)
-      alert('音频生成功能需要配置n8n后端')
+      const response: any = await n8nClient.post('/english/analyze', { text: selectedText })
+      console.log('解析响应:', response)
+      
+      // n8n 可能直接返回文本，或者包装在不同字段中
+      const analysis = response.output || response.analysis || response.text || response
+      setTranslation(typeof analysis === 'string' ? analysis : JSON.stringify(analysis, null, 2))
+    } catch (error: any) {
+      console.error('解析失败:', error)
+      setTranslation(`解析失败: ${error.message || '未知错误'}`)
     }
   }
 
@@ -393,21 +428,21 @@ export default function EnglishLearning() {
                       翻译
                     </Button>
                     <Button 
-                      onClick={playAudio} 
+                      onClick={analyzeText} 
                       variant="outline" 
                       size="sm"
                       className="flex-1 gap-2 border-2"
                     >
-                      <Volume2 className="h-4 w-4" />
-                      朗读
+                      <Sparkles className="h-4 w-4" />
+                      解析
                     </Button>
                   </div>
 
-                  {/* 翻译结果 */}
+                  {/* 结果显示 */}
                   {translation && (
                     <div className="pt-3 border-t">
-                      <p className="text-xs font-semibold mb-2 text-primary">翻译结果</p>
-                      <p className="text-sm leading-relaxed text-foreground/90">{translation}</p>
+                      <p className="text-xs font-semibold mb-2 text-primary">结果</p>
+                      <p className="text-sm leading-relaxed text-foreground/90 whitespace-pre-line">{translation}</p>
                     </div>
                   )}
                 </div>

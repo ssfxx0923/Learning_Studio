@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Video, BookText, Plus, Sparkles, PlayCircle, FileText, X } from 'lucide-react'
-import { courseAPI } from '@/services/api'
+import { n8nClient } from '@/services/api'
 
 interface Course {
   id: string
@@ -36,7 +36,7 @@ export default function CourseLearning() {
     if (!videoUrl.trim()) return
 
     try {
-      const response: any = await courseAPI.addVideoLesson(videoUrl)
+      const response: any = await n8nClient.post('/course/add-video', { url: videoUrl })
       const newCourse: Course = {
         id: Date.now().toString(),
         type: 'video',
@@ -55,7 +55,7 @@ export default function CourseLearning() {
     if (!bookTitle.trim()) return
 
     try {
-      await courseAPI.addBook({ title: bookTitle, content: bookContent })
+      await n8nClient.post('/course/add-book', { title: bookTitle, content: bookContent })
       const newCourse: Course = {
         id: Date.now().toString(),
         type: 'book',
@@ -75,7 +75,7 @@ export default function CourseLearning() {
 
     try {
       if (course.type === 'video') {
-        const response: any = await courseAPI.analyzeVideo(course.id)
+        const response: any = await n8nClient.post('/course/analyze-video', { videoId: course.id })
         const updatedCourses = courses.map((c) =>
           c.id === course.id ? { ...c, analysis: response.analysis } : c
         )
@@ -89,7 +89,7 @@ export default function CourseLearning() {
 
   const getCoursePlan = async (course: Course) => {
     try {
-      const response: any = await courseAPI.getCoursePlan(course.id)
+      const response: any = await n8nClient.post('/course/get-plan', { courseId: course.id })
       const updatedCourses = courses.map((c) =>
         c.id === course.id ? { ...c, plan: response.plan } : c
       )

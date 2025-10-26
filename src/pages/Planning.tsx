@@ -28,7 +28,7 @@ import {
   ListOrdered,
   Target,
 } from 'lucide-react'
-import { planningAPI } from '@/services/api'
+import { n8nClient } from '@/services/api'
 
 interface Task {
   id: string
@@ -135,7 +135,7 @@ export default function Planning() {
     }
 
     try {
-      await planningAPI.createPlan(newPlan)
+      await n8nClient.post('/planning/create', newPlan)
     } catch (error) {
       console.error('创建计划失败:', error)
     }
@@ -207,7 +207,7 @@ export default function Planning() {
     updatePlan(updatedPlan)
 
     try {
-      await planningAPI.updateProgress(selectedPlan.id, { progress })
+      await n8nClient.post('/planning/update-progress', { planId: selectedPlan.id, progress })
     } catch (error) {
       console.error('更新进度失败:', error)
     }
@@ -241,7 +241,7 @@ export default function Planning() {
     if (!selectedPlan) return
 
     try {
-      const response: any = await planningAPI.getAISuggestion(selectedPlan.id)
+      const response: any = await n8nClient.post('/planning/ai-suggestion', { planId: selectedPlan.id })
       const updatedPlan = {
         ...selectedPlan,
         aiSuggestion: response.suggestion,

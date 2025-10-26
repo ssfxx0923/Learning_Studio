@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { FileText, Plus, Sparkles, Upload, Lightbulb, Save, Trash2, Clock } from 'lucide-react'
-import { noteAPI } from '@/services/api'
+import { n8nClient } from '@/services/api'
 
 interface Note {
   id: string
@@ -58,7 +58,7 @@ export default function NotePage() {
       }
 
       try {
-        await noteAPI.saveNote(updatedNote)
+        await n8nClient.post('/note/save', updatedNote)
         const updatedNotes = notes.map((n) =>
           n.id === selectedNote.id ? updatedNote : n
         )
@@ -78,7 +78,7 @@ export default function NotePage() {
       }
 
       try {
-        await noteAPI.saveNote(newNote)
+        await n8nClient.post('/note/save', newNote)
         setNotes([newNote, ...notes])
         setNoteTitle('')
         setNoteContent('')
@@ -98,7 +98,7 @@ export default function NotePage() {
 
     setIsOptimizing(true)
     try {
-      const response: any = await noteAPI.optimizeNote(selectedNote.id)
+      const response: any = await n8nClient.post('/note/optimize', { noteId: selectedNote.id })
       const updatedNote = {
         ...selectedNote,
         optimizedContent: response.optimizedContent,
@@ -126,7 +126,7 @@ export default function NotePage() {
       const imageData = e.target?.result as string
 
       try {
-        const response: any = await noteAPI.convertHandwriting(imageData)
+        const response: any = await n8nClient.post('/note/convert-handwriting', { imageData })
 
         const newNote: Note = {
           id: Date.now().toString(),
@@ -149,7 +149,7 @@ export default function NotePage() {
     if (!noteContent) return
 
     try {
-      const response: any = await noteAPI.autoComplete(noteContent)
+      const response: any = await n8nClient.post('/note/auto-complete', { content: noteContent })
       setNoteContent(noteContent + '\n\n' + response.suggestion)
     } catch (error) {
       console.error('自动补全失败:', error)

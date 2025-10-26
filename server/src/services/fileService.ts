@@ -134,5 +134,83 @@ export class FileService {
       return false;
     }
   }
+
+  /**
+   * 扫描所有文章文件夹，返回完整的文章ID列表
+   */
+  async scanAllArticles(): Promise<string[]> {
+    try {
+      const entries = await fs.readdir(this.articlesBasePath, { withFileTypes: true });
+      const completeArticles: string[] = [];
+
+      for (const entry of entries) {
+        // 跳过文件，只处理文件夹
+        if (!entry.isDirectory()) continue;
+        
+        // 跳过 index.json
+        if (entry.name === 'index.json') continue;
+
+        // 检查文章是否完整
+        const isComplete = await this.validateArticleFiles(entry.name);
+        if (isComplete) {
+          completeArticles.push(entry.name);
+        }
+      }
+
+      return completeArticles;
+    } catch (error) {
+      console.error('Failed to scan articles:', error);
+      return [];
+    }
+  }
+
+  /**
+   * 同步索引：扫描文件夹并更新 index.json
+   */
+  async syncIndex(): Promise<{ added: string[], removed: string[] }> {
+    const actualArticles = await this.scanAllArticles();
+    const index = await this.readIndex();
+    const indexedArticles = new Set(index.articles);
+    
+    const added: string[] = [];
+    const removed: string[] = [];
+
+    // 找出需要添加的文章
+    for (const articleId of actualArticles) {
+      if (!indexedArticles.has(articleId)) {
+        added.push(articleId);
+      }
+    }
+
+    // 找出需要删除的文章（索引中有但文件夹中没有）
+    const actualArticlesSet = new Set(actualArticles);
+    for (const articleId of index.articles) {
+      if (!actualArticlesSet.has(articleId)) {
+        removed.push(articleId);
+      }
+    }
+
+    // 更新索引
+    if (added.length > 0 || removed.length > 0) {
+      const newIndex: ArticleIndex = {
+        articles: actualArticles.sort(), // 按字母排序
+      };
+
+      await fs.writeFile(
+        this.indexPath,
+        JSON.stringify(newIndex, null, 2) + '\n',
+        'utf-8'
+      );
+
+      if (added.length > 0) {
+        console.log(`✓ Added to index: ${added.join(', ')}`);
+      }
+      if (removed.length > 0) {
+        console.log(`✓ Removed from index: ${removed.join(', ')}`);
+      }
+    }
+
+    return { added, removed };
+  }
 }
 
