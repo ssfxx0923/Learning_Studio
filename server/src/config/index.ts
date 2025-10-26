@@ -17,6 +17,8 @@ export const CONFIG = {
   storage: {
     articlesBasePath: process.env.ARTICLES_BASE_PATH || join(__dirname, '../../../public/data/english/artikel'),
     plansBasePath: process.env.PLANS_BASE_PATH || join(__dirname, '../../../public/data/plan'),
+    mentalHealthBasePath: process.env.MENTAL_HEALTH_BASE_PATH || join(__dirname, '../../../public/data/mentalhealth'),
+    notesBasePath: process.env.NOTES_BASE_PATH || join(__dirname, '../../../public/data/notes'),
     // 索引同步间隔（秒）
     indexSyncInterval: parseInt(process.env.INDEX_SYNC_INTERVAL || '10', 10),
   },

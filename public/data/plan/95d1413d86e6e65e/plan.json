@@ -1,0 +1,68 @@
+{
+  "title": "7天篮球入门学习计划",
+  "description": "帮助用户在一周内系统学习篮球基础技能，包括投篮、运球、防守和团队配合，每天有明确的训练内容、时间安排和注意事项。",
+  "priority": 5,
+  "tasks": [
+    {
+      "id": "2529e2993c7c4607",
+      "title": "了解篮球规则和基础知识",
+      "priority": 3,
+      "completed": false,
+      "dueDate": "2025-10-27T20:00:00-04:00",
+      "createdAt": "2025-10-26T14:44:10.884Z"
+    },
+    {
+      "id": "6a7a9dd03faa52d1",
+      "title": "基础运球训练与控球练习",
+      "priority": 4,
+      "completed": false,
+      "dueDate": "2025-10-28T20:00:00-04:00",
+      "createdAt": "2025-10-26T14:44:10.884Z"
+    },
+    {
+      "id": "2d34e399999133c6",
+      "title": "投篮技巧学习与练习",
+      "priority": 5,
+      "completed": false,
+      "dueDate": "2025-10-29T20:00:00-04:00",
+      "createdAt": "2025-10-26T14:44:10.884Z"
+    },
+    {
+      "id": "bebe8e67e1e1e6d5",
+      "title": "防守姿势及脚步训练",
+      "priority": 4,
+      "completed": false,
+      "dueDate": "2025-10-30T20:00:00-04:00",
+      "createdAt": "2025-10-26T14:44:10.884Z"
+    },
+    {
+      "id": "5b78a183a4082681",
+      "title": "简单战术和团队配合训练",
+      "priority": 4,
+      "completed": false,
+      "dueDate": "2025-10-31T20:00:00-04:00",
+      "createdAt": "2025-10-26T14:44:10.884Z"
+    },
+    {
+      "id": "5b882882b610d602",
+      "title": "实战演练和技巧巩固",
+      "priority": 5,
+      "completed": false,
+      "dueDate": "2025-11-01T20:00:00-04:00",
+      "createdAt": "2025-10-26T14:44:10.884Z"
+    },
+    {
+      "id": "bed249c60b409612",
+      "title": "全方位复习和总结训练",
+      "priority": 5,
+      "completed": false,
+      "dueDate": "2025-11-02T20:00:00-04:00",
+      "createdAt": "2025-10-26T14:44:10.884Z"
+    }
+  ],
+  "progress": 0,
+  "dueDate": "2025-11-02T20:00:00-04:00",
+  "createdAt": "2025-10-26T14:44:10.884Z",
+  "aiSuggestion": "此计划由AI自动生成",
+  "id": "95d1413d86e6e65e"
+}

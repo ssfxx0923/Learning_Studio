@@ -27,14 +27,18 @@ import {
   Trash2,
   ListOrdered,
   Target,
+  ChevronUp,
+  RefreshCw,
 } from 'lucide-react'
 import { n8nClient, backendAPI, type Plan, type Task } from '@/services/api'
 import { AIGreeting } from '@/components/AIGreeting'
+import { PlanningChatDialog } from '@/components/PlanningChatDialog'
 
 type SortOption = 'createdAt' | 'dueDate' | 'priority'
 
 export default function Planning() {
   const [plans, setPlans] = useState<Plan[]>([])
+  const [isChatOpen, setIsChatOpen] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null)
   const [isRightPanelCollapsed, setIsRightPanelCollapsed] = useState(false)
   const [sortBy, setSortBy] = useState<SortOption>('createdAt')
@@ -539,6 +543,16 @@ export default function Planning() {
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
                 <CardTitle className="text-lg whitespace-nowrap">我的计划</CardTitle>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={loadPlans}
+                  disabled={isLoading}
+                  className="h-8 w-8"
+                  title="刷新计划列表"
+                >
+                  <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+                </Button>
               </div>
               <Button onClick={() => setIsCreateDialogOpen(true)} className="w-full gap-2 mb-4">
                 <Plus className="h-4 w-4" />
@@ -757,6 +771,22 @@ export default function Planning() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* 底部浮动聊天按钮 - 半隐藏状态 */}
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-40 w-10 h-10 bg-primary/80 hover:bg-primary backdrop-blur-sm text-primary-foreground rounded-full shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg border border-primary/20"
+        aria-label="打开AI助手对话"
+      >
+        <ChevronUp className="h-4 w-4" />
+      </button>
+
+      {/* AI 聊天对话框 */}
+      <PlanningChatDialog
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        plan={selectedPlan}
+      />
     </div>
   )
 }

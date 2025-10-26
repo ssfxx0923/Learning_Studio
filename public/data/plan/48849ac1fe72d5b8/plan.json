@@ -1,0 +1,28 @@
+{
+  "title": "英语四级和六级备考计划",
+  "description": "系统备考英语四级和六级考试，提升英语综合能力",
+  "priority": 5,
+  "tasks": [
+    {
+      "id": "dbae05c6aecdf463",
+      "title": "词汇积累 - 四级核心词汇",
+      "priority": 5,
+      "completed": false,
+      "dueDate": "2024-03-01",
+      "createdAt": "2025-10-26T13:19:29.885Z"
+    },
+    {
+      "id": "76196816c45835fc",
+      "title": "听力训练 - 四级听力练习",
+      "priority": 4,
+      "completed": false,
+      "dueDate": "2024-03-15",
+      "createdAt": "2025-10-26T13:19:29.885Z"
+    }
+  ],
+  "progress": 0,
+  "dueDate": "2024-06-15",
+  "createdAt": "2025-10-26T13:19:29.885Z",
+  "aiSuggestion": "此计划由AI自动生成",
+  "id": "48849ac1fe72d5b8"
+}

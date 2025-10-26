@@ -1,0 +1,12 @@
+{
+  "id": "84723a1e6019525c",
+  "title": "测试笔记",
+  "content": "# 我的第一篇笔记\n\n这是一篇测试笔记，支持 **Markdown** 格式。\n\n- 列表项1\n- 列表项2\n\n```javascript\nconsole.log(\"Hello World\")\n```",
+  "tags": [
+    "测试",
+    "Markdown"
+  ],
+  "category": "学习",
+  "createdAt": "2025-10-26T16:29:09.286Z",
+  "updatedAt": "2025-10-26T16:29:09.286Z"
+}

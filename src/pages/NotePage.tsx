@@ -1,369 +1,574 @@
-import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { Badge } from '@/components/ui/badge'
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { FileText, Plus, Sparkles, Upload, Lightbulb, Save, Trash2, Clock } from 'lucide-react'
-import { n8nClient } from '@/services/api'
-import { AIGreeting } from '@/components/AIGreeting'
-
-interface Note {
-  id: string
-  title: string
-  content: string
-  optimizedContent?: string
-  aiSuggestions?: string
-  createdAt: Date
-}
+  FileText,
+  Plus,
+  Search,
+  Tag,
+  Folder,
+  Save,
+  Trash2,
+  X,
+  ArrowLeft,
+  Calendar,
+  Edit,
+} from 'lucide-react'
+import { backendAPI, type Note } from '@/services/api'
+import MarkdownEditor from '@/components/MarkdownEditor'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/github-dark.css'
+import { cn } from '@/lib/utils'
 
 export default function NotePage() {
   const [notes, setNotes] = useState<Note[]>([])
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
-  const [noteTitle, setNoteTitle] = useState('')
-  const [noteContent, setNoteContent] = useState('')
-  const [isOptimizing, setIsOptimizing] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [isEditMode, setIsEditMode] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filterTag, setFilterTag] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const previewRef = useRef<HTMLDivElement>(null)
 
-  const openNewNoteDialog = () => {
-    setIsEditMode(false)
-    setSelectedNote(null)
-    setNoteTitle('')
-    setNoteContent('')
-    setIsDialogOpen(true)
-  }
+  // 编辑表单状态
+  const [editTitle, setEditTitle] = useState('')
+  const [editContent, setEditContent] = useState('')
+  const [editTags, setEditTags] = useState<string[]>([])
+  const [editCategory, setEditCategory] = useState('')
+  const [tagInput, setTagInput] = useState('')
 
-  const openEditNoteDialog = (note: Note) => {
-    setIsEditMode(true)
-    setSelectedNote(note)
-    setNoteTitle(note.title)
-    setNoteContent(note.content)
-    setIsDialogOpen(true)
-  }
-
-  const saveNote = async () => {
-    if (isEditMode && selectedNote) {
-      // 更新现有笔记
-      const updatedNote = {
-        ...selectedNote,
-        title: noteTitle || '无标题笔记',
-        content: noteContent,
-      }
-
-      try {
-        await n8nClient.post('/note/save', updatedNote)
-        const updatedNotes = notes.map((n) =>
-          n.id === selectedNote.id ? updatedNote : n
-        )
-        setNotes(updatedNotes)
-        setSelectedNote(updatedNote)
-        setIsDialogOpen(false)
-      } catch (error) {
-        console.error('保存笔记失败:', error)
-      }
-    } else {
-      // 创建新笔记
-      const newNote: Note = {
-        id: Date.now().toString(),
-        title: noteTitle || '无标题笔记',
-        content: noteContent,
-        createdAt: new Date(),
-      }
-
-      try {
-        await n8nClient.post('/note/save', newNote)
-        setNotes([newNote, ...notes])
-        setNoteTitle('')
-        setNoteContent('')
-        setIsDialogOpen(false)
-      } catch (error) {
-        console.error('创建笔记失败:', error)
-      }
-    }
-  }
-
-  const deleteNote = (noteId: string) => {
-    setNotes(notes.filter((n) => n.id !== noteId))
-  }
-
-  const optimizeNote = async () => {
-    if (!selectedNote) return
-
-    setIsOptimizing(true)
+  // 加载所有笔记
+  const loadNotes = async () => {
+    setLoading(true)
     try {
-      const response: any = await n8nClient.post('/note/optimize', { noteId: selectedNote.id })
-      const updatedNote = {
-        ...selectedNote,
-        optimizedContent: response.optimizedContent,
-        aiSuggestions: response.suggestions,
-      }
-      const updatedNotes = notes.map((n) =>
-        n.id === selectedNote.id ? updatedNote : n
-      )
-      setNotes(updatedNotes)
-      setSelectedNote(updatedNote)
+      const data = await backendAPI.getAllNotes()
+      setNotes(data)
     } catch (error) {
-      console.error('优化笔记失败:', error)
+      console.error('加载笔记失败:', error)
     } finally {
-      setIsOptimizing(false)
+      setLoading(false)
     }
   }
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
+  useEffect(() => {
+    loadNotes()
+  }, [])
 
-    // 读取图片并转换为base64
-    const reader = new FileReader()
-    reader.onload = async (e) => {
-      const imageData = e.target?.result as string
-
-      try {
-        const response: any = await n8nClient.post('/note/convert-handwriting', { imageData })
-
-        const newNote: Note = {
-          id: Date.now().toString(),
-          title: '手写笔记转换',
-          content: response.markdown,
-          createdAt: new Date(),
+  // 高亮预览模式的代码块
+  useEffect(() => {
+    if (selectedNote && !isEditing && previewRef.current) {
+      // 延迟执行以确保 DOM 已更新
+      setTimeout(() => {
+        if (previewRef.current) {
+          const codeBlocks = previewRef.current.querySelectorAll('pre code')
+          codeBlocks.forEach((block) => {
+            // 移除已有的高亮类，避免重复高亮
+            block.className = block.className.replace(/hljs[^\s]*/g, '')
+            hljs.highlightElement(block as HTMLElement)
+          })
         }
+      }, 0)
+    }
+  }, [selectedNote, isEditing, selectedNote?.content])
 
+  // 过滤笔记
+  const filteredNotes = notes.filter((note) => {
+    const matchesSearch =
+      searchQuery === '' ||
+      note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      note.content.toLowerCase().includes(searchQuery.toLowerCase())
+
+    const matchesTag = filterTag === null || note.tags.includes(filterTag)
+
+    return matchesSearch && matchesTag
+  })
+
+  // 获取所有标签
+  const allTags = Array.from(new Set(notes.flatMap((note) => note.tags)))
+
+  // 创建新笔记
+  const handleCreateNote = () => {
+    setSelectedNote(null)
+    setEditTitle('')
+    setEditContent('')
+    setEditTags([])
+    setEditCategory('')
+    setIsEditing(true)
+  }
+
+  // 打开笔记（预览模式）
+  const handleOpenNote = (note: Note) => {
+    setSelectedNote(note)
+    setEditTitle(note.title)
+    setEditContent(note.content)
+    setEditTags(note.tags)
+    setEditCategory(note.category || '')
+    setIsEditing(false) // 先进入预览模式
+  }
+
+  // 进入编辑模式
+  const handleEditNote = () => {
+    setIsEditing(true)
+  }
+
+  // 保存笔记
+  const handleSaveNote = async () => {
+    if (!editTitle.trim()) {
+      alert('请输入标题')
+      return
+    }
+
+    setLoading(true)
+    try {
+      if (selectedNote) {
+        // 更新现有笔记
+        const updatedNote = await backendAPI.updateNote(selectedNote.id, {
+          title: editTitle,
+          content: editContent,
+          tags: editTags,
+          category: editCategory || undefined,
+        })
+        setNotes(notes.map((n) => (n.id === updatedNote.id ? updatedNote : n)))
+        setSelectedNote(updatedNote)
+      } else {
+        // 创建新笔记
+        const newNote = await backendAPI.createNote({
+          title: editTitle,
+          content: editContent,
+          tags: editTags,
+          category: editCategory || undefined,
+        })
         setNotes([newNote, ...notes])
         setSelectedNote(newNote)
-        setNoteContent(response.markdown)
-      } catch (error) {
-        console.error('转换手写笔记失败:', error)
       }
-    }
-    reader.readAsDataURL(file)
-  }
-
-  const autoComplete = async () => {
-    if (!noteContent) return
-
-    try {
-      const response: any = await n8nClient.post('/note/auto-complete', { content: noteContent })
-      setNoteContent(noteContent + '\n\n' + response.suggestion)
+      setIsEditing(false)
     } catch (error) {
-      console.error('自动补全失败:', error)
+      console.error('保存笔记失败:', error)
+      alert('保存失败，请重试')
+    } finally {
+      setLoading(false)
     }
   }
 
+  // 删除笔记
+  const handleDeleteNote = async () => {
+    if (!selectedNote) return
 
-  return (
-    <div className="space-y-6 relative">
-      <div className="space-y-4">
-        <div>
-          <h1 className="text-3xl font-bold">笔记</h1>
-          <p className="text-muted-foreground mt-2">
-            智能笔记编辑器,支持AI优化和手写笔记识别
-          </p>
+    if (!confirm('确定要删除这篇笔记吗？')) return
+
+    setLoading(true)
+    try {
+      await backendAPI.deleteNote(selectedNote.id)
+      setNotes(notes.filter((n) => n.id !== selectedNote.id))
+      setSelectedNote(null)
+      setIsEditing(false)
+    } catch (error) {
+      console.error('删除笔记失败:', error)
+      alert('删除失败，请重试')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // 添加标签
+  const handleAddTag = () => {
+    const trimmedTag = tagInput.trim()
+    if (trimmedTag && !editTags.includes(trimmedTag)) {
+      setEditTags([...editTags, trimmedTag])
+      setTagInput('')
+    }
+  }
+
+  // 移除标签
+  const handleRemoveTag = (tag: string) => {
+    setEditTags(editTags.filter((t) => t !== tag))
+  }
+
+  // 格式化日期
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('zh-CN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
+
+  // 如果选中了笔记且不在编辑模式，显示预览
+  if (selectedNote && !isEditing) {
+    return (
+      <div className="h-screen flex flex-col">
+        {/* 顶部工具栏 */}
+        <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="flex items-center gap-3 px-6 py-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSelectedNote(null)}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex-1">
+              <h1 className="text-2xl font-bold">{selectedNote.title}</h1>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleDeleteNote}
+              disabled={loading}
+            >
+              <Trash2 className="h-5 w-5 text-destructive" />
+            </Button>
+            <Button onClick={handleEditNote}>
+              <Edit className="h-4 w-4 mr-2" />
+              编辑
+            </Button>
+          </div>
+
+          {/* 标签和分类 */}
+          <div className="px-6 pb-4 space-y-2">
+            <div className="flex items-center gap-3 flex-wrap text-sm text-muted-foreground">
+              {selectedNote.category && (
+                <div className="flex items-center gap-1">
+                  <Folder className="h-4 w-4" />
+                  <span>{selectedNote.category}</span>
+                </div>
+              )}
+              <div className="flex items-center gap-1">
+                <Calendar className="h-4 w-4" />
+                <span>更新于 {formatDate(selectedNote.updatedAt)}</span>
+              </div>
+              {selectedNote.tags.length > 0 && (
+                <>
+                  <div className="h-4 w-px bg-border" />
+                  <div className="flex items-center gap-2">
+                    <Tag className="h-4 w-4" />
+                    {selectedNote.tags.map((tag) => (
+                      <Badge key={tag} variant="secondary">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-        
-        {/* AI问候组件 */}
-        <AIGreeting />
+
+        {/* Markdown 预览 */}
+        <div className="flex-1 overflow-auto">
+          <div ref={previewRef} className="max-w-4xl mx-auto px-6 py-8">
+            <article className="prose prose-lg dark:prose-invert max-w-none
+              prose-headings:font-bold prose-headings:tracking-tight
+              prose-h1:text-4xl prose-h1:mb-4
+              prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4
+              prose-h3:text-2xl prose-h3:mt-6 prose-h3:mb-3
+              prose-p:text-foreground/90 prose-p:leading-7
+              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+              prose-strong:text-foreground prose-strong:font-semibold
+              prose-code:text-foreground prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+              prose-pre:!bg-[#0d1117] prose-pre:!text-[#c9d1d9] prose-pre:!p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-pre:my-4
+              prose-pre:shadow-lg
+              prose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:py-1
+              prose-ul:my-4 prose-ol:my-4
+              prose-li:my-1
+              prose-img:rounded-lg prose-img:shadow-md
+              prose-hr:my-8
+              [&_pre_code]:!text-inherit [&_pre_code]:!bg-transparent [&_pre_code]:!p-0">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  code({ node, inline, className, children, ...props }: any) {
+                    if (inline) {
+                      return (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      )
+                    }
+                    // 代码块：保留 className 以便 highlight.js 识别语言
+                    return (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    )
+                  },
+                }}
+              >
+                {selectedNote.content || '暂无内容'}
+              </ReactMarkdown>
+            </article>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // 如果在编辑模式，显示编辑器
+  if (isEditing) {
+    return (
+      <div className="h-screen flex flex-col">
+        {/* 顶部工具栏 */}
+        <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="flex items-center gap-3 px-6 py-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                if (selectedNote) {
+                  // 如果是编辑现有笔记，检查是否有未保存的更改
+                  if (
+                    editTitle === selectedNote.title &&
+                    editContent === selectedNote.content &&
+                    JSON.stringify(editTags) === JSON.stringify(selectedNote.tags) &&
+                    editCategory === (selectedNote.category || '')
+                  ) {
+                    // 没有更改，返回预览模式
+                    setIsEditing(false)
+                  } else {
+                    // 有更改，提示用户
+                    if (confirm('有未保存的更改，确定要退出吗？')) {
+                      setIsEditing(false)
+                    }
+                  }
+                } else {
+                  // 如果是新建笔记，直接返回列表
+                  if (editTitle.trim() || editContent.trim()) {
+                    if (confirm('有未保存的更改，确定要退出吗？')) {
+                      setIsEditing(false)
+                      setSelectedNote(null)
+                    }
+                  } else {
+                    setIsEditing(false)
+                    setSelectedNote(null)
+                  }
+                }
+              }}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <Input
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              placeholder="笔记标题..."
+              className="flex-1 text-lg font-semibold border-none shadow-none focus-visible:ring-0"
+            />
+            {selectedNote && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleDeleteNote}
+                disabled={loading}
+              >
+                <Trash2 className="h-5 w-5 text-destructive" />
+              </Button>
+            )}
+            <Button onClick={handleSaveNote} disabled={loading}>
+              <Save className="h-4 w-4 mr-2" />
+              {loading ? '保存中...' : '保存'}
+            </Button>
+          </div>
+
+          {/* 标签和分类 */}
+          <div className="px-6 pb-3 space-y-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Folder className="h-4 w-4 text-muted-foreground" />
+              <Input
+                value={editCategory}
+                onChange={(e) => setEditCategory(e.target.value)}
+                placeholder="分类（可选）"
+                className="w-40 h-7 text-sm"
+              />
+              <Tag className="h-4 w-4 text-muted-foreground ml-2" />
+              {editTags.map((tag) => (
+                <Badge key={tag} variant="secondary" className="gap-1">
+                  {tag}
+                  <X
+                    className="h-3 w-3 cursor-pointer"
+                    onClick={() => handleRemoveTag(tag)}
+                  />
+                </Badge>
+              ))}
+              <Input
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    handleAddTag()
+                  }
+                }}
+                placeholder="添加标签..."
+                className="w-32 h-7 text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Markdown 编辑器 */}
+        <div className="flex-1 overflow-hidden">
+          <MarkdownEditor value={editContent} onChange={setEditContent} />
+        </div>
+      </div>
+    )
+  }
+
+  // 列表视图
+  return (
+    <div className="space-y-6">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">笔记</h1>
+            <p className="text-muted-foreground mt-2">
+              使用 Markdown 编写和管理你的学习笔记
+            </p>
+          </div>
+          <Button onClick={handleCreateNote} size="lg">
+            <Plus className="h-5 w-5 mr-2" />
+            新建笔记
+          </Button>
+        </div>
+
+        {/* 搜索和过滤 */}
+        <div className="flex gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="搜索笔记..."
+              className="pl-10"
+            />
+          </div>
+          {allTags.length > 0 && (
+            <div className="flex items-center gap-2">
+              <Button
+                variant={filterTag === null ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setFilterTag(null)}
+              >
+                全部
+              </Button>
+              {allTags.slice(0, 5).map((tag) => (
+                <Button
+                  key={tag}
+                  variant={filterTag === tag ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setFilterTag(filterTag === tag ? null : tag)}
+                >
+                  {tag}
+                </Button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* 笔记展示区 */}
-      {notes.length === 0 ? (
+      {/* 笔记列表 */}
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <div className="text-muted-foreground">加载中...</div>
+        </div>
+      ) : filteredNotes.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20">
           <div className="rounded-full bg-primary/10 p-6 mb-4">
             <FileText className="h-12 w-12 text-primary" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">还没有笔记</h3>
-          <p className="text-muted-foreground mb-6">点击右下角的按钮创建你的第一条笔记</p>
+          <h3 className="text-xl font-semibold mb-2">
+            {searchQuery || filterTag ? '未找到匹配的笔记' : '还没有笔记'}
+          </h3>
+          <p className="text-muted-foreground mb-6">
+            {searchQuery || filterTag
+              ? '尝试修改搜索条件'
+              : '点击右上角按钮创建你的第一篇笔记'}
+          </p>
         </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {notes.map((note) => (
-            <Card
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {filteredNotes.map((note) => (
+            <div
               key={note.id}
-              className="group cursor-pointer hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50"
-              onClick={() => openEditNoteDialog(note)}
+              onClick={() => handleOpenNote(note)}
+              className={cn(
+                'group cursor-pointer rounded-lg border-2 p-5 transition-all duration-200',
+                'hover:shadow-lg hover:border-primary/50 hover:-translate-y-1'
+              )}
             >
-              <CardHeader>
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1 min-w-0">
-                    <CardTitle className="text-lg line-clamp-2 group-hover:text-primary transition-colors">
-                      {note.title}
-                    </CardTitle>
-                    <CardDescription className="flex items-center gap-1 mt-2">
-                      <Clock className="h-3 w-3" />
-                      <span className="text-xs">
-                        {note.createdAt.toLocaleDateString()}
-                      </span>
-                    </CardDescription>
+              <div className="space-y-3">
+                <div>
+                  <h3 className="font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors">
+                    {note.title}
+                  </h3>
+                  <div className="text-sm text-muted-foreground line-clamp-3 mt-2 prose prose-sm max-w-none
+                    prose-headings:text-foreground prose-headings:font-semibold
+                    prose-p:text-muted-foreground prose-p:my-0
+                    prose-strong:text-foreground
+                    prose-code:text-xs prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+                    prose-pre:!bg-[#0d1117] prose-pre:!text-[#c9d1d9] prose-pre:text-xs prose-pre:p-2 prose-pre:rounded prose-pre:my-1
+                    prose-ul:my-0 prose-ol:my-0 prose-li:my-0
+                    [&_pre_code]:!text-inherit [&_pre_code]:!bg-transparent [&_pre_code]:!p-0">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        code({ node, inline, className, children, ...props }: any) {
+                          if (inline) {
+                            return (
+                              <code className={className} {...props}>
+                                {children}
+                              </code>
+                            )
+                          }
+                          // 代码块：保留 className 供识别语言
+                          return (
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
+                          )
+                        },
+                      }}
+                    >
+                      {note.content || '暂无内容'}
+                    </ReactMarkdown>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      deleteNote(note.id)
-                    }}
-                  >
-                    <Trash2 className="h-4 w-4 text-destructive" />
-                  </Button>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground line-clamp-4">
-                  {note.content || '暂无内容'}
-                </p>
-                {(note.optimizedContent || note.aiSuggestions) && (
-                  <div className="mt-3 flex gap-2">
-                    {note.optimizedContent && (
-                      <span className="text-xs px-2 py-1 rounded-full bg-green-500/10 text-green-600 dark:text-green-400">
-                        已优化
-                      </span>
-                    )}
-                    {note.aiSuggestions && (
-                      <span className="text-xs px-2 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                        有建议
-                      </span>
+
+                {/* 标签 */}
+                {note.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {note.tags.slice(0, 3).map((tag) => (
+                      <Badge key={tag} variant="secondary" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                    {note.tags.length > 3 && (
+                      <Badge variant="secondary" className="text-xs">
+                        +{note.tags.length - 3}
+                      </Badge>
                     )}
                   </div>
                 )}
-              </CardContent>
-            </Card>
+
+                {/* 元信息 */}
+                <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t">
+                  {note.category && (
+                    <div className="flex items-center gap-1">
+                      <Folder className="h-3 w-3" />
+                      <span>{note.category}</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" />
+                    <span>{formatDate(note.updatedAt)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       )}
-
-      {/* 浮动添加按钮 */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
-          <Button
-            className="fixed bottom-8 right-8 h-14 w-14 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 z-50"
-            size="icon"
-            onClick={openNewNoteDialog}
-          >
-            <Plus className="h-6 w-6" />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-2xl">
-              <FileText className="h-6 w-6 text-primary" />
-              {isEditMode ? '编辑笔记' : '新建笔记'}
-            </DialogTitle>
-            <DialogDescription>
-              {isEditMode ? '修改笔记内容并使用AI助手优化' : '创建新笔记，支持AI优化和手写识别'}
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-6 py-4">
-            {/* 笔记编辑区 */}
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium mb-2 block">标题</label>
-                <Input
-                  placeholder="笔记标题..."
-                  value={noteTitle}
-                  onChange={(e) => setNoteTitle(e.target.value)}
-                  className="h-12 text-lg"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-2 block">内容</label>
-                <Textarea
-                  placeholder="在这里编写笔记..."
-                  value={noteContent}
-                  onChange={(e) => setNoteContent(e.target.value)}
-                  rows={12}
-                  className="font-mono resize-none"
-                />
-              </div>
-            </div>
-
-            {/* AI优化区域 */}
-            {isEditMode && selectedNote && (
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b">
-                  <Lightbulb className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-lg">AI助手</h3>
-                </div>
-
-                {selectedNote.optimizedContent && (
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-sm flex items-center gap-2">
-                      <Sparkles className="h-4 w-4 text-green-600" />
-                      优化后的内容
-                    </h4>
-                    <div className="rounded-lg bg-gradient-to-br from-green-500/5 to-emerald-500/5 border border-green-500/20 p-4 text-sm leading-relaxed max-h-60 overflow-y-auto">
-                      {selectedNote.optimizedContent}
-                    </div>
-                  </div>
-                )}
-
-                {selectedNote.aiSuggestions && (
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-sm flex items-center gap-2">
-                      <Lightbulb className="h-4 w-4 text-blue-600" />
-                      AI建议
-                    </h4>
-                    <div className="rounded-lg bg-gradient-to-br from-blue-500/5 to-cyan-500/5 border border-blue-500/20 p-4 text-sm leading-relaxed max-h-60 overflow-y-auto">
-                      {selectedNote.aiSuggestions}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* 操作按钮 */}
-            <div className="flex gap-3 pt-4 border-t">
-              <label htmlFor="file-upload" className="flex-1">
-                <input
-                  id="file-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                />
-                <Button variant="outline" className="w-full h-12" size="lg" type="button">
-                  <Upload className="mr-2 h-5 w-5" />
-                  上传手写笔记
-                </Button>
-              </label>
-              <Button
-                onClick={autoComplete}
-                variant="outline"
-                className="flex-1 h-12"
-                size="lg"
-                disabled={!noteContent}
-              >
-                <Sparkles className="mr-2 h-5 w-5" />
-                AI续写
-              </Button>
-              {isEditMode && (
-                <Button
-                  onClick={optimizeNote}
-                  variant="outline"
-                  className="flex-1 h-12"
-                  size="lg"
-                  disabled={isOptimizing}
-                >
-                  <Sparkles className="mr-2 h-5 w-5" />
-                  {isOptimizing ? '优化中...' : 'AI优化'}
-                </Button>
-              )}
-              <Button onClick={saveNote} className="flex-1 h-12" size="lg">
-                <Save className="mr-2 h-5 w-5" />
-                {isEditMode ? '保存修改' : '创建笔记'}
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }

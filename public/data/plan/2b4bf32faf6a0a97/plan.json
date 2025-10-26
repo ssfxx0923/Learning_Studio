@@ -1,0 +1,84 @@
+{
+  "title": "One-Month Python Learning Plan",
+  "description": "A structured learning plan to master Python basics and practical skills including syntax, data structures, functions, modules, file operations, error handling, OOP, and simple project practice within one month.",
+  "priority": 5,
+  "tasks": [
+    {
+      "id": "110ef35cad002db2",
+      "title": "Learn Python Basic Syntax",
+      "priority": 5,
+      "completed": true,
+      "dueDate": "2025-10-31",
+      "createdAt": "2025-10-26T14:48:38.367Z",
+      "completedAt": "2025-10-26T15:36:56.286Z"
+    },
+    {
+      "id": "95a5ff48756b9c87",
+      "title": "Study Python Data Structures (Lists, Tuples, Dictionaries, Sets)",
+      "priority": 5,
+      "completed": true,
+      "dueDate": "2025-11-05",
+      "createdAt": "2025-10-26T14:48:38.367Z",
+      "completedAt": "2025-10-26T15:36:58.943Z"
+    },
+    {
+      "id": "30eb65807afbefd7",
+      "title": "Understand and Practice Functions in Python",
+      "priority": 5,
+      "completed": true,
+      "dueDate": "2025-11-10",
+      "createdAt": "2025-10-26T14:48:38.367Z",
+      "completedAt": "2025-10-26T15:37:05.041Z"
+    },
+    {
+      "id": "ab3235ff5508828b",
+      "title": "Understand Object-Oriented Programming Concepts",
+      "priority": 5,
+      "completed": true,
+      "dueDate": "2025-11-23",
+      "createdAt": "2025-10-26T14:48:38.368Z",
+      "completedAt": "2025-10-26T15:37:17.826Z"
+    },
+    {
+      "id": "3b256c79e369f5b5",
+      "title": "Practice a Simple Python Project to Integrate Learned Concepts",
+      "priority": 5,
+      "completed": true,
+      "dueDate": "2025-11-25",
+      "createdAt": "2025-10-26T14:48:38.368Z",
+      "completedAt": "2025-10-26T15:37:12.874Z"
+    },
+    {
+      "id": "7b8759f9e05452fc",
+      "title": "Explore Modules and Packages",
+      "priority": 4,
+      "completed": true,
+      "dueDate": "2025-11-13",
+      "createdAt": "2025-10-26T14:48:38.367Z",
+      "completedAt": "2025-10-26T15:37:10.617Z"
+    },
+    {
+      "id": "24282506db9c1132",
+      "title": "Master File Operations in Python",
+      "priority": 4,
+      "completed": true,
+      "dueDate": "2025-11-16",
+      "createdAt": "2025-10-26T14:48:38.367Z",
+      "completedAt": "2025-10-26T15:37:16.059Z"
+    },
+    {
+      "id": "df362a4c3061b83b",
+      "title": "Learn Error and Exception Handling",
+      "priority": 4,
+      "completed": true,
+      "dueDate": "2025-11-19",
+      "createdAt": "2025-10-26T14:48:38.368Z",
+      "completedAt": "2025-10-26T15:37:01.345Z"
+    }
+  ],
+  "progress": 100,
+  "dueDate": "2025-11-25",
+  "createdAt": "2025-10-26T14:48:38.368Z",
+  "aiSuggestion": "此计划由AI自动生成",
+  "id": "2b4bf32faf6a0a97"
+}

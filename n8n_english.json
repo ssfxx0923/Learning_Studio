@@ -9,10 +9,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2816,
-        -1984
+        832,
+        -2608
       ],
-      "id": "a9dca6b2-becf-458b-9365-61a0b65196e8",
+      "id": "510944b8-27d6-4fcd-a5f1-ba51fd3acbce",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -60,10 +60,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2400,
-        -1984
+        416,
+        -2608
       ],
-      "id": "7dafd0a8-b286-46dd-b2e4-26951c503772",
+      "id": "f5a5ea04-a79d-4e11-b256-010dfe31aa98",
       "name": "语音生成"
     },
     {
@@ -101,10 +101,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2400,
-        -2384
+        416,
+        -3008
       ],
-      "id": "ebea05c9-6dbc-4364-9e72-1c7ae450d759",
+      "id": "b66ae83c-ed33-4ce8-b7ad-4a2490abdf1d",
       "name": "图片生成"
     },
     {
@@ -119,10 +119,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        1456,
-        -2208
+        -528,
+        -2832
       ],
-      "id": "c6ccc282-5d05-437a-bcb7-22d245527cc6",
+      "id": "a0dd99c2-d34a-4215-bdbd-f03d1a175b98",
       "name": "AI Agent"
     },
     {
@@ -138,10 +138,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1456,
-        -2000
+        -528,
+        -2624
       ],
-      "id": "38aa053d-cf54-494c-89b1-ca31b1885f55",
+      "id": "e7b5d295-0c05-4cab-a7f4-97bee0299ca7",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -157,10 +157,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1600,
-        -2000
+        -384,
+        -2624
       ],
-      "id": "c8c90dae-5305-4320-8818-de38f861e6b1",
+      "id": "7d09cd53-df13-46f0-94bc-b3ca7e4d7922",
       "name": "Structured Output Parser"
     },
     {
@@ -198,10 +198,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2432,
-        -2624
+        448,
+        -3248
       ],
-      "id": "8fd71848-ca48-44ad-bd42-f2791ae77e35",
+      "id": "eb40e3f6-7412-4ece-be87-6e44f4edd6cc",
       "name": "图片生成1"
     },
     {
@@ -218,10 +218,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2640,
-        -2624
+        656,
+        -3248
       ],
-      "id": "6c7ec269-ce69-4949-a8e6-6d87ebc6ebbd",
+      "id": "fae34bc7-09bf-410c-9ccf-0738d685f17b",
       "name": "HTTP Request"
     },
     {
@@ -232,10 +232,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2608,
-        -2384
+        624,
+        -3008
       ],
-      "id": "b46c96eb-d264-4f73-a60a-c6d7ef840bbd",
+      "id": "c2304a65-bee4-4829-a0a0-81c5951c7e13",
       "name": "HTTP Request1"
     },
     {
@@ -249,10 +249,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2848,
-        -2624
+        864,
+        -3248
       ],
-      "id": "c1a72a89-bb43-4363-855c-a69446d81989",
+      "id": "3fdc9397-de77-43c8-b0be-47c63af4521d",
       "name": "Read/Write Files from Disk1"
     },
     {
@@ -266,10 +266,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2832,
-        -2384
+        848,
+        -3008
       ],
-      "id": "f8799bcb-ef73-471e-9145-a5ebb4150be5",
+      "id": "4545eb77-668f-40c5-8010-49b78b676250",
       "name": "Read/Write Files from Disk2"
     },
     {
@@ -281,11 +281,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        720,
-        -2960
+        -1264,
+        -3584
       ],
       "typeVersion": 1,
-      "id": "9fe8a62c-133a-441d-99ad-9eb80901c75a",
+      "id": "ac9c14d0-f8aa-4f7d-bf23-23926079d9fd",
       "name": "Sticky Note"
     },
     {
@@ -297,10 +297,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        1184,
-        -2208
+        -800,
+        -2832
       ],
-      "id": "22fa1942-4992-4e1a-862e-bd81a39f454c",
+      "id": "34cf17ba-c30d-4ed3-bfb0-9d68cbfadec1",
       "name": "Webhook",
       "webhookId": "e155b53a-e6bc-4d80-a7ac-b4ec8d525119"
     },
@@ -314,10 +314,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2832,
-        -2176
+        848,
+        -2800
       ],
-      "id": "9f06fad2-a989-4591-ba11-6bbd91d22165",
+      "id": "f35e36e9-603f-4df1-b8bd-129b0910f865",
       "name": "Read/Write Files from Disk3"
     },
     {
@@ -328,10 +328,10 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        2400,
-        -2176
+        416,
+        -2800
       ],
-      "id": "faac8117-101c-4890-97a1-f0355dbd7305",
+      "id": "de6fcb2d-3787-45ef-9051-1aef44de1f4e",
       "name": "Convert to File"
     },
     {
@@ -344,10 +344,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        960,
-        -1168
+        -1024,
+        -1792
       ],
-      "id": "612b6bc4-e5a4-4b20-b097-cc56dadb5c41",
+      "id": "cc4ef7d6-c6c1-498a-bc06-09687b4e503a",
       "name": "Webhook_Translate",
       "webhookId": "6a373184-55f7-42fb-978d-dc92de20223f"
     },
@@ -362,10 +362,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        1296,
-        -1168
+        -688,
+        -1792
       ],
-      "id": "42970817-2cf9-463b-9cde-aa670bc43a04",
+      "id": "26f0cb1a-66f9-4521-931c-be529909642b",
       "name": "AI Agent1"
     },
     {
@@ -380,10 +380,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1296,
-        -976
+        -688,
+        -1600
       ],
-      "id": "3020f424-27a6-4f0f-b764-fe8c79a3089c",
+      "id": "366862be-6a39-40f5-99de-b8a321bc4310",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
@@ -400,11 +400,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        720,
-        -1232
+        -1264,
+        -1856
       ],
       "typeVersion": 1,
-      "id": "6e38c96c-45af-4059-81a3-cb0c0eecc63d",
+      "id": "c0c069cb-7cad-4054-b922-37a3810a3ba2",
       "name": "Sticky Note1"
     },
     {
@@ -417,10 +417,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        960,
-        -496
+        -1024,
+        -1120
       ],
-      "id": "d9139036-bd4c-4b9a-940b-2e4f60001c23",
+      "id": "a2ee0462-85ae-4c71-8c46-09f31cca4275",
       "name": "Webhook_Analyze",
       "webhookId": "8f9e3d21-4c85-44ff-b256-9a8e7f8d6c3e"
     },
@@ -435,10 +435,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        1312,
-        -496
+        -672,
+        -1120
       ],
-      "id": "3d17fd44-3a36-4670-903c-c05de5ebf194",
+      "id": "0b50206a-01d8-4ffd-9628-88281630365c",
       "name": "AI Agent2"
     },
     {
@@ -453,10 +453,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1312,
-        -304
+        -672,
+        -928
       ],
-      "id": "3fe7f0db-3ce7-4ed5-87f0-167abc1327c7",
+      "id": "a618127d-256a-4a38-a825-9d5b2c263764",
       "name": "OpenAI Chat Model3",
       "credentials": {
         "openAiApi": {
@@ -473,11 +473,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        720,
-        -624
+        -1264,
+        -1248
       ],
       "typeVersion": 1,
-      "id": "c14cc862-c355-48c6-a833-c8426ce7f594",
+      "id": "5c70cc4d-0794-442a-8314-b09927614a5b",
       "name": "Sticky Note2"
     },
     {
@@ -492,10 +492,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        2000,
-        -2544
+        16,
+        -3168
       ],
-      "id": "629292a8-a693-4903-9399-89c2c00069d7",
+      "id": "ecab0369-a8b6-4640-8830-d885e1d12fa2",
       "name": "AI Agent3"
     },
     {
@@ -510,10 +510,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        2000,
-        -2336
+        16,
+        -2960
       ],
-      "id": "8c17f822-6391-4c1c-93c6-69e4696981ac",
+      "id": "e2d214bc-82e7-4aca-85ee-36fe9335ba82",
       "name": "OpenAI Chat Model2",
       "credentials": {
         "openAiApi": {
@@ -529,28 +529,24 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2144,
-        -2336
+        160,
+        -2960
       ],
-      "id": "31991a56-4688-4aca-bdab-7c184793968a",
+      "id": "9667b180-d1bc-4f23-807c-77c5a8428e6a",
       "name": "Structured Output Parser1"
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "={{ $json.body.plan }}",
-        "options": {
-          "systemMessage": "你是一个专业的学习规划和时间管理助手。用户会提供一个学习计划的JSON数据，包含任务列表、优先级、截止日期等信息。\n\n请仔细分析这个计划并给出具体的优化建议，包括：\n1. 任务优先级是否合理\n2. 时间安排是否科学\n3. 任务分解是否合适\n4. 完成进度评估\n5. 具体的改进建议\n\n请用简洁、实用的中文回答，给出3-5条具体可行的建议。每条建议控制在50字以内。"
-        }
+        "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
+      "type": "n8n-nodes-base.dateTimeTool",
+      "typeVersion": 2,
       "position": [
-        1376,
-        32
+        -272,
+        -320
       ],
-      "id": "6293461b-b450-4a31-85af-2ccb707fbf8f",
-      "name": "AI Agent4"
+      "id": "189248bf-959e-4e9b-8ab1-a21cc1cd5f4d",
+      "name": "Date & Time"
     },
     {
       "parameters": {
@@ -564,11 +560,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1264,
-        304
+        -112,
+        -272
       ],
-      "id": "084b3b12-45c5-4356-8045-5ddd5e8e90ba",
-      "name": "OpenAI Chat Model4",
+      "id": "a6fb3b7b-da55-4170-b41e-dc66256aa521",
+      "name": "OpenAI Chat Model5",
       "credentials": {
         "openAiApi": {
           "id": "Ja1oOqdJYdJ0EpPS",
@@ -578,83 +574,16 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.dateTimeTool",
-      "typeVersion": 2,
-      "position": [
-        1536,
-        304
-      ],
-      "id": "e1ef2a88-cae0-4f75-b7df-9cd0313afd96",
-      "name": "Date & Time"
-    },
-    {
-      "parameters": {
-        "toolDescription": "计划创建助手",
-        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
-        "hasOutputParser": true,
-        "options": {
-          "systemMessage": "你是一个json助手，用户会想你描述他的计划，你的任务是根据用户的计划创建一个对应的json文件。请确保你的返回为纯粹的当行json格式，不要附带任何说明。\njson格式说明：\n{\"title\": \"The title of the plan or project, summarizing its main theme.\", \"description\": \"A brief description of the plan’s goal or purpose.\", \"priority\": \"The overall priority level of the plan (higher number means higher importance).\", \"tasks\": [{\"id\": \"A unique identifier for the task, used to distinguish it from others.\", \"title\": \"The title of the task, summarizing what needs to be done.\", \"priority\": \"The task's priority level (higher number means more important).\", \"completed\": \"Boolean value indicating whether the task is completed (true or false).\", \"dueDate\": \"The due date for the task, used for scheduling or reminders.\", \"createdAt\": \"The timestamp when the task was created.\", \"completedAt\": \"The timestamp when the task was completed; only present if completed.\"}], \"progress\": \"The overall progress percentage of the plan, usually based on completed tasks.\", \"dueDate\": \"The final deadline for the entire plan or project.\", \"createdAt\": \"The timestamp when the plan was created.\"}\n"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agentTool",
-      "typeVersion": 2.2,
-      "position": [
-        1808,
-        240
-      ],
-      "id": "a39f6152-34c1-48ed-9158-160ab6befbac",
-      "name": "AI Agent Tool"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "glm-4.5",
-          "mode": "list",
-          "cachedResultName": "glm-4.5"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        1680,
-        448
-      ],
-      "id": "73016485-7b54-4c75-8e44-aa330235cbeb",
-      "name": "OpenAI Chat Model5",
-      "credentials": {
-        "openAiApi": {
-          "id": "yK0fgk8FcJgoqsnQ",
-          "name": "OpenAi account 2"
-        }
-      }
-    },
-    {
-      "parameters": {},
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        1792,
-        448
-      ],
-      "id": "6965ce6d-a2ce-4e9e-8705-daee3ce3ff5b",
-      "name": "Simple Memory1"
-    },
-    {
-      "parameters": {
         "schemaType": "manual",
         "inputSchema": "{\"title\": \"The title of the plan or project, summarizing its main theme.\", \"description\": \"A brief description of the plan’s goal or purpose.\", \"priority\": \"The overall priority level of the plan (higher number means higher importance).\", \"tasks\": [{\"id\": \"A unique identifier for the task, used to distinguish it from others.\", \"title\": \"The title of the task, summarizing what needs to be done.\", \"priority\": \"The task's priority level (higher number means more important).\", \"completed\": \"Boolean value indicating whether the task is completed (true or false).\", \"dueDate\": \"The due date for the task, used for scheduling or reminders.\", \"createdAt\": \"The timestamp when the task was created.\", \"completedAt\": \"The timestamp when the task was completed; only present if completed.\"}], \"progress\": \"The overall progress percentage of the plan, usually based on completed tasks.\", \"dueDate\": \"The final deadline for the entire plan or project.\", \"createdAt\": \"The timestamp when the plan was created.\"}\n"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2016,
-        448
+        112,
+        -272
       ],
-      "id": "497cbd9b-4c5a-4e6d-ad86-d8af342b7c6a",
+      "id": "d931345a-b6b9-4c93-9a08-2f7e0b2a81b0",
       "name": "Structured Output Parser2"
     },
     {
@@ -666,11 +595,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        720,
-        -48
+        -1264,
+        -672
       ],
       "typeVersion": 1,
-      "id": "23a97bd3-526e-4d2a-9274-a661d447cdfb",
+      "id": "c0f3b673-4ca1-4408-a906-ada91abd9583",
       "name": "Sticky Note3"
     },
     {
@@ -683,12 +612,278 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        1040,
-        32
+        -944,
+        -592
       ],
-      "id": "fc223477-57fc-41a1-a642-7047068cc5ca",
+      "id": "8128a054-d34c-4df1-8bc9-6d4411a090ee",
       "name": "Webhook_plan",
       "webhookId": "8a9e5f2c-1d3b-4e8a-9c7d-6f5e4d3c2b1a"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.planId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -624,
+        -320
+      ],
+      "id": "3c7e5d4e-eeb7-4013-9e57-4438b8840198",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTimeTool",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -272
+      ],
+      "id": "40183489-26c8-46bf-a60c-a553f3958716",
+      "name": "Date & Time1"
+    },
+    {
+      "parameters": {
+        "toolDescription": "数据发送",
+        "method": "POST",
+        "url": "http://localhost:3002/api/plans/ai-create",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', ``, 'json') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -448,
+        -320
+      ],
+      "id": "da67f4b4-d2be-4925-88de-6b72ae613859",
+      "name": "发送数据"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -784,
+        -320
+      ],
+      "id": "31559790-4648-4088-9a60-91f83acdb565",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "计划创建助手",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "你是一个json助手，用户会想你描述他的计划，你的任务是根据用户的计划创建一个对应的json文件。\n1. 请确保你的返回为纯粹的当行json格式，不要附带任何说明。\n2. 你可以使用时间工具查看当前时间。\n3. 不要创建过期的任务\n4. 确保使用中文\n5. 请合理运用优先级一班设置为3，紧急为5，时间宽松为1\njson格式说明：\n{\"title\": \"The title of the plan or project, summarizing its main theme.\", \"description\": \"A brief description of the plan’s goal or purpose.\", \"priority\": \"The overall priority level of the plan (higher number means higher importance).\", \"tasks\": [{\"id\": \"A unique identifier for the task, used to distinguish it from others.\", \"title\": \"The title of the task, summarizing what needs to be done.\", \"priority\": \"The task's priority level (higher number means more important).\", \"completed\": \"Boolean value indicating whether the task is completed (true or false).\", \"dueDate\": \"The due date for the task, used for scheduling or reminders.\", \"createdAt\": \"The timestamp when the task was created.\", \"completedAt\": \"The timestamp when the task was completed; only present if completed.\"}], \"progress\": \"The overall progress percentage of the plan, usually based on completed tasks.\", \"dueDate\": \"The final deadline for the entire plan or project.\", \"createdAt\": \"The timestamp when the plan was created.\"}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        -112,
+        -448
+      ],
+      "id": "19c72d45-396a-4fa4-b594-e78b4d295b29",
+      "name": "AI Agent Tool"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.plan }}{{ $json.body.userMessage }}",
+        "options": {
+          "systemMessage": "你是一个学时和经验都极其丰富的时间管理助手。用户会提供一个学习计划的JSON数据，包含了用户的计划。请你分析用户计划并且给出相应的建议。\n1. 你可以使用时间工具查看当前时间。\n2. 每一次分析计划都需要调用时间工具分析\n2. 你可以使用创建计划工具帮助用户创建一个计划，使用时请描述清楚计划相关信息，和计划紧急程度（一遍，宽裕，紧急）。\n3. 每一次计划创建完成后调用数据发送工具发送json数据。\n4. 为确保回复速度当用户没有要求你创建计划时不要调用计划创建工具."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -608,
+        -592
+      ],
+      "id": "24ea55bb-8033-4f7e-a027-d730b7e9bffa",
+      "name": "AI Agent4"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.sessionId }}",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -816,
+        416
+      ],
+      "id": "aed05f67-4724-48e6-aea2-dcbbbc7cb519",
+      "name": "Mental Health Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.userMessage }}",
+        "options": {
+          "systemMessage": "你是一位温暖、专业、富有同理心的AI心理咨询助手。你的角色是倾听用户的情感困扰，提供情感支持和建议。\n\n你的职责：\n1. 积极倾听：认真理解用户的感受，不要急于给出建议\n2. 同理心回应：表达对用户感受的理解和共情\n3. 提供支持：给予温暖的鼓励和情感支持\n4. 建议引导：在适当的时候，提供合理的建议和应对策略\n5. 积极态度：保持乐观但不敷衍，真诚但不夸张\n\n注意事项：\n- 使用温和、关怀的语气\n- 避免使用过于专业的术语\n- 不要做出诊断或替代专业治疗\n- 如果用户表现出严重心理问题（如自杀倾向），建议寻求专业帮助\n- 保持对话的连贯性，记住之前的对话内容\n\n请用中文回复用户的问题。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -912,
+        208
+      ],
+      "id": "6bd82177-ce02-4a71-985b-262858d195c9",
+      "name": "AI Agent5"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -912,
+        416
+      ],
+      "id": "2bb666c5-8ace-46fb-968a-bc5840d03b84",
+      "name": "OpenAI Chat Model6",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 心理咨询\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
+        "height": 640,
+        "width": 960
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1248,
+        80
+      ],
+      "typeVersion": 1,
+      "id": "88943959-c097-4b55-96a3-a791cb9e1c26",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.firstMessage }}",
+        "options": {
+          "systemMessage": "你是一个标题生成助手。根据用户的第一条消息，生成一个简短、准确的会话标题（5-10个汉字）。\n\n要求：\n1. 标题要简洁明了，概括用户的核心问题或情感状态\n2. 只返回标题文本，不要添加任何解释、引号或标点符号\n3. 使用中文\n4. 长度控制在5-10个汉字\n\n示例：\n输入：我最近工作压力很大，经常失眠\n输出：工作压力与失眠\n\n输入：和朋友吵架了，不知道该怎么办\n输出：朋友关系问题\n\n输入：考试焦虑，总是担心考不好\n输出：考试焦虑困扰"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -912,
+        832
+      ],
+      "id": "10b3b175-471f-4b40-8ca6-4f0a5065ab2f",
+      "name": "AI Agent6"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -912,
+        1024
+      ],
+      "id": "b2abe37a-1573-4212-9649-a363295be887",
+      "name": "OpenAI Chat Model7",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 标题生成\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
+        "height": 496,
+        "width": 896
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1232,
+        752
+      ],
+      "typeVersion": 1,
+      "id": "acbee527-db16-4113-916b-9537d93211e3",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mental-health/session/generate-title",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1168,
+        832
+      ],
+      "id": "63295733-6bc1-463a-b395-de00f8ebce20",
+      "name": "心理健康标题生成",
+      "webhookId": "75c97db2-05f1-4a8f-b799-45e63207df9f"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mental-health/chat",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1136,
+        208
+      ],
+      "id": "0f2e89e2-e718-4450-8647-c8c15bbb8e44",
+      "name": "心里咨询",
+      "webhookId": "47bed156-3310-4eb9-a1ff-e9996079466c"
     }
   ],
   "connections": {
@@ -894,29 +1089,7 @@
         ]
       ]
     },
-    "OpenAI Chat Model4": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent4",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Date & Time": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent4",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent Tool": {
       "ai_tool": [
         [
           {
@@ -938,17 +1111,6 @@
         ]
       ]
     },
-    "Simple Memory1": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent Tool",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Structured Output Parser2": {
       "ai_outputParser": [
         [
@@ -965,6 +1127,116 @@
         [
           {
             "node": "AI Agent4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送数据": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mental Health Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent5",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent5",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent6",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "标题生成": {
+      "main": [
+        [
+          {
+            "node": "AI Agent6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "心里咨询": {
+      "main": [
+        [
+          {
+            "node": "AI Agent5",
             "type": "main",
             "index": 0
           }

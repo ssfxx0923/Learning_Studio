@@ -32,6 +32,51 @@ export interface PlanIndex {
   plans: string[]; // 计划ID列表
 }
 
+// 聊天消息类型
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+}
+
+export interface ChatHistory {
+  messages: ChatMessage[];
+}
+
+// 心理咨询相关类型
+export interface MentalHealthMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+}
+
+export interface MentalHealthSession {
+  id: string;
+  title?: string;  // 会话标题，可选
+  messages: MentalHealthMessage[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SessionIndex {
+  sessions: string[]; // 会话ID列表
+}
+
+// 笔记相关类型
+export interface Note {
+  id: string;
+  title: string;
+  content: string;  // Markdown 内容
+  tags: string[];   // 标签
+  category?: string; // 分类
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface NoteIndex {
+  notes: string[]; // 笔记ID列表
+}
+
 // 错误响应
 export interface ErrorResponse {
   success: false;

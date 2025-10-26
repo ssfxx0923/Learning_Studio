@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import articleRoutes from './articleRoutes.js';
 import planRoutes from './planRoutes.js';
+import mentalHealthRoutes from './mentalHealthRoutes.js';
+import noteRoutes from './noteRoutes.js';
 
 const router = Router();
 
@@ -9,6 +11,12 @@ router.use('/articles', articleRoutes);
 
 // 计划相关路由
 router.use('/plans', planRoutes);
+
+// 心理咨询相关路由
+router.use('/mental-health', mentalHealthRoutes);
+
+// 笔记相关路由
+router.use('/notes', noteRoutes);
 
 // 健康检查
 router.get('/health', (req, res) => {

@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Video, BookText, Plus, Sparkles, PlayCircle, FileText, X } from 'lucide-react'
+import { Video, BookText, Plus, Sparkles, PlayCircle, FileText } from 'lucide-react'
 import { n8nClient } from '@/services/api'
 import { AIGreeting } from '@/components/AIGreeting'
 
