@@ -9,10 +9,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        -10224,
-        -3264
+        2816,
+        -1984
       ],
-      "id": "6a936525-8d2e-4e56-b79b-e2c39b20a9df",
+      "id": "a9dca6b2-becf-458b-9365-61a0b65196e8",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -60,10 +60,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -10640,
-        -3264
+        2400,
+        -1984
       ],
-      "id": "35275fb1-cfe2-454c-9764-ea2ce9e0a90b",
+      "id": "7dafd0a8-b286-46dd-b2e4-26951c503772",
       "name": "语音生成"
     },
     {
@@ -101,10 +101,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -10640,
-        -3664
+        2400,
+        -2384
       ],
-      "id": "8cf8deb1-d1ac-4b84-8669-66f392f3b148",
+      "id": "ebea05c9-6dbc-4364-9e72-1c7ae450d759",
       "name": "图片生成"
     },
     {
@@ -119,10 +119,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -11584,
-        -3488
+        1456,
+        -2208
       ],
-      "id": "95213371-5ab6-42bc-9450-6fe35131bbba",
+      "id": "c6ccc282-5d05-437a-bcb7-22d245527cc6",
       "name": "AI Agent"
     },
     {
@@ -138,10 +138,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -11584,
-        -3280
+        1456,
+        -2000
       ],
-      "id": "55d5465b-a5da-499a-a63e-2a9b63be26f0",
+      "id": "38aa053d-cf54-494c-89b1-ca31b1885f55",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -157,10 +157,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -11440,
-        -3280
+        1600,
+        -2000
       ],
-      "id": "996a89b2-5124-4801-9376-038fabdf4987",
+      "id": "c8c90dae-5305-4320-8818-de38f861e6b1",
       "name": "Structured Output Parser"
     },
     {
@@ -198,10 +198,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -10608,
-        -3904
+        2432,
+        -2624
       ],
-      "id": "9b1eeb45-daa0-4ac4-bd67-9514130c4fd0",
+      "id": "8fd71848-ca48-44ad-bd42-f2791ae77e35",
       "name": "图片生成1"
     },
     {
@@ -218,10 +218,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -10400,
-        -3904
+        2640,
+        -2624
       ],
-      "id": "af286e9c-ef3e-42ca-94de-380abeb7d3fe",
+      "id": "6c7ec269-ce69-4949-a8e6-6d87ebc6ebbd",
       "name": "HTTP Request"
     },
     {
@@ -232,10 +232,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -10432,
-        -3664
+        2608,
+        -2384
       ],
-      "id": "d7423987-327b-427d-98ed-623a8647ec2a",
+      "id": "b46c96eb-d264-4f73-a60a-c6d7ef840bbd",
       "name": "HTTP Request1"
     },
     {
@@ -249,10 +249,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        -10192,
-        -3904
+        2848,
+        -2624
       ],
-      "id": "8fe93522-ae8f-48bc-93fd-c4dcff3adc8c",
+      "id": "c1a72a89-bb43-4363-855c-a69446d81989",
       "name": "Read/Write Files from Disk1"
     },
     {
@@ -266,10 +266,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        -10208,
-        -3664
+        2832,
+        -2384
       ],
-      "id": "168ef645-5669-4675-aa75-aa8903a1f59f",
+      "id": "f8799bcb-ef73-471e-9145-a5ebb4150be5",
       "name": "Read/Write Files from Disk2"
     },
     {
@@ -281,11 +281,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -12320,
-        -4240
+        720,
+        -2960
       ],
       "typeVersion": 1,
-      "id": "39601f66-0317-49e4-afb6-da9cdf824cc2",
+      "id": "9fe8a62c-133a-441d-99ad-9eb80901c75a",
       "name": "Sticky Note"
     },
     {
@@ -297,10 +297,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -11856,
-        -3488
+        1184,
+        -2208
       ],
-      "id": "d394b291-5222-469b-9ce5-59eff907828a",
+      "id": "22fa1942-4992-4e1a-862e-bd81a39f454c",
       "name": "Webhook",
       "webhookId": "e155b53a-e6bc-4d80-a7ac-b4ec8d525119"
     },
@@ -314,10 +314,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        -10208,
-        -3456
+        2832,
+        -2176
       ],
-      "id": "58a1a79e-11e6-4bc1-9522-fe6b439873d9",
+      "id": "9f06fad2-a989-4591-ba11-6bbd91d22165",
       "name": "Read/Write Files from Disk3"
     },
     {
@@ -328,10 +328,10 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -10640,
-        -3456
+        2400,
+        -2176
       ],
-      "id": "9a818531-d32b-4032-b413-2e895fea4b4d",
+      "id": "faac8117-101c-4890-97a1-f0355dbd7305",
       "name": "Convert to File"
     },
     {
@@ -344,10 +344,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -12080,
-        -2448
+        960,
+        -1168
       ],
-      "id": "b9908e20-3c78-4499-8e49-74549ed6417b",
+      "id": "612b6bc4-e5a4-4b20-b097-cc56dadb5c41",
       "name": "Webhook_Translate",
       "webhookId": "6a373184-55f7-42fb-978d-dc92de20223f"
     },
@@ -362,10 +362,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -11744,
-        -2448
+        1296,
+        -1168
       ],
-      "id": "af6d82ad-b293-438d-acf6-2bbbb755cc17",
+      "id": "42970817-2cf9-463b-9cde-aa670bc43a04",
       "name": "AI Agent1"
     },
     {
@@ -380,10 +380,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -11744,
-        -2256
+        1296,
+        -976
       ],
-      "id": "ed17c370-374e-452c-b59c-9b917be7299d",
+      "id": "3020f424-27a6-4f0f-b764-fe8c79a3089c",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
@@ -400,11 +400,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -12336,
-        -2512
+        720,
+        -1232
       ],
       "typeVersion": 1,
-      "id": "13bc970b-5bd7-49e3-aff3-58b600f79d02",
+      "id": "6e38c96c-45af-4059-81a3-cb0c0eecc63d",
       "name": "Sticky Note1"
     },
     {
@@ -417,10 +417,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -12080,
-        -1776
+        960,
+        -496
       ],
-      "id": "2e6aa8e4-b272-49e3-9de4-12b759552853",
+      "id": "d9139036-bd4c-4b9a-940b-2e4f60001c23",
       "name": "Webhook_Analyze",
       "webhookId": "8f9e3d21-4c85-44ff-b256-9a8e7f8d6c3e"
     },
@@ -435,10 +435,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -11728,
-        -1776
+        1312,
+        -496
       ],
-      "id": "c6971926-f0d9-43ad-a3b3-44b0ff83a8ec",
+      "id": "3d17fd44-3a36-4670-903c-c05de5ebf194",
       "name": "AI Agent2"
     },
     {
@@ -453,10 +453,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -11728,
-        -1584
+        1312,
+        -304
       ],
-      "id": "d0053527-6db4-4c2b-8dd3-b1164b1c9889",
+      "id": "3fe7f0db-3ce7-4ed5-87f0-167abc1327c7",
       "name": "OpenAI Chat Model3",
       "credentials": {
         "openAiApi": {
@@ -473,11 +473,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -12336,
-        -1888
+        720,
+        -624
       ],
       "typeVersion": 1,
-      "id": "af1bd319-03fe-4c9f-abe3-ef03ae075eea",
+      "id": "c14cc862-c355-48c6-a833-c8426ce7f594",
       "name": "Sticky Note2"
     },
     {
@@ -492,10 +492,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -11040,
-        -3824
+        2000,
+        -2544
       ],
-      "id": "7de8066a-d9f1-4a18-b423-261955bed33e",
+      "id": "629292a8-a693-4903-9399-89c2c00069d7",
       "name": "AI Agent3"
     },
     {
@@ -510,10 +510,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -11040,
-        -3616
+        2000,
+        -2336
       ],
-      "id": "db0848e0-01ce-4e6a-b9d5-9d15ed0f3be3",
+      "id": "8c17f822-6391-4c1c-93c6-69e4696981ac",
       "name": "OpenAI Chat Model2",
       "credentials": {
         "openAiApi": {
@@ -529,19 +529,169 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -10896,
-        -3616
+        2144,
+        -2336
       ],
-      "id": "4154ffa3-3786-4ccd-9bc2-bca9309d5950",
+      "id": "31991a56-4688-4aca-bdab-7c184793968a",
       "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.plan }}",
+        "options": {
+          "systemMessage": "你是一个专业的学习规划和时间管理助手。用户会提供一个学习计划的JSON数据，包含任务列表、优先级、截止日期等信息。\n\n请仔细分析这个计划并给出具体的优化建议，包括：\n1. 任务优先级是否合理\n2. 时间安排是否科学\n3. 任务分解是否合适\n4. 完成进度评估\n5. 具体的改进建议\n\n请用简洁、实用的中文回答，给出3-5条具体可行的建议。每条建议控制在50字以内。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1376,
+        32
+      ],
+      "id": "6293461b-b450-4a31-85af-2ccb707fbf8f",
+      "name": "AI Agent4"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1264,
+        304
+      ],
+      "id": "084b3b12-45c5-4356-8045-5ddd5e8e90ba",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTimeTool",
+      "typeVersion": 2,
+      "position": [
+        1536,
+        304
+      ],
+      "id": "e1ef2a88-cae0-4f75-b7df-9cd0313afd96",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "toolDescription": "计划创建助手",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "你是一个json助手，用户会想你描述他的计划，你的任务是根据用户的计划创建一个对应的json文件。请确保你的返回为纯粹的当行json格式，不要附带任何说明。\njson格式说明：\n{\"title\": \"The title of the plan or project, summarizing its main theme.\", \"description\": \"A brief description of the plan’s goal or purpose.\", \"priority\": \"The overall priority level of the plan (higher number means higher importance).\", \"tasks\": [{\"id\": \"A unique identifier for the task, used to distinguish it from others.\", \"title\": \"The title of the task, summarizing what needs to be done.\", \"priority\": \"The task's priority level (higher number means more important).\", \"completed\": \"Boolean value indicating whether the task is completed (true or false).\", \"dueDate\": \"The due date for the task, used for scheduling or reminders.\", \"createdAt\": \"The timestamp when the task was created.\", \"completedAt\": \"The timestamp when the task was completed; only present if completed.\"}], \"progress\": \"The overall progress percentage of the plan, usually based on completed tasks.\", \"dueDate\": \"The final deadline for the entire plan or project.\", \"createdAt\": \"The timestamp when the plan was created.\"}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        1808,
+        240
+      ],
+      "id": "a39f6152-34c1-48ed-9158-160ab6befbac",
+      "name": "AI Agent Tool"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "glm-4.5",
+          "mode": "list",
+          "cachedResultName": "glm-4.5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1680,
+        448
+      ],
+      "id": "73016485-7b54-4c75-8e44-aa330235cbeb",
+      "name": "OpenAI Chat Model5",
+      "credentials": {
+        "openAiApi": {
+          "id": "yK0fgk8FcJgoqsnQ",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1792,
+        448
+      ],
+      "id": "6965ce6d-a2ce-4e9e-8705-daee3ce3ff5b",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\"title\": \"The title of the plan or project, summarizing its main theme.\", \"description\": \"A brief description of the plan’s goal or purpose.\", \"priority\": \"The overall priority level of the plan (higher number means higher importance).\", \"tasks\": [{\"id\": \"A unique identifier for the task, used to distinguish it from others.\", \"title\": \"The title of the task, summarizing what needs to be done.\", \"priority\": \"The task's priority level (higher number means more important).\", \"completed\": \"Boolean value indicating whether the task is completed (true or false).\", \"dueDate\": \"The due date for the task, used for scheduling or reminders.\", \"createdAt\": \"The timestamp when the task was created.\", \"completedAt\": \"The timestamp when the task was completed; only present if completed.\"}], \"progress\": \"The overall progress percentage of the plan, usually based on completed tasks.\", \"dueDate\": \"The final deadline for the entire plan or project.\", \"createdAt\": \"The timestamp when the plan was created.\"}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2016,
+        448
+      ],
+      "id": "497cbd9b-4c5a-4e6d-ad86-d8af342b7c6a",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "content": "## 任务规划\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
+        "height": 704,
+        "width": 2160,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        720,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "23a97bd3-526e-4d2a-9274-a661d447cdfb",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "plan/analyze",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        32
+      ],
+      "id": "fc223477-57fc-41a1-a642-7047068cc5ca",
+      "name": "Webhook_plan",
+      "webhookId": "8a9e5f2c-1d3b-4e8a-9c7d-6f5e4d3c2b1a"
     }
   ],
   "connections": {
-    "Read/Write Files from Disk": {
-      "main": [
-        []
-      ]
-    },
     "语音生成": {
       "main": [
         [
@@ -739,6 +889,83 @@
           {
             "node": "AI Agent3",
             "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent Tool",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook_plan": {
+      "main": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "main",
             "index": 0
           }
         ]

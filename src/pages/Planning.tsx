@@ -190,9 +190,17 @@ export default function Planning() {
   const toggleTask = async (taskId: string) => {
     if (!selectedPlan) return
 
-    const updatedTasks = selectedPlan.tasks.map((task) =>
-      task.id === taskId ? { ...task, completed: !task.completed } : task
-    )
+    const updatedTasks = selectedPlan.tasks.map((task) => {
+      if (task.id === taskId) {
+        const newCompleted = !task.completed
+        return {
+          ...task,
+          completed: newCompleted,
+          completedAt: newCompleted ? new Date().toISOString() : undefined  // 完成时记录时间，取消完成时清除时间
+        }
+      }
+      return task
+    })
 
     const completedTasks = updatedTasks.filter((t) => t.completed).length
     const progress = updatedTasks.length > 0 ? (completedTasks / updatedTasks.length) * 100 : 0
@@ -246,22 +254,44 @@ export default function Planning() {
   const getAISuggestion = async () => {
     if (!selectedPlan) return
 
+    setIsLoading(true)
     try {
-      const response: any = await n8nClient.post('/planning/ai-suggestion', { planId: selectedPlan.id })
+      // 准备发送给AI的计划数据（简化版，只包含关键信息）
+      const planData = {
+        title: selectedPlan.title,
+        description: selectedPlan.description,
+        priority: selectedPlan.priority,
+        progress: selectedPlan.progress,
+        dueDate: selectedPlan.dueDate,
+        tasks: selectedPlan.tasks.map(task => ({
+          title: task.title,
+          priority: task.priority,
+          completed: task.completed,
+          dueDate: task.dueDate
+        }))
+      }
+
+      // 调用n8n的plan/analyze接口
+      const response: any = await n8nClient.post('/plan/analyze', {
+        planId: selectedPlan.id,
+        plan: JSON.stringify(planData, null, 2)
+      })
+
+      // 提取AI返回的建议文本（n8nClient已经返回了data）
+      const aiSuggestion = response?.output || response?.text || response || '建议生成成功'
+      
       const updatedPlan = {
         ...selectedPlan,
-        aiSuggestion: response.suggestion,
+        aiSuggestion: typeof aiSuggestion === 'string' ? aiSuggestion : JSON.stringify(aiSuggestion),
       }
-      updatePlan(updatedPlan)
+      
+      await updatePlan(updatedPlan)
+      alert('AI建议已生成！')
     } catch (error) {
       console.error('获取AI建议失败:', error)
-      // 模拟AI建议
-      const mockSuggestion = '建议将高优先级任务优先完成，合理安排时间，保持学习节奏。可以将大任务分解为小任务，逐步完成。'
-      const updatedPlan = {
-        ...selectedPlan,
-        aiSuggestion: mockSuggestion,
-      }
-      updatePlan(updatedPlan)
+      alert('获取AI建议失败，请检查n8n服务是否正常运行')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -397,7 +427,7 @@ export default function Planning() {
                           >
                             {task.title}
                           </p>
-                          <div className="flex items-center gap-3 mt-1">
+                          <div className="flex items-center gap-3 mt-1 flex-wrap">
                             <Badge
                               variant={getPriorityColor(task.priority)}
                               className="text-xs opacity-50"
@@ -407,7 +437,18 @@ export default function Planning() {
                             {task.dueDate && (
                               <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
-                                {formatDate(task.dueDate)}
+                                截止: {formatDate(task.dueDate)}
+                              </span>
+                            )}
+                            {task.completed && task.completedAt && (
+                              <span className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+                                <CheckCircle2 className="h-3 w-3" />
+                                完成于: {new Date(task.completedAt).toLocaleString('zh-CN', { 
+                                  month: 'short', 
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
                               </span>
                             )}
                           </div>
@@ -434,21 +475,29 @@ export default function Planning() {
                     <TrendingUp className="h-5 w-5" />
                     AI优化建议
                   </CardTitle>
-                  <Button onClick={getAISuggestion} variant="outline" size="sm" className="gap-2">
-                    <Sparkles className="h-4 w-4" />
-                    获取建议
+                  <Button 
+                    onClick={getAISuggestion} 
+                    variant="outline" 
+                    size="sm" 
+                    className="gap-2"
+                    disabled={isLoading}
+                  >
+                    <Sparkles className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+                    {isLoading ? '分析中...' : '获取建议'}
                   </Button>
                 </div>
               </CardHeader>
               <CardContent>
                 {selectedPlan.aiSuggestion ? (
-                  <div className="rounded-lg bg-muted p-4 text-sm leading-relaxed">
+                  <div className="rounded-lg bg-muted p-4 text-sm leading-relaxed whitespace-pre-wrap">
                     {selectedPlan.aiSuggestion}
                   </div>
                 ) : (
-                  <p className="text-muted-foreground text-center py-8">
-                    点击上方按钮获取AI优化建议
-                  </p>
+                  <div className="text-center py-8">
+                    <Sparkles className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-20" />
+                    <p className="text-muted-foreground">点击上方按钮获取AI优化建议</p>
+                    <p className="text-xs text-muted-foreground mt-2">AI会分析您的计划并提供专业建议</p>
+                  </div>
                 )}
               </CardContent>
             </Card>

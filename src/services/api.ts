@@ -11,6 +11,7 @@ export interface Task {
   completed: boolean
   dueDate?: string
   createdAt: string
+  completedAt?: string  // 任务完成时间
 }
 
 export interface Plan {
