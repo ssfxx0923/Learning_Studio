@@ -6,7 +6,7 @@ import { PlatformLayout } from './components/PlatformLayout'
 import LandingPage from './pages/LandingPage'
 import Dashboard from './pages/Dashboard'
 import EnglishLearning from './pages/EnglishLearning'
-import CourseLearning from './pages/CourseLearning'
+import ResearchPage from './pages/ResearchPage'
 import Planning from './pages/Planning'
 import NotePage from './pages/NotePage'
 import MentalHealth from './pages/MentalHealth'
@@ -19,12 +19,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Routes>
           {/* Landing Page - No Layout */}
           <Route path="/" element={<LandingPage />} />
-          
+
           {/* Platform Routes - With Sidebar Layout */}
           <Route element={<PlatformLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="english" element={<EnglishLearning />} />
-            <Route path="course" element={<CourseLearning />} />
+            <Route path="research" element={<ResearchPage />} />
             <Route path="planning" element={<Planning />} />
             <Route path="note" element={<NotePage />} />
             <Route path="mental-health" element={<MentalHealth />} />

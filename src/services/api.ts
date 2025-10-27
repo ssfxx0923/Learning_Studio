@@ -240,6 +240,50 @@ export const backendAPI = {
   syncNotesIndex: async () => {
     return apiClient.post('/api/notes/sync-index')
   },
+
+  // ============================================
+  // 研究功能相关 API
+  // ============================================
+
+  // 获取所有研究会话
+  getAllResearchSessions: async (): Promise<any[]> => {
+    const response = await apiClient.get('/api/research')
+    return response.data.data || response.data || []
+  },
+
+  // 获取单个研究会话
+  getResearchSession: async (sessionId: string): Promise<any> => {
+    const response = await apiClient.get(`/api/research/${sessionId}`)
+    return response.data.data || response.data
+  },
+
+  // 创建新研究会话
+  createResearchSession: async (topic?: string): Promise<any> => {
+    const response = await apiClient.post('/api/research', { topic })
+    return response.data.data || response.data
+  },
+
+  // 更新研究会话
+  updateResearchSession: async (sessionId: string, sessionData: any): Promise<any> => {
+    const response = await apiClient.put(`/api/research/${sessionId}`, sessionData)
+    return response.data.data || response.data
+  },
+
+  // 删除研究会话
+  deleteResearchSession: async (sessionId: string): Promise<void> => {
+    await apiClient.delete(`/api/research/${sessionId}`)
+  },
+
+  // 获取研究会话的所有消息
+  getResearchSessionMessages: async (sessionId: string): Promise<ChatMessage[]> => {
+    const response = await apiClient.get(`/api/research/${sessionId}/messages`)
+    return response.data.data || response.data || []
+  },
+
+  // 添加消息到研究会话
+  addResearchSessionMessage: async (sessionId: string, message: ChatMessage): Promise<void> => {
+    await apiClient.post(`/api/research/${sessionId}/messages`, message)
+  },
 }
 
 // ============================================

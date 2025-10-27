@@ -3,6 +3,7 @@ import articleRoutes from './articleRoutes.js';
 import planRoutes from './planRoutes.js';
 import mentalHealthRoutes from './mentalHealthRoutes.js';
 import noteRoutes from './noteRoutes.js';
+import researchRoutes from './researchRoutes.js';
 
 const router = Router();
 
@@ -17,6 +18,9 @@ router.use('/mental-health', mentalHealthRoutes);
 
 // 笔记相关路由
 router.use('/notes', noteRoutes);
+
+// 研究功能相关路由
+router.use('/research', researchRoutes);
 
 // 健康检查
 router.get('/health', (req, res) => {

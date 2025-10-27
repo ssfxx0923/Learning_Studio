@@ -112,9 +112,10 @@ export default function MarkdownEditor({ value, onChange, className }: MarkdownE
       }
     }
 
+    // 立即更新文本内容（保证用户输入立刻反馈）
     onChange(newValue)
 
-    // 清除之前的定时器
+    // 清除之前的 AI 建议定时器
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current)
     }
@@ -122,11 +123,12 @@ export default function MarkdownEditor({ value, onChange, className }: MarkdownE
     // 清除旧的建议
     setAiSuggestion('')
 
-    // 设置新的防抖定时器（800ms 后请求 AI 建议）
+    // 设置新的防抖定时器（1s 后请求 AI 建议，延长时间减少请求频率）
+    // 这样不会阻塞用户输入，AI 建议是非紧急更新
     debounceTimerRef.current = setTimeout(() => {
       const cursor = newCursorPos ?? textareaRef.current?.selectionStart ?? 0
       fetchAISuggestion(newValue, cursor)
-    }, 800)
+    }, 1200)
   }, [onChange, fetchAISuggestion])
 
   // 撤销操作 (Ctrl+Z)

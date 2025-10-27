@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Textarea } from '@/components/ui/textarea'
 import {
   FileText,
   Plus,
@@ -15,17 +14,15 @@ import {
   ArrowLeft,
   Calendar,
   Edit,
-  Sparkles,
-  Send,
 } from 'lucide-react'
 import { backendAPI, type Note } from '@/services/api'
 import MarkdownEditor from '@/components/MarkdownEditor'
 import { HighlightedCodeBlock } from '@/components/HighlightedCodeBlock'
+import { NoteQuestionDialog } from '@/components/NoteQuestionDialog'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import 'highlight.js/styles/github-dark.css'
 import { cn } from '@/lib/utils'
-import { askNoteQuestion } from '@/lib/n8nClient'
 import { useLazyCodeHighlight } from '@/hooks/useCodeHighlight'
 
 export default function NotePage() {
@@ -37,17 +34,9 @@ export default function NotePage() {
   const [loading, setLoading] = useState(false)
   const listContainerRef = useRef<HTMLDivElement>(null)
 
-  // 划词提问相关状态
+  // 划词提问对话框状态
   const [selectedText, setSelectedText] = useState('')
-  const [toolbarPosition, setToolbarPosition] = useState<{ top: number; left: number } | null>(null)
-  const [userQuestion, setUserQuestion] = useState('')
-  const [aiAnswer, setAiAnswer] = useState('')
-  const [isAsking, setIsAsking] = useState(false)
-
-  // 拖动相关状态
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
-  const toolbarRef = useRef<HTMLDivElement>(null)
+  const [showQuestionDialog, setShowQuestionDialog] = useState(false)
 
   // 编辑表单状态
   const [editTitle, setEditTitle] = useState('')
@@ -73,20 +62,22 @@ export default function NotePage() {
     loadNotes()
   }, [])
 
-  // 过滤笔记
-  const filteredNotes = notes.filter((note) => {
-    const matchesSearch =
-      searchQuery === '' ||
-      note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchQuery.toLowerCase())
+  // 过滤笔记 - 使用 useMemo 缓存结果，避免不必要的重新计算
+  const filteredNotes = useMemo(() => {
+    return notes.filter((note) => {
+      const matchesSearch =
+        searchQuery === '' ||
+        note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        note.content.toLowerCase().includes(searchQuery.toLowerCase())
 
-    const matchesTag = filterTag === null || note.tags.includes(filterTag)
+      const matchesTag = filterTag === null || note.tags.includes(filterTag)
 
-    return matchesSearch && matchesTag
-  })
+      return matchesSearch && matchesTag
+    })
+  }, [notes, searchQuery, filterTag])
 
-  // 获取所有标签
-  const allTags = Array.from(new Set(notes.flatMap((note) => note.tags)))
+  // 获取所有标签 - 使用 useMemo 缓存
+  const allTags = useMemo(() => Array.from(new Set(notes.flatMap((note) => note.tags))), [notes])
 
   // 只在列表视图使用懒加载高亮
   useLazyCodeHighlight(listContainerRef, [filteredNotes])
@@ -205,109 +196,12 @@ export default function NotePage() {
     const text = selection?.toString()
     if (text && text.trim()) {
       setSelectedText(text.trim())
-      setUserQuestion('')
-      setAiAnswer('')
-
-      // 获取选中文本的位置
-      const range = selection?.getRangeAt(0)
-      if (range) {
-        const rect = range.getBoundingClientRect()
-        // 计算初始位置，让对话框居中显示在选中文本下方
-        const toolbarWidth = 400 // 对话框的最小宽度
-        setToolbarPosition({
-          top: rect.bottom + window.scrollY + 10,
-          left: Math.max(20, rect.left + window.scrollX + rect.width / 2 - toolbarWidth / 2)
-        })
-      }
+      setShowQuestionDialog(true)
     } else {
       setSelectedText('')
-      setUserQuestion('')
-      setAiAnswer('')
-      setToolbarPosition(null)
+      setShowQuestionDialog(false)
     }
   }
-
-  // 向AI提问
-  const handleAskQuestion = async () => {
-    if (!selectedText || !userQuestion.trim()) return
-
-    setIsAsking(true)
-    setAiAnswer('AI 正在思考中...')
-
-    try {
-      const answer = await askNoteQuestion({
-        selectedText,
-        question: userQuestion,
-        noteContext: selectedNote?.content,
-      })
-      setAiAnswer(answer)
-    } catch (error: any) {
-      console.error('提问失败:', error)
-      setAiAnswer(`提问失败: ${error.message || '未知错误'}`)
-    } finally {
-      setIsAsking(false)
-    }
-  }
-
-  // 处理拖动开始
-  const handleDragStart = (e: React.MouseEvent<HTMLDivElement>) => {
-    // 只有点击标题区域才能拖动
-    if (!(e.target as HTMLElement).closest('[data-drag-handle]')) return
-
-    if (toolbarPosition && toolbarRef.current) {
-      setIsDragging(true)
-      const rect = toolbarRef.current.getBoundingClientRect()
-      setDragOffset({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      })
-    }
-  }
-
-  // 处理拖动
-  useEffect(() => {
-    if (!isDragging) return
-
-    const handleMouseMove = (e: MouseEvent) => {
-      // 使用 requestAnimationFrame 优化性能
-      requestAnimationFrame(() => {
-        if (toolbarPosition) {
-          setToolbarPosition({
-            left: e.clientX - dragOffset.x,
-            top: e.clientY - dragOffset.y,
-          })
-        }
-      })
-    }
-
-    const handleMouseUp = () => {
-      setIsDragging(false)
-    }
-
-    document.addEventListener('mousemove', handleMouseMove, { passive: true })
-    document.addEventListener('mouseup', handleMouseUp)
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
-    }
-  }, [isDragging, dragOffset, toolbarPosition])
-
-  // 点击页面其他地方时关闭工具栏
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (selectedText && !target.closest('.prose') && !target.closest('[data-question-toolbar]')) {
-        setSelectedText('')
-        setUserQuestion('')
-        setAiAnswer('')
-        setToolbarPosition(null)
-      }
-    }
-
-    document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
-  }, [selectedText])
 
   // 如果选中了笔记且不在编辑模式，显示预览
   if (selectedNote && !isEditing) {
@@ -373,7 +267,8 @@ export default function NotePage() {
         {/* Markdown 预览 */}
         <div className="flex-1 overflow-auto">
           <div className="max-w-4xl mx-auto px-6 py-8">
-            <article className="prose prose-lg dark:prose-invert max-w-none
+            <article
+              className="prose prose-lg dark:prose-invert max-w-none
               prose-headings:font-bold prose-headings:tracking-tight
               prose-h1:text-4xl prose-h1:mb-4
               prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4
@@ -414,148 +309,19 @@ export default function NotePage() {
               </ReactMarkdown>
             </article>
           </div>
-
-          {/* 划词提问工具栏 */}
-          {selectedText && toolbarPosition && (
-            <div
-              ref={toolbarRef}
-              data-question-toolbar
-              className={`fixed z-50 ${isDragging ? '' : 'animate-in fade-in zoom-in-95 duration-200'}`}
-              style={{
-                top: 0,
-                left: 0,
-                transform: `translate(${toolbarPosition.left}px, ${toolbarPosition.top}px)`,
-                willChange: isDragging ? 'transform' : 'auto',
-              }}
-              onMouseDown={handleDragStart}
-            >
-              <div className="bg-background/98 backdrop-blur-xl border-2 border-primary/20 rounded-xl shadow-2xl min-w-[400px] max-w-[600px]">
-                {/* 可拖动的标题栏 */}
-                <div
-                  data-drag-handle
-                  className="flex items-center justify-between px-4 py-2 border-b border-primary/10 cursor-move select-none bg-primary/5 rounded-t-xl"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="flex gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
-                    </div>
-                    <p className="text-xs font-medium text-muted-foreground">AI 问答助手</p>
-                  </div>
-                  <Button
-                    onClick={() => {
-                      setSelectedText('')
-                      setUserQuestion('')
-                      setAiAnswer('')
-                      setToolbarPosition(null)
-                    }}
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 shrink-0 hover:bg-primary/20"
-                  >
-                    <X className="h-3 w-3" />
-                  </Button>
-                </div>
-
-                <div className="p-4 space-y-3">
-                  {/* 选中文本显示 */}
-                  <div className="flex items-start gap-3">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-muted-foreground mb-1.5">选中内容</p>
-                      <p className="text-sm font-medium leading-relaxed bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent">
-                        {selectedText}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* 提问输入框 */}
-                  <div className="space-y-2">
-                    <p className="text-xs text-muted-foreground">向 AI 提问</p>
-                    <div className="flex gap-2">
-                      <Textarea
-                        value={userQuestion}
-                        onChange={(e) => setUserQuestion(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault()
-                            handleAskQuestion()
-                          }
-                        }}
-                        placeholder="例如：这段话是什么意思？能详细解释一下吗？"
-                        className="flex-1 min-h-[80px] resize-none border-2 text-sm"
-                        disabled={isAsking}
-                      />
-                    </div>
-                    <Button
-                      onClick={handleAskQuestion}
-                      disabled={!userQuestion.trim() || isAsking}
-                      size="sm"
-                      className="w-full gap-2 border-2"
-                    >
-                      {isAsking ? (
-                        <>
-                          <Sparkles className="h-4 w-4 animate-spin" />
-                          AI 思考中...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4" />
-                          发送提问
-                        </>
-                      )}
-                    </Button>
-                  </div>
-
-                  {/* AI回答显示 - 支持Markdown渲染 */}
-                  {aiAnswer && (
-                    <div className="pt-3 border-t">
-                      <p className="text-xs font-semibold mb-2 text-primary flex items-center gap-1">
-                        <Sparkles className="h-3 w-3" />
-                        AI 回答
-                      </p>
-                      <div
-                        className="text-sm bg-muted/30 rounded-lg p-3 max-h-[400px] overflow-y-auto
-                        [&_.prose]:max-w-none
-                        [&_p]:text-foreground/90 [&_p]:leading-relaxed [&_p]:my-2
-                        [&_h1]:text-foreground [&_h1]:font-semibold [&_h1]:text-lg
-                        [&_h2]:text-foreground [&_h2]:font-semibold [&_h2]:text-base
-                        [&_h3]:text-foreground [&_h3]:font-semibold [&_h3]:text-sm
-                        [&_ul]:my-2 [&_ol]:my-2 [&_li]:my-0.5 [&_li]:text-foreground/90
-                        [&_strong]:text-foreground [&_strong]:font-semibold
-                        [&_code]:text-foreground [&_code]:bg-muted/80 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs
-                        [&_pre]:!bg-[#0d1117] [&_pre]:!text-[#c9d1d9] [&_pre]:text-xs [&_pre]:p-3 [&_pre]:rounded-lg [&_pre]:my-2 [&_pre]:overflow-x-auto
-                        [&_pre_code]:!text-[#c9d1d9] [&_pre_code]:!bg-transparent [&_pre_code]:!p-0
-                        [&_blockquote]:border-l-primary [&_blockquote]:border-l-4 [&_blockquote]:bg-muted/50 [&_blockquote]:py-0.5 [&_blockquote]:pl-3 [&_blockquote]:my-2
-                        [&_a]:text-primary [&_a]:no-underline hover:[&_a]:underline
-                        [&_table]:text-sm [&_table]:my-2 [&_table]:w-full
-                        [&_th]:bg-muted [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_th]:font-semibold
-                        [&_td]:px-2 [&_td]:py-1 [&_td]:border-t [&_td]:border-border">
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            code({ inline, className, children }: any) {
-                              return (
-                                <HighlightedCodeBlock
-                                  className={className}
-                                  inline={inline}
-                                >
-                                  {String(children).replace(/\n$/, '')}
-                                </HighlightedCodeBlock>
-                              )
-                            },
-                          }}
-                        >
-                          {aiAnswer}
-                        </ReactMarkdown>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
+
+        {/* 划词提问对话框 */}
+        {selectedText && showQuestionDialog && (
+          <NoteQuestionDialog
+            selectedText={selectedText}
+            noteContext={selectedNote?.content}
+            onClose={() => {
+              setSelectedText('')
+              setShowQuestionDialog(false)
+            }}
+          />
+        )}
       </div>
     )
   }

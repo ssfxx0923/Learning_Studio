@@ -1,25 +1,34 @@
-import { useEffect, RefObject } from 'react'
+import { useEffect, RefObject, useRef } from 'react'
 import hljs from 'highlight.js'
 
 /**
  * 列表视图专用的代码高亮 Hook
  * 性能优化：使用 IntersectionObserver 只高亮可见的代码块
+ * 优化：避免重复高亮和频繁的观察器创建
  */
 export const useLazyCodeHighlight = (
   containerRef: RefObject<HTMLElement>,
   dependencies: any[] = []
 ) => {
+  const observerRef = useRef<IntersectionObserver | null>(null)
+
   useEffect(() => {
     if (!containerRef.current) return
 
-    const observer = new IntersectionObserver(
+    // 如果观察器已存在，先断开旧的
+    if (observerRef.current) {
+      observerRef.current.disconnect()
+    }
+
+    observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const codeBlocks = entry.target.querySelectorAll('pre code')
+            const codeBlocks = (entry.target as HTMLElement).querySelectorAll('pre code')
             codeBlocks.forEach((block) => {
               const htmlBlock = block as HTMLElement
 
+              // 检查是否已经高亮过，避免重复高亮
               if (htmlBlock.dataset.highlighted !== 'yes') {
                 try {
                   hljs.highlightElement(htmlBlock)
@@ -31,7 +40,9 @@ export const useLazyCodeHighlight = (
             })
 
             // 高亮完成后停止观察
-            observer.unobserve(entry.target)
+            if (observerRef.current) {
+              observerRef.current.unobserve(entry.target)
+            }
           }
         })
       },
@@ -40,9 +51,19 @@ export const useLazyCodeHighlight = (
 
     // 观察所有包含代码块的卡片
     const cards = containerRef.current.querySelectorAll('[data-note-card]')
-    cards.forEach((card) => observer.observe(card))
+    cards.forEach((card) => {
+      if (observerRef.current) {
+        observerRef.current.observe(card)
+      }
+    })
 
-    return () => observer.disconnect()
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect()
+        observerRef.current = null
+      }
+    }
   }, dependencies)
 }
+
 

@@ -77,6 +77,15 @@ export interface NoteIndex {
   notes: string[]; // 笔记ID列表
 }
 
+// 研究相关类型
+export interface ResearchSession {
+  id: string;
+  topic?: string;
+  messages: ChatMessage[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 // 错误响应
 export interface ErrorResponse {
   success: false;

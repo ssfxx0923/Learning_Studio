@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { ThemeToggle } from './ThemeToggle'
 import {
   BookOpen,
-  Video,
+  Lightbulb,
   Calendar,
   FileText,
   Heart,
@@ -19,7 +19,7 @@ import { useState, useEffect } from 'react'
 const navItems = [
   { path: '/dashboard', label: '首页', icon: GraduationCap, color: 'text-pink-500' },
   { path: '/english', label: '英语学习', icon: BookOpen, color: 'text-pink-500' },
-  { path: '/course', label: '课程学习', icon: Video, color: 'text-purple-500' },
+  { path: '/research', label: '智能研究', icon: Lightbulb, color: 'text-yellow-500' },
   { path: '/planning', label: '学习规划', icon: Calendar, color: 'text-blue-500' },
   { path: '/note', label: '智能笔记', icon: FileText, color: 'text-green-500' },
   { path: '/mental-health', label: '心理健康', icon: Heart, color: 'text-red-500' },
