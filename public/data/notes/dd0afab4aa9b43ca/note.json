@@ -1,7 +1,7 @@
 {
   "id": "dd0afab4aa9b43ca",
   "title": "React Hooks 学习笔记",
-  "content": "## useState# 标题## 标题\n\n`useState` 是最常用的 Hook。\n\n```jsx\nconst [count, setCount] = useState(0)\n```\n\n## useEffect\n\n用于处理副作用。\n\n```jsx\nuseEffect(() => {\n  document.title = `You clicked ${count} times`\n}, [count])\n```",
+  "content": "## useState# 标题## 标题\n\n`useState` 是最常用的 Hook。\n\n```jsx\nconst [count, setCount] = useState(0)\n```\n\n## useEffect\n\n用于处理副作用。\n\n```jsx\nuseEffect(() => {\n  document.title = `You clicked ${count} times`\n}, [count])\n\n\n```\n\n清理函数（可选）：\n```jsx\nreturn () => {\n  // 在组件卸载或依赖变化前执行清理操作\n}\n```",
   "tags": [
     "React",
     "前端",
@@ -9,5 +9,5 @@
   ],
   "category": "技术",
   "createdAt": "2025-10-26T16:29:21.453Z",
-  "updatedAt": "2025-10-26T16:34:52.768Z"
+  "updatedAt": "2025-10-27T09:18:08.054Z"
 }

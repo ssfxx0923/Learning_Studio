@@ -9,10 +9,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        832,
-        -2608
+        2272,
+        1408
       ],
-      "id": "510944b8-27d6-4fcd-a5f1-ba51fd3acbce",
+      "id": "77adac8b-cc9c-4a5a-a632-02bf5314b107",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -60,10 +60,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        416,
-        -2608
+        1856,
+        1408
       ],
-      "id": "f5a5ea04-a79d-4e11-b256-010dfe31aa98",
+      "id": "addf11f9-49fe-4c68-bb19-80d0ad5cd887",
       "name": "语音生成"
     },
     {
@@ -101,10 +101,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        416,
-        -3008
+        1856,
+        1008
       ],
-      "id": "b66ae83c-ed33-4ce8-b7ad-4a2490abdf1d",
+      "id": "38402479-d032-4cc1-878e-d18f2c6b909f",
       "name": "图片生成"
     },
     {
@@ -119,11 +119,12 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -528,
-        -2832
+        912,
+        1184
       ],
-      "id": "a0dd99c2-d34a-4215-bdbd-f03d1a175b98",
-      "name": "AI Agent"
+      "id": "88160b11-79c7-4d27-9458-bbf3977ca1bc",
+      "name": "AI Agent",
+      "retryOnFail": true
     },
     {
       "parameters": {
@@ -138,10 +139,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -528,
-        -2624
+        912,
+        1392
       ],
-      "id": "e7b5d295-0c05-4cab-a7f4-97bee0299ca7",
+      "id": "5beec038-f645-4c34-9a2d-f114453c37e6",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -157,10 +158,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -384,
-        -2624
+        1056,
+        1392
       ],
-      "id": "7d09cd53-df13-46f0-94bc-b3ca7e4d7922",
+      "id": "e6dff279-43dc-477b-b29c-50b89d24c50c",
       "name": "Structured Output Parser"
     },
     {
@@ -198,10 +199,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        448,
-        -3248
+        1888,
+        768
       ],
-      "id": "eb40e3f6-7412-4ece-be87-6e44f4edd6cc",
+      "id": "2d2c18a7-f487-45df-b90d-54044e5122da",
       "name": "图片生成1"
     },
     {
@@ -218,10 +219,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        656,
-        -3248
+        2096,
+        768
       ],
-      "id": "fae34bc7-09bf-410c-9ccf-0738d685f17b",
+      "id": "db343286-67ca-41a9-8fe0-4d36b66bc0d1",
       "name": "HTTP Request"
     },
     {
@@ -232,10 +233,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        624,
-        -3008
+        2064,
+        1008
       ],
-      "id": "c2304a65-bee4-4829-a0a0-81c5951c7e13",
+      "id": "1985db6c-27c1-437a-995a-7943cff1d64b",
       "name": "HTTP Request1"
     },
     {
@@ -249,10 +250,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        864,
-        -3248
+        2304,
+        768
       ],
-      "id": "3fdc9397-de77-43c8-b0be-47c63af4521d",
+      "id": "23dc665a-91b9-49f0-9dec-5ede1b798809",
       "name": "Read/Write Files from Disk1"
     },
     {
@@ -266,10 +267,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        848,
-        -3008
+        2288,
+        1008
       ],
-      "id": "4545eb77-668f-40c5-8010-49b78b676250",
+      "id": "4f686ea1-2c44-4edd-961f-c91d4b09ec84",
       "name": "Read/Write Files from Disk2"
     },
     {
@@ -281,11 +282,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1264,
-        -3584
+        176,
+        432
       ],
       "typeVersion": 1,
-      "id": "ac9c14d0-f8aa-4f7d-bf23-23926079d9fd",
+      "id": "8986e9cb-2add-4855-bfb4-9da7a804b351",
       "name": "Sticky Note"
     },
     {
@@ -297,10 +298,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -800,
-        -2832
+        640,
+        1184
       ],
-      "id": "34cf17ba-c30d-4ed3-bfb0-9d68cbfadec1",
+      "id": "722f654e-22d9-44bc-815f-974ee5ffdbc2",
       "name": "Webhook",
       "webhookId": "e155b53a-e6bc-4d80-a7ac-b4ec8d525119"
     },
@@ -314,10 +315,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        848,
-        -2800
+        2288,
+        1216
       ],
-      "id": "f35e36e9-603f-4df1-b8bd-129b0910f865",
+      "id": "1c2a5211-3b2e-4d96-9edc-e8de038f008a",
       "name": "Read/Write Files from Disk3"
     },
     {
@@ -328,10 +329,10 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        416,
-        -2800
+        1856,
+        1216
       ],
-      "id": "de6fcb2d-3787-45ef-9051-1aef44de1f4e",
+      "id": "7d6f9738-b906-4040-8e74-2c0bb8599025",
       "name": "Convert to File"
     },
     {
@@ -344,10 +345,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -1024,
-        -1792
+        416,
+        2224
       ],
-      "id": "cc4ef7d6-c6c1-498a-bc06-09687b4e503a",
+      "id": "b91ddef0-8e9c-4039-ba37-8637d1f42404",
       "name": "Webhook_Translate",
       "webhookId": "6a373184-55f7-42fb-978d-dc92de20223f"
     },
@@ -362,28 +363,30 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -688,
-        -1792
+        752,
+        2224
       ],
-      "id": "26f0cb1a-66f9-4521-931c-be529909642b",
-      "name": "AI Agent1"
+      "id": "b7d84275-dd5d-4800-b038-5d69f33cfbbb",
+      "name": "AI Agent1",
+      "retryOnFail": true,
+      "waitBetweenTries": 100
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "mode": "list",
-          "value": "gpt-4.1-mini"
+          "value": "gpt-4.1-nano",
+          "mode": "id"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -688,
-        -1600
+        752,
+        2416
       ],
-      "id": "366862be-6a39-40f5-99de-b8a321bc4310",
+      "id": "8f8873be-4dcb-4bac-9fb3-74f9ef0b5b24",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
@@ -400,11 +403,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1264,
-        -1856
+        176,
+        2160
       ],
       "typeVersion": 1,
-      "id": "c0c069cb-7cad-4054-b922-37a3810a3ba2",
+      "id": "95c12c1a-4520-4377-804a-4eebcb19573f",
       "name": "Sticky Note1"
     },
     {
@@ -417,10 +420,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -1024,
-        -1120
+        416,
+        2896
       ],
-      "id": "a2ee0462-85ae-4c71-8c46-09f31cca4275",
+      "id": "dd1f998f-bc45-4104-8eb4-a20d42bd49be",
       "name": "Webhook_Analyze",
       "webhookId": "8f9e3d21-4c85-44ff-b256-9a8e7f8d6c3e"
     },
@@ -435,28 +438,30 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -672,
-        -1120
+        768,
+        2896
       ],
-      "id": "0b50206a-01d8-4ffd-9628-88281630365c",
-      "name": "AI Agent2"
+      "id": "5e95affa-519a-41b5-bfb8-730f71c5f45d",
+      "name": "AI Agent2",
+      "retryOnFail": true,
+      "waitBetweenTries": 100
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "mode": "list",
-          "value": "gpt-4.1-mini"
+          "value": "gpt-4.1-nano",
+          "mode": "id"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -672,
-        -928
+        768,
+        3088
       ],
-      "id": "a618127d-256a-4a38-a825-9d5b2c263764",
+      "id": "4fb3edbe-e8d4-422c-80a3-f55faa2ed536",
       "name": "OpenAI Chat Model3",
       "credentials": {
         "openAiApi": {
@@ -473,11 +478,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1264,
-        -1248
+        176,
+        2768
       ],
       "typeVersion": 1,
-      "id": "5c70cc4d-0794-442a-8314-b09927614a5b",
+      "id": "f5899a43-b2ef-4444-97c1-5053c8b3075a",
       "name": "Sticky Note2"
     },
     {
@@ -492,11 +497,12 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        16,
-        -3168
+        1456,
+        848
       ],
-      "id": "ecab0369-a8b6-4640-8830-d885e1d12fa2",
-      "name": "AI Agent3"
+      "id": "342b99dc-edb1-43b2-90f0-317c9ad52e06",
+      "name": "AI Agent3",
+      "retryOnFail": true
     },
     {
       "parameters": {
@@ -510,10 +516,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        16,
-        -2960
+        1456,
+        1056
       ],
-      "id": "e2d214bc-82e7-4aca-85ee-36fe9335ba82",
+      "id": "ebd67288-fb02-4c3e-bb51-5adb329de547",
       "name": "OpenAI Chat Model2",
       "credentials": {
         "openAiApi": {
@@ -529,10 +535,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        160,
-        -2960
+        1600,
+        1056
       ],
-      "id": "9667b180-d1bc-4f23-807c-77c5a8428e6a",
+      "id": "3a523ebb-6d08-4df7-935e-5826d4932d17",
       "name": "Structured Output Parser1"
     },
     {
@@ -542,10 +548,10 @@
       "type": "n8n-nodes-base.dateTimeTool",
       "typeVersion": 2,
       "position": [
-        -272,
-        -320
+        1168,
+        3696
       ],
-      "id": "189248bf-959e-4e9b-8ab1-a21cc1cd5f4d",
+      "id": "2c44d7bb-08cb-43a7-9c30-92e7bc1c59f5",
       "name": "Date & Time"
     },
     {
@@ -560,10 +566,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -112,
-        -272
+        1328,
+        3744
       ],
-      "id": "a6fb3b7b-da55-4170-b41e-dc66256aa521",
+      "id": "7cf2ab21-b160-4e5f-babd-6e0c15f181fd",
       "name": "OpenAI Chat Model5",
       "credentials": {
         "openAiApi": {
@@ -580,10 +586,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        112,
-        -272
+        1552,
+        3744
       ],
-      "id": "d931345a-b6b9-4c93-9a08-2f7e0b2a81b0",
+      "id": "23426c88-3203-4443-a014-c15e886eeb7a",
       "name": "Structured Output Parser2"
     },
     {
@@ -595,11 +601,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1264,
-        -672
+        176,
+        3344
       ],
       "typeVersion": 1,
-      "id": "c0f3b673-4ca1-4408-a906-ada91abd9583",
+      "id": "00e0b12d-b420-487a-aa46-ce3e43dfd0b5",
       "name": "Sticky Note3"
     },
     {
@@ -612,12 +618,13 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -944,
-        -592
+        496,
+        3424
       ],
-      "id": "8128a054-d34c-4df1-8bc9-6d4411a090ee",
+      "id": "08ebea3b-ffdd-4844-9847-077aff51df68",
       "name": "Webhook_plan",
-      "webhookId": "8a9e5f2c-1d3b-4e8a-9c7d-6f5e4d3c2b1a"
+      "webhookId": "8a9e5f2c-1d3b-4e8a-9c7d-6f5e4d3c2b1a",
+      "retryOnFail": true
     },
     {
       "parameters": {
@@ -627,10 +634,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        -624,
-        -320
+        816,
+        3696
       ],
-      "id": "3c7e5d4e-eeb7-4013-9e57-4438b8840198",
+      "id": "6c536f70-3207-4a57-aa53-b3f4b96e9f50",
       "name": "Simple Memory"
     },
     {
@@ -640,10 +647,10 @@
       "type": "n8n-nodes-base.dateTimeTool",
       "typeVersion": 2,
       "position": [
-        0,
-        -272
+        1440,
+        3744
       ],
-      "id": "40183489-26c8-46bf-a60c-a553f3958716",
+      "id": "7cd94f20-6359-4570-b5bf-2a2dc2825f66",
       "name": "Date & Time1"
     },
     {
@@ -659,10 +666,10 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        -448,
-        -320
+        992,
+        3696
       ],
-      "id": "da67f4b4-d2be-4925-88de-6b72ae613859",
+      "id": "2cd5d8bc-f657-4120-999e-e9b9525bfb2b",
       "name": "发送数据"
     },
     {
@@ -677,10 +684,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -784,
-        -320
+        656,
+        3696
       ],
-      "id": "31559790-4648-4088-9a60-91f83acdb565",
+      "id": "4b83dff7-7dfd-440a-a4e6-9ef94ac450ef",
       "name": "OpenAI Chat Model4",
       "credentials": {
         "openAiApi": {
@@ -701,10 +708,10 @@
       "type": "@n8n/n8n-nodes-langchain.agentTool",
       "typeVersion": 2.2,
       "position": [
-        -112,
-        -448
+        1328,
+        3568
       ],
-      "id": "19c72d45-396a-4fa4-b594-e78b4d295b29",
+      "id": "f714fac1-6a10-426d-9aae-acbc68c5b18f",
       "name": "AI Agent Tool"
     },
     {
@@ -718,10 +725,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -608,
-        -592
+        832,
+        3424
       ],
-      "id": "24ea55bb-8033-4f7e-a027-d730b7e9bffa",
+      "id": "c53c4384-efef-44bc-ab49-c9a7b4d0a517",
       "name": "AI Agent4"
     },
     {
@@ -733,10 +740,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        -816,
-        416
+        624,
+        4432
       ],
-      "id": "aed05f67-4724-48e6-aea2-dcbbbc7cb519",
+      "id": "a9501987-0b5d-4e99-9f63-92c144bc6cfb",
       "name": "Mental Health Memory"
     },
     {
@@ -750,11 +757,12 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -912,
-        208
+        528,
+        4224
       ],
-      "id": "6bd82177-ce02-4a71-985b-262858d195c9",
-      "name": "AI Agent5"
+      "id": "fe782810-0fb0-429b-816e-cf3b290767d1",
+      "name": "AI Agent5",
+      "retryOnFail": true
     },
     {
       "parameters": {
@@ -768,10 +776,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -912,
-        416
+        528,
+        4432
       ],
-      "id": "2bb666c5-8ace-46fb-968a-bc5840d03b84",
+      "id": "2cbdaa08-2339-4c5b-b5b9-0884daf0d6f8",
       "name": "OpenAI Chat Model6",
       "credentials": {
         "openAiApi": {
@@ -788,11 +796,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1248,
-        80
+        192,
+        4096
       ],
       "typeVersion": 1,
-      "id": "88943959-c097-4b55-96a3-a791cb9e1c26",
+      "id": "300f4434-5170-46d8-b58f-71da9b3d0d41",
       "name": "Sticky Note4"
     },
     {
@@ -806,11 +814,13 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -912,
-        832
+        528,
+        4848
       ],
-      "id": "10b3b175-471f-4b40-8ca6-4f0a5065ab2f",
-      "name": "AI Agent6"
+      "id": "72407d26-188e-4c64-8372-5e67aae14771",
+      "name": "AI Agent6",
+      "retryOnFail": true,
+      "waitBetweenTries": 100
     },
     {
       "parameters": {
@@ -824,10 +834,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -912,
-        1024
+        528,
+        5040
       ],
-      "id": "b2abe37a-1573-4212-9649-a363295be887",
+      "id": "bf79bd27-2a57-4d6f-8e13-a7c8ecf7b731",
       "name": "OpenAI Chat Model7",
       "credentials": {
         "openAiApi": {
@@ -844,11 +854,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1232,
-        752
+        208,
+        4768
       ],
       "typeVersion": 1,
-      "id": "acbee527-db16-4113-916b-9537d93211e3",
+      "id": "029c8e12-0f7a-46b6-b695-8c34d598bd03",
       "name": "Sticky Note5"
     },
     {
@@ -861,10 +871,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -1168,
-        832
+        272,
+        4848
       ],
-      "id": "63295733-6bc1-463a-b395-de00f8ebce20",
+      "id": "604fd7cd-53db-4ff9-b0dc-45aee1061d6f",
       "name": "心理健康标题生成",
       "webhookId": "75c97db2-05f1-4a8f-b799-45e63207df9f"
     },
@@ -878,12 +888,97 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -1136,
-        208
+        304,
+        4224
       ],
-      "id": "0f2e89e2-e718-4450-8647-c8c15bbb8e44",
+      "id": "3b3a5e32-0196-494f-9267-58307b43ac31",
       "name": "心里咨询",
       "webhookId": "47bed156-3310-4eb9-a1ff-e9996079466c"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "你是 Learning Studio 的智能笔记补全助手。用户正在编写学习笔记（Markdown 格式），你需要根据光标前后的上下文智能预测用户接下来要写的内容。\n\n# 核心要求\n1. **只补全，不重复**：只返回接下来要写的文本，不要重复已有内容\n2. **简短精准**：补全 1-3 句话或 3-5 行代码\n3. **保持一致性**：\n   - 语言：中文学习笔记用中文，代码注释跟随原语言\n   - 风格：正式/随笔风格与上下文一致\n   - 格式：列表继续列表，代码保持缩进\n\n# 学习场景优化\n- **代码笔记**：补全代码逻辑 + 简洁注释\n- **概念笔记**：补全定义、特点、示例\n- **列表笔记**：补全相关条目（技术栈、要点等）\n- **问答笔记**：补全答案或相关问题\n- **TODO 列表**：补全常见学习任务\n\n# 输出规则\n- 直接返回补全文本，无引号、无前缀、无解释\n- 代码块必须保持正确的缩进和语法\n- 如果上下文不足（< 5 字符）或无法预测，返回空字符串\n- 避免生成过于宽泛或无关的内容\n\n# 示例\n\n**示例 1 - React Hooks 学习笔记**\n上下文：\n```\n# React Hooks 学习\n\n今天学习了以下 Hooks：\n- useState - 状态管理\n- useEffect - 副作用处理\n-\n```\n补全：\n```\n useContext - 上下文共享\n- useReducer - 复杂状态逻辑\n- useMemo - 性能优化\n```\n\n**示例 2 - 函数代码**\n上下文：\n```javascript\nfunction calculateTotal(items) {\n  return items.reduce((sum, item) => \n```\n补全：\n```javascript\nsum + item.price, 0)\n}\n```\n\n**示例 3 - 学习计划**\n上下文：\n```\n## 本周学习计划\n- [ ] 完成 React 教程\n- [ ] \n```\n补全：\n```\n学习 TypeScript 基础\n- [ ] 实战项目：Todo App\n```\n\n**示例 4 - 技术概念**\n上下文：\n```\n### 闭包 (Closure)\n\n定义：函数可以访问其外部作用域的变量\n\n特点：\n```\n补全：\n```\n1. 延长变量生命周期\n2. 创建私有变量\n3. 常用于数据封装和模块化\n```\n\n请根据用户提供的上下文进行智能补全："
+        },
+        "promptType": "define",
+        "text": "={{ $json.body.context }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        512,
+        5376
+      ],
+      "id": "f34daae9-82ec-4f7f-a826-5730cf2cccb3",
+      "name": "AI Agent7"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "id"
+        },
+        "options": {
+          "temperature": 0.4,
+          "maxTokens": 200
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        512,
+        5536
+      ],
+      "id": "3f7bafe6-6a67-4884-a5a0-aa7a4e705c5d",
+      "name": "OpenAI Chat Model8",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "note/autocomplete",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        "httpMethod": "POST",
+        "responseMode": "lastNode"
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        5376
+      ],
+      "id": "3dd23173-8aa9-423b-ac76-5b898a9a508e",
+      "name": "笔记自动补全 Webhook",
+      "webhookId": "ed2bcb20-dbe8-4b22-a7cb-c9cce83860f9"
+    },
+    {
+      "parameters": {
+        "content": "## 笔记自动补全 (Note Autocomplete)\n\n**功能**：基于上下文的智能学习笔记补全\n**模型**：GPT-4.1-nano (快速 + 低成本)\n**参数**：temperature=0.4, maxTokens=200\n**触发**：前端 800ms 防抖后自动请求\n\n**优化点**：\n- 针对学习场景优化 prompt\n- 支持代码、列表、概念等多种笔记格式\n- 简短精准的补全（1-3 句话或 3-5 行代码）",
+        "height": 432,
+        "width": 848
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        192,
+        5280
+      ],
+      "typeVersion": 1,
+      "id": "c70162f7-8472-4065-9519-452526818799",
+      "name": "Sticky Note6"
     }
   ],
   "connections": {
@@ -1221,7 +1316,7 @@
         ]
       ]
     },
-    "标题生成": {
+    "心理健康标题生成": {
       "main": [
         [
           {
@@ -1237,6 +1332,28 @@
         [
           {
             "node": "AI Agent5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model8": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent7",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "笔记自动补全": {
+      "main": [
+        [
+          {
+            "node": "AI Agent7",
             "type": "main",
             "index": 0
           }

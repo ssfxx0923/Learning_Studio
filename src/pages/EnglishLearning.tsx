@@ -15,6 +15,8 @@ import { loadLocalArticles, reloadArticles } from '@/services/localArticles'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { AIGreeting } from '@/components/AIGreeting'
 import { v4 as uuidv4 } from 'uuid'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface Article {
   id: string
@@ -439,11 +441,25 @@ export default function EnglishLearning() {
                     </Button>
                   </div>
 
-                  {/* 结果显示 */}
+                  {/* 结果显示 - 支持Markdown渲染 */}
                   {translation && (
                     <div className="pt-3 border-t">
                       <p className="text-xs font-semibold mb-2 text-primary">结果</p>
-                      <p className="text-sm leading-relaxed text-foreground/90 whitespace-pre-line">{translation}</p>
+                      <div className="prose prose-sm dark:prose-invert max-w-none
+                        prose-p:text-foreground/90 prose-p:leading-relaxed prose-p:my-2
+                        prose-headings:text-foreground prose-headings:font-semibold
+                        prose-h1:text-lg prose-h2:text-base prose-h3:text-sm
+                        prose-ul:my-2 prose-ol:my-2 prose-li:my-0.5
+                        prose-strong:text-foreground prose-strong:font-semibold
+                        prose-code:text-foreground prose-code:bg-muted/80 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:before:content-none prose-code:after:content-none
+                        prose-pre:!bg-[#0d1117] prose-pre:!text-[#c9d1d9] prose-pre:text-xs prose-pre:p-3 prose-pre:rounded-lg prose-pre:my-2 prose-pre:overflow-x-auto
+                        prose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:py-0.5 prose-blockquote:my-2
+                        prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                        [&_pre_code]:!text-inherit [&_pre_code]:!bg-transparent [&_pre_code]:!p-0">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {translation}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                   )}
                 </div>
