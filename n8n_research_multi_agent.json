@@ -1422,7 +1422,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ { \n  \"response\": $json.output, \n  \"mode\": \"multi-agent\",\n  \"agents\": [\n    {\n      \"role\": $('准备Agent数据').item.json.agent1.role,\n      \"response\": $('Research Agent 1').item.json.output\n    },\n    {\n      \"role\": $('准备Agent数据').item.json.agent2.role,\n      \"response\": $('Research Agent 2').item.json.output\n    },\n    {\n      \"role\": $('准备Agent数据').item.json.agent3.role,\n      \"response\": $('Research Agent 3').item.json.output\n    }\n  ]\n} }}",
+        "responseBody": "={{ { \n  \"response\": $json.output, \n  \"mode\": \"multi-agent\"\n} }}",
         "options": {}
       },
       "type": "n8n-nodes-base.respondToWebhook",
@@ -1437,7 +1437,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "text": "={{ $('Webhook - Research Entry').item.json.body.message }}",
         "options": {
           "systemMessage": "你是一个专业的研究助手，能够深入分析和回答各类研究问题。请提供详细、准确的回答。"
         }

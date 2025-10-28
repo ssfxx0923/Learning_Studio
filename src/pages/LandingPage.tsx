@@ -87,7 +87,7 @@ export default function LandingPage() {
           <div className="space-y-4">
             <h1 className="text-5xl lg:text-7xl font-bold">
               <span className="bg-gradient-to-r from-primary via-pink-500 to-purple-600 bg-clip-text text-transparent">
-                AI学习平台
+                Learning Studio
               </span>
             </h1>
             <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">

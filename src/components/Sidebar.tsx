@@ -71,7 +71,7 @@ export function Sidebar() {
           {!collapsed && showContent && (
             <div className="animate-in fade-in duration-200">
               <span className="text-lg font-bold bg-gradient-to-r from-primary to-pink-600 bg-clip-text text-transparent">
-                AI学习平台
+                Learning Studio
               </span>
               <p className="text-[10px] text-muted-foreground">智能学习新时代</p>
             </div>
