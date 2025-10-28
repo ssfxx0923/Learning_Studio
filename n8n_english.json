@@ -9,10 +9,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2272,
-        1408
+        1696,
+        1312
       ],
-      "id": "77adac8b-cc9c-4a5a-a632-02bf5314b107",
+      "id": "2edbec0e-de45-4713-ba18-fc0dfefa5a3e",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -60,10 +60,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1856,
-        1408
+        1280,
+        1312
       ],
-      "id": "addf11f9-49fe-4c68-bb19-80d0ad5cd887",
+      "id": "ddc6087e-9ec2-4fc9-93cf-ce515da00342",
       "name": "语音生成"
     },
     {
@@ -101,10 +101,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1856,
-        1008
+        1280,
+        912
       ],
-      "id": "38402479-d032-4cc1-878e-d18f2c6b909f",
+      "id": "0f35cd08-b437-479b-be0a-78736555c7f0",
       "name": "图片生成"
     },
     {
@@ -113,43 +113,18 @@
         "text": "={{ $json.body.message }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=你是一个英语学习辅助助手。用户会输入若干英文单词，请写一篇约 100 词的有趣英文短文，兼顾流畅度和单词使用量。\n你只需要返回纯粹的json。格式，不要附带任何解释和说明。\njson格式如下:\n{\"Title\": \"California\", \"Body\": \"Your English essay related to the keyword\", \"Words\": [\"word1\", \"word2\", \"word3\"]}"
+          "systemMessage": "=你是一个英语学习辅助助手。用户会输入若干英文单词，请写一篇约 500 词的有趣英文短文，兼顾流畅度和单词使用量。\n你只需要返回纯粹的json。格式，不要附带任何解释和说明。\njson格式如下:\n{\"Title\": \"California\", \"Body\": \"Your English essay related to the keyword\", \"Words\": [\"word1\", \"word2\", \"word3\"]}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        912,
-        1184
+        336,
+        1088
       ],
-      "id": "88160b11-79c7-4d27-9458-bbf3977ca1bc",
+      "id": "85cfe032-9886-42bd-90a3-2267fe53d3f4",
       "name": "AI Agent",
       "retryOnFail": true
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "glm-4.5",
-          "mode": "list",
-          "cachedResultName": "glm-4.5"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        912,
-        1392
-      ],
-      "id": "5beec038-f645-4c34-9a2d-f114453c37e6",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "yK0fgk8FcJgoqsnQ",
-          "name": "OpenAi account 2"
-        }
-      }
     },
     {
       "parameters": {
@@ -158,10 +133,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1056,
-        1392
+        480,
+        1296
       ],
-      "id": "e6dff279-43dc-477b-b29c-50b89d24c50c",
+      "id": "a6a4edc8-bbba-434d-beab-13fcc608dc98",
       "name": "Structured Output Parser"
     },
     {
@@ -199,10 +174,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1888,
-        768
+        1312,
+        672
       ],
-      "id": "2d2c18a7-f487-45df-b90d-54044e5122da",
+      "id": "f0cd21c7-22ee-4f76-9449-34e4aae11af7",
       "name": "图片生成1"
     },
     {
@@ -219,10 +194,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2096,
-        768
+        1520,
+        672
       ],
-      "id": "db343286-67ca-41a9-8fe0-4d36b66bc0d1",
+      "id": "4721520b-a968-4e6a-a2f3-ca8f694de8e3",
       "name": "HTTP Request"
     },
     {
@@ -233,10 +208,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2064,
-        1008
+        1488,
+        912
       ],
-      "id": "1985db6c-27c1-437a-995a-7943cff1d64b",
+      "id": "5463b2ed-6a11-4664-80e7-361bc5d863bc",
       "name": "HTTP Request1"
     },
     {
@@ -250,10 +225,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2304,
-        768
+        1728,
+        672
       ],
-      "id": "23dc665a-91b9-49f0-9dec-5ede1b798809",
+      "id": "e8906956-6a23-4938-837d-52c0b3d35367",
       "name": "Read/Write Files from Disk1"
     },
     {
@@ -267,10 +242,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2288,
-        1008
+        1712,
+        912
       ],
-      "id": "4f686ea1-2c44-4edd-961f-c91d4b09ec84",
+      "id": "d5044201-6dc5-422a-b0c0-7b634f0196f0",
       "name": "Read/Write Files from Disk2"
     },
     {
@@ -282,11 +257,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        176,
-        432
+        -400,
+        336
       ],
       "typeVersion": 1,
-      "id": "8986e9cb-2add-4855-bfb4-9da7a804b351",
+      "id": "e0de8138-f47d-4e51-adfc-af79b7eb9cb8",
       "name": "Sticky Note"
     },
     {
@@ -298,10 +273,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        640,
-        1184
+        64,
+        1088
       ],
-      "id": "722f654e-22d9-44bc-815f-974ee5ffdbc2",
+      "id": "1f80a3a6-a189-42a4-9dba-b7e97f31ceaa",
       "name": "Webhook",
       "webhookId": "e155b53a-e6bc-4d80-a7ac-b4ec8d525119"
     },
@@ -315,10 +290,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        2288,
-        1216
+        1712,
+        1120
       ],
-      "id": "1c2a5211-3b2e-4d96-9edc-e8de038f008a",
+      "id": "582cbd56-0135-4f46-835b-db463b5b35f2",
       "name": "Read/Write Files from Disk3"
     },
     {
@@ -329,10 +304,10 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        1856,
-        1216
+        1280,
+        1120
       ],
-      "id": "7d6f9738-b906-4040-8e74-2c0bb8599025",
+      "id": "913d1d04-6352-4079-90c4-d58b82ec5b95",
       "name": "Convert to File"
     },
     {
@@ -345,10 +320,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        416,
-        2224
+        -160,
+        2128
       ],
-      "id": "b91ddef0-8e9c-4039-ba37-8637d1f42404",
+      "id": "2deff2ae-b64e-4c6c-b37b-c832088d71d5",
       "name": "Webhook_Translate",
       "webhookId": "6a373184-55f7-42fb-978d-dc92de20223f"
     },
@@ -363,37 +338,13 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        752,
-        2224
+        176,
+        2128
       ],
-      "id": "b7d84275-dd5d-4800-b038-5d69f33cfbbb",
+      "id": "0f13e861-e71c-4e36-9056-29815832355a",
       "name": "AI Agent1",
       "retryOnFail": true,
       "waitBetweenTries": 100
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-nano",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        752,
-        2416
-      ],
-      "id": "8f8873be-4dcb-4bac-9fb3-74f9ef0b5b24",
-      "name": "OpenAI Chat Model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "Ja1oOqdJYdJ0EpPS",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -403,11 +354,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        176,
-        2160
+        -400,
+        2064
       ],
       "typeVersion": 1,
-      "id": "95c12c1a-4520-4377-804a-4eebcb19573f",
+      "id": "74b840e5-8019-48c9-85d7-61477bacfd40",
       "name": "Sticky Note1"
     },
     {
@@ -420,10 +371,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        416,
-        2896
+        -160,
+        2800
       ],
-      "id": "dd1f998f-bc45-4104-8eb4-a20d42bd49be",
+      "id": "00e037d4-37ca-4785-8b7e-a5c81a342b98",
       "name": "Webhook_Analyze",
       "webhookId": "8f9e3d21-4c85-44ff-b256-9a8e7f8d6c3e"
     },
@@ -438,37 +389,13 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        768,
-        2896
+        192,
+        2800
       ],
-      "id": "5e95affa-519a-41b5-bfb8-730f71c5f45d",
+      "id": "ea0bcffd-61a0-4b18-ba3d-c01fd8e92f4b",
       "name": "AI Agent2",
       "retryOnFail": true,
       "waitBetweenTries": 100
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-nano",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        768,
-        3088
-      ],
-      "id": "4fb3edbe-e8d4-422c-80a3-f55faa2ed536",
-      "name": "OpenAI Chat Model3",
-      "credentials": {
-        "openAiApi": {
-          "id": "Ja1oOqdJYdJ0EpPS",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -478,11 +405,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        176,
-        2768
+        -400,
+        2672
       ],
       "typeVersion": 1,
-      "id": "f5899a43-b2ef-4444-97c1-5053c8b3075a",
+      "id": "a2d42b2f-bf76-4ebf-a3a1-00b3036fff5e",
       "name": "Sticky Note2"
     },
     {
@@ -497,36 +424,12 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        1456,
-        848
+        880,
+        752
       ],
-      "id": "342b99dc-edb1-43b2-90f0-317c9ad52e06",
+      "id": "0a641f44-4421-49dd-ba44-713ad321b64b",
       "name": "AI Agent3",
       "retryOnFail": true
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-mini",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        1456,
-        1056
-      ],
-      "id": "ebd67288-fb02-4c3e-bb51-5adb329de547",
-      "name": "OpenAI Chat Model2",
-      "credentials": {
-        "openAiApi": {
-          "id": "Ja1oOqdJYdJ0EpPS",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -535,10 +438,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1600,
-        1056
+        1024,
+        960
       ],
-      "id": "3a523ebb-6d08-4df7-935e-5826d4932d17",
+      "id": "195b7b90-0a69-44be-b995-1d4ef8225f20",
       "name": "Structured Output Parser1"
     },
     {
@@ -548,17 +451,17 @@
       "type": "n8n-nodes-base.dateTimeTool",
       "typeVersion": 2,
       "position": [
-        1168,
-        3696
+        592,
+        3600
       ],
-      "id": "2c44d7bb-08cb-43a7-9c30-92e7bc1c59f5",
+      "id": "ab8a268c-f5ff-4ab9-98f1-f7718137bf05",
       "name": "Date & Time"
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1-mini",
+          "value": "gpt-4.1-nano",
           "mode": "id"
         },
         "options": {}
@@ -566,10 +469,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1328,
-        3744
+        752,
+        3664
       ],
-      "id": "7cf2ab21-b160-4e5f-babd-6e0c15f181fd",
+      "id": "b24dfeac-bb14-429b-9cad-922942d92639",
       "name": "OpenAI Chat Model5",
       "credentials": {
         "openAiApi": {
@@ -586,10 +489,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1552,
-        3744
+        976,
+        3664
       ],
-      "id": "23426c88-3203-4443-a014-c15e886eeb7a",
+      "id": "6e758fbd-252e-41ed-a802-037c0cde89e5",
       "name": "Structured Output Parser2"
     },
     {
@@ -601,11 +504,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        176,
-        3344
+        -400,
+        3248
       ],
       "typeVersion": 1,
-      "id": "00e0b12d-b420-487a-aa46-ce3e43dfd0b5",
+      "id": "e72f745b-cbd0-42fe-9369-d3729168b607",
       "name": "Sticky Note3"
     },
     {
@@ -618,10 +521,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        496,
-        3424
+        -80,
+        3328
       ],
-      "id": "08ebea3b-ffdd-4844-9847-077aff51df68",
+      "id": "038524ab-2d8a-4897-b929-76b21790c9a7",
       "name": "Webhook_plan",
       "webhookId": "8a9e5f2c-1d3b-4e8a-9c7d-6f5e4d3c2b1a",
       "retryOnFail": true
@@ -634,10 +537,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        816,
-        3696
+        240,
+        3600
       ],
-      "id": "6c536f70-3207-4a57-aa53-b3f4b96e9f50",
+      "id": "94509130-1fda-4f95-a696-e8b3312f0294",
       "name": "Simple Memory"
     },
     {
@@ -647,10 +550,10 @@
       "type": "n8n-nodes-base.dateTimeTool",
       "typeVersion": 2,
       "position": [
-        1440,
-        3744
+        864,
+        3664
       ],
-      "id": "7cd94f20-6359-4570-b5bf-2a2dc2825f66",
+      "id": "7d21740a-2526-4eb6-a766-f0bc7376548f",
       "name": "Date & Time1"
     },
     {
@@ -666,35 +569,11 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        992,
-        3696
+        416,
+        3600
       ],
-      "id": "2cd5d8bc-f657-4120-999e-e9b9525bfb2b",
+      "id": "2e756e7d-84f5-4aec-b507-126a7dd3cf02",
       "name": "发送数据"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        656,
-        3696
-      ],
-      "id": "4b83dff7-7dfd-440a-a4e6-9ef94ac450ef",
-      "name": "OpenAI Chat Model4",
-      "credentials": {
-        "openAiApi": {
-          "id": "Ja1oOqdJYdJ0EpPS",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -708,10 +587,10 @@
       "type": "@n8n/n8n-nodes-langchain.agentTool",
       "typeVersion": 2.2,
       "position": [
-        1328,
-        3568
+        752,
+        3472
       ],
-      "id": "f714fac1-6a10-426d-9aae-acbc68c5b18f",
+      "id": "74df276c-9b6a-4ddb-a12d-d8404d6c89d9",
       "name": "AI Agent Tool"
     },
     {
@@ -725,10 +604,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        832,
-        3424
+        256,
+        3328
       ],
-      "id": "c53c4384-efef-44bc-ab49-c9a7b4d0a517",
+      "id": "8018b06a-4f5a-42c8-8135-0fc05dfed7d1",
       "name": "AI Agent4"
     },
     {
@@ -740,10 +619,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        624,
-        4432
+        48,
+        4336
       ],
-      "id": "a9501987-0b5d-4e99-9f63-92c144bc6cfb",
+      "id": "a5efebe9-ba5f-43c8-b2cb-f43db63be506",
       "name": "Mental Health Memory"
     },
     {
@@ -757,50 +636,26 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        528,
-        4224
+        -48,
+        4128
       ],
-      "id": "fe782810-0fb0-429b-816e-cf3b290767d1",
+      "id": "fb87aa1c-8380-4a2f-b234-eab883e39503",
       "name": "AI Agent5",
       "retryOnFail": true
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        528,
-        4432
-      ],
-      "id": "2cbdaa08-2339-4c5b-b5b9-0884daf0d6f8",
-      "name": "OpenAI Chat Model6",
-      "credentials": {
-        "openAiApi": {
-          "id": "Ja1oOqdJYdJ0EpPS",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "content": "## 心理咨询\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
         "height": 640,
-        "width": 960
+        "width": 1056
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        192,
-        4096
+        -384,
+        4000
       ],
       "typeVersion": 1,
-      "id": "300f4434-5170-46d8-b58f-71da9b3d0d41",
+      "id": "3fb10226-c636-4950-9775-107f0ac9637c",
       "name": "Sticky Note4"
     },
     {
@@ -814,51 +669,27 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        528,
-        4848
+        -48,
+        4752
       ],
-      "id": "72407d26-188e-4c64-8372-5e67aae14771",
+      "id": "b8c488fc-8fba-415e-a028-047498ecdb5f",
       "name": "AI Agent6",
       "retryOnFail": true,
       "waitBetweenTries": 100
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4.1-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        528,
-        5040
-      ],
-      "id": "bf79bd27-2a57-4d6f-8e13-a7c8ecf7b731",
-      "name": "OpenAI Chat Model7",
-      "credentials": {
-        "openAiApi": {
-          "id": "Ja1oOqdJYdJ0EpPS",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "content": "## 标题生成\n**Double click** to edit me. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
         "height": 496,
-        "width": 896
+        "width": 944
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        208,
-        4768
+        -368,
+        4672
       ],
       "typeVersion": 1,
-      "id": "029c8e12-0f7a-46b6-b695-8c34d598bd03",
+      "id": "f9ca7ced-8560-4fc5-ab7c-61b6eae8cac1",
       "name": "Sticky Note5"
     },
     {
@@ -871,10 +702,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        272,
-        4848
+        -304,
+        4752
       ],
-      "id": "604fd7cd-53db-4ff9-b0dc-45aee1061d6f",
+      "id": "c4d79876-8305-45ce-a527-f30249c25bc4",
       "name": "心理健康标题生成",
       "webhookId": "75c97db2-05f1-4a8f-b799-45e63207df9f"
     },
@@ -888,60 +719,35 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        304,
-        4224
+        -272,
+        4128
       ],
-      "id": "3b3a5e32-0196-494f-9267-58307b43ac31",
+      "id": "88d21284-5554-40a2-86eb-5cc4b6a01abd",
       "name": "心里咨询",
       "webhookId": "47bed156-3310-4eb9-a1ff-e9996079466c"
     },
     {
       "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.context }}",
         "options": {
           "systemMessage": "你是 Learning Studio 的智能笔记补全助手。用户正在编写学习笔记（Markdown 格式），你需要根据光标前后的上下文智能预测用户接下来要写的内容。\n\n# 核心要求\n1. **只补全，不重复**：只返回接下来要写的文本，不要重复已有内容\n2. **简短精准**：补全 1-3 句话或 3-5 行代码\n3. **保持一致性**：\n   - 语言：中文学习笔记用中文，代码注释跟随原语言\n   - 风格：正式/随笔风格与上下文一致\n   - 格式：列表继续列表，代码保持缩进\n\n# 学习场景优化\n- **代码笔记**：补全代码逻辑 + 简洁注释\n- **概念笔记**：补全定义、特点、示例\n- **列表笔记**：补全相关条目（技术栈、要点等）\n- **问答笔记**：补全答案或相关问题\n- **TODO 列表**：补全常见学习任务\n\n# 输出规则\n- 直接返回补全文本，无引号、无前缀、无解释\n- 代码块必须保持正确的缩进和语法\n- 如果上下文不足（< 5 字符）或无法预测，返回空字符串\n- 避免生成过于宽泛或无关的内容\n\n# 示例\n\n**示例 1 - React Hooks 学习笔记**\n上下文：\n```\n# React Hooks 学习\n\n今天学习了以下 Hooks：\n- useState - 状态管理\n- useEffect - 副作用处理\n-\n```\n补全：\n```\n useContext - 上下文共享\n- useReducer - 复杂状态逻辑\n- useMemo - 性能优化\n```\n\n**示例 2 - 函数代码**\n上下文：\n```javascript\nfunction calculateTotal(items) {\n  return items.reduce((sum, item) => \n```\n补全：\n```javascript\nsum + item.price, 0)\n}\n```\n\n**示例 3 - 学习计划**\n上下文：\n```\n## 本周学习计划\n- [ ] 完成 React 教程\n- [ ] \n```\n补全：\n```\n学习 TypeScript 基础\n- [ ] 实战项目：Todo App\n```\n\n**示例 4 - 技术概念**\n上下文：\n```\n### 闭包 (Closure)\n\n定义：函数可以访问其外部作用域的变量\n\n特点：\n```\n补全：\n```\n1. 延长变量生命周期\n2. 创建私有变量\n3. 常用于数据封装和模块化\n```\n\n请根据用户提供的上下文进行智能补全："
-        },
-        "promptType": "define",
-        "text": "={{ $json.body.context }}"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        512,
-        5376
+        1088,
+        4336
       ],
-      "id": "f34daae9-82ec-4f7f-a826-5730cf2cccb3",
+      "id": "0ae0c44c-9966-49e7-9c6b-567c22a3b71a",
       "name": "AI Agent7"
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-nano",
-          "mode": "id"
-        },
-        "options": {
-          "temperature": 0.4,
-          "maxTokens": 200
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        512,
-        5536
-      ],
-      "id": "3f7bafe6-6a67-4884-a5a0-aa7a4e705c5d",
-      "name": "OpenAI Chat Model8",
-      "credentials": {
-        "openAiApi": {
-          "id": "Ja1oOqdJYdJ0EpPS",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
+        "httpMethod": "POST",
         "path": "note/autocomplete",
+        "responseMode": "lastNode",
         "options": {
           "responseHeaders": {
             "entries": [
@@ -951,34 +757,573 @@
               }
             ]
           }
-        },
-        "httpMethod": "POST",
-        "responseMode": "lastNode"
+        }
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        240,
-        5376
+        816,
+        4336
       ],
-      "id": "3dd23173-8aa9-423b-ac76-5b898a9a508e",
+      "id": "21849104-9c1c-4f60-9ad2-4c2f9d9e5c7f",
       "name": "笔记自动补全 Webhook",
       "webhookId": "ed2bcb20-dbe8-4b22-a7cb-c9cce83860f9"
     },
     {
       "parameters": {
         "content": "## 笔记自动补全 (Note Autocomplete)\n\n**功能**：基于上下文的智能学习笔记补全\n**模型**：GPT-4.1-nano (快速 + 低成本)\n**参数**：temperature=0.4, maxTokens=200\n**触发**：前端 800ms 防抖后自动请求\n\n**优化点**：\n- 针对学习场景优化 prompt\n- 支持代码、列表、概念等多种笔记格式\n- 简短精准的补全（1-3 句话或 3-5 行代码）",
-        "height": 432,
-        "width": 848
+        "height": 592,
+        "width": 720
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        192,
-        5280
+        720,
+        4032
       ],
       "typeVersion": 1,
-      "id": "c70162f7-8472-4065-9519-452526818799",
+      "id": "49a38d0c-295c-494d-b5f2-2f84f27c3c09",
       "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        992,
+        4784
+      ],
+      "id": "423b8c70-0de7-4b9c-bb17-774716aa6bc6",
+      "name": "AI Agent8"
+    },
+    {
+      "parameters": {
+        "path": "english/analyze",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        720,
+        4784
+      ],
+      "id": "6002f210-aa44-4be9-87c1-de2dc1fd3bee",
+      "name": "笔记划词提问",
+      "webhookId": "ed743cbd-65e9-4d3a-82cc-190f01b584a5"
+    },
+    {
+      "parameters": {
+        "height": 416,
+        "width": 1072
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        592,
+        4688
+      ],
+      "typeVersion": 1,
+      "id": "f2aad45b-3845-4b8d-b48f-4bfec01f0e6e",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3824,
+        3728
+      ],
+      "id": "3eec8c32-7150-463d-bdd0-ed69b065a56f",
+      "name": "OpenAI Chat Model10",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "你好",
+        "options": {
+          "systemMessage": "={{ $json.output.agent1 }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        4784,
+        3056
+      ],
+      "id": "bf24ef75-a1e9-4587-b3d4-30f43dcd57f7",
+      "name": "AI Agent10"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4784,
+        3200
+      ],
+      "id": "e7a463aa-93c6-4a24-a88f-acca84e721fc",
+      "name": "OpenAI Chat Model11",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "你好",
+        "options": {
+          "systemMessage": "={{ $json.output.agent2 }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        4784,
+        3424
+      ],
+      "id": "0f9e5425-5021-453c-bf54-ff36d9279d90",
+      "name": "AI Agent11"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4784,
+        3584
+      ],
+      "id": "ba029d07-6c8b-4fd4-a390-8bc733bfb5a8",
+      "name": "OpenAI Chat Model12",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "你好",
+        "options": {
+          "systemMessage": "={{ $json.output.agent3 }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        4800,
+        3776
+      ],
+      "id": "ca0626f5-db19-4070-a276-109d0a10e9b5",
+      "name": "AI Agent12"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4800,
+        3920
+      ],
+      "id": "8642c817-44a7-4efd-bfae-8fa5552c39e3",
+      "name": "OpenAI Chat Model13",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "1f79734f-0d50-45a5-b6d4-875b1027ae7f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        4592,
+        3776
+      ],
+      "id": "6083d216-caad-4d93-a27f-ee59249e347a",
+      "name": "Webhook3",
+      "webhookId": "1f79734f-0d50-45a5-b6d4-875b1027ae7f"
+    },
+    {
+      "parameters": {
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "你是agent组长，你的任务是分析用户的问题，并且为你手下的每个agent分配角色。你的输出需要以json的格式返回\n1. 你可以为三个不同的agent可以分配\n2. 不同agent的角色重合度不要太高\n3. 你只需要分配角色。\n4. 提示词示例：你是一位专业业务分析师擅长制定业务计划，包括市场分析、竞争分析和财务预测，你需要根据用户的需求完成相应的任务。\n\n确保你的输出符合json格式\njson说明：\n{\"agent1\": \"California\", \"agent2\": \"California\", \"agent3\": \"California\", \"agent4\": \"California\"}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        3824,
+        3536
+      ],
+      "id": "a7b33eaa-a7dd-4c84-ae86-a98af12032c4",
+      "name": "角色分配",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"agent1\": \"California\",\n\t\"agent2\": \"California\",\n    \"agent3\": \"California\",\n    \"agent4\": \"California\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        3968,
+        3696
+      ],
+      "id": "352aa820-0046-4bdf-83ff-44bf8acf6fcd",
+      "name": "Structured Output Parser3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "你好",
+        "options": {
+          "systemMessage": "={{ $json.output.agent4 }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        4768,
+        4080
+      ],
+      "id": "73314877-ce63-4ebd-a8b9-c3583df8dc84",
+      "name": "AI Agent13"
+    },
+    {
+      "parameters": {
+        "path": "1f79734f-0d50-45a5-b6d4-875b1027ae7f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        4592,
+        4080
+      ],
+      "id": "451e0280-6f8f-4f52-ad6b-ddcfa8766d89",
+      "name": "Webhook4",
+      "webhookId": "1f79734f-0d50-45a5-b6d4-875b1027ae7f"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4768,
+        4256
+      ],
+      "id": "e180234f-126b-454f-bfe6-b61d371f2108",
+      "name": "OpenAI Chat Model14",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        4320
+      ],
+      "id": "f10472bc-9ee7-436f-a1d0-314a35ab2319",
+      "name": "DeepSeek Chat Model4",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "p4ewtEWbAkNVB2SC",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        128,
+        3600
+      ],
+      "id": "6d5be370-f8e5-4ebc-98e9-f079f0ca3a0e",
+      "name": "DeepSeek Chat Model8",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "p4ewtEWbAkNVB2SC",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        1296
+      ],
+      "id": "a305dcdc-d95c-44b2-b0af-5cf98d053f82",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        928
+      ],
+      "id": "420c5fde-eab3-4e1d-bbac-298e33d96fa9",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        176,
+        2304
+      ],
+      "id": "80a8f500-012b-4637-affc-aa12b3debbc6",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        2944
+      ],
+      "id": "af470da6-cf3d-481c-a2d2-625701861cda",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        4512
+      ],
+      "id": "c824fd06-6a5d-4e1b-813d-7aa217f1508c",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -48,
+        4928
+      ],
+      "id": "3423b071-60e5-4e17-bc67-0e6bc122b318",
+      "name": "OpenAI Chat Model6",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        992,
+        4960
+      ],
+      "id": "e53d99ee-4d68-492c-a733-bfb401763be0",
+      "name": "OpenAI Chat Model7",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        3632,
+        3536
+      ],
+      "id": "e20bd522-f4f1-4159-9281-d0dbf301fed2",
+      "name": "提示词输出",
+      "webhookId": "a231ff42-a6a4-4509-8129-0981d2eda94d"
+    },
+    {
+      "parameters": {
+        "path": "1f79734f-0d50-45a5-b6d4-875b1027ae7f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        4576,
+        3424
+      ],
+      "id": "bcfd5877-6dc9-4963-bd8e-4b7850850d09",
+      "name": "agent2",
+      "webhookId": "1f79734f-0d50-45a5-b6d4-875b1027ae7f"
+    },
+    {
+      "parameters": {
+        "path": "1f79734f-0d50-45a5-b6d4-875b1027ae7f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        4576,
+        3056
+      ],
+      "id": "bb179233-57c3-44bc-82f2-c900f557bee3",
+      "name": "agent1",
+      "webhookId": "1f79734f-0d50-45a5-b6d4-875b1027ae7f"
     }
   ],
   "connections": {
@@ -1020,17 +1365,6 @@
           {
             "node": "AI Agent3",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1113,34 +1447,12 @@
         ]
       ]
     },
-    "OpenAI Chat Model1": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Webhook_Analyze": {
       "main": [
         [
           {
             "node": "AI Agent2",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model3": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent2",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1157,17 +1469,6 @@
           {
             "node": "图片生成",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model2": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent3",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1261,17 +1562,6 @@
         ]
       ]
     },
-    "OpenAI Chat Model4": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent4",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "AI Agent Tool": {
       "ai_tool": [
         [
@@ -1289,28 +1579,6 @@
           {
             "node": "AI Agent5",
             "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model6": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent5",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model7": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent6",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1338,7 +1606,192 @@
         ]
       ]
     },
-    "OpenAI Chat Model8": {
+    "笔记自动补全 Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "笔记划词提问": {
+      "main": [
+        [
+          {
+            "node": "AI Agent8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model10": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "角色分配",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent10": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model11": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent10",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent11": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model12": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent11",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent12": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model13": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent12",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "角色分配": {
+      "main": [
+        []
+      ]
+    },
+    "Structured Output Parser3": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "角色分配",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook4": {
+      "main": [
+        [
+          {
+            "node": "AI Agent13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model14": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent13",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent5",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model8": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
       "ai_languageModel": [
         [
           {
@@ -1349,11 +1802,55 @@
         ]
       ]
     },
-    "笔记自动补全": {
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent6",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent8",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "提示词输出": {
       "main": [
         [
           {
-            "node": "AI Agent7",
+            "node": "角色分配",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agent2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agent1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent10",
             "type": "main",
             "index": 0
           }
@@ -1361,7 +1858,56 @@
       ]
     }
   },
-  "pinData": {},
+  "pinData": {
+    "Webhook_Analyze": [
+      {
+        "headers": {
+          "host": "a.ssfxx.cloud:5678",
+          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0",
+          "content-length": "450",
+          "accept": "application/json, text/plain, */*",
+          "accept-encoding": "gzip, deflate",
+          "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+          "content-type": "application/json",
+          "dnt": "1",
+          "origin": "http://localhost:5174",
+          "referer": "http://localhost:5174/"
+        },
+        "params": {},
+        "query": {},
+        "body": {
+          "text": "用于处理副作用",
+          "question": "你好",
+          "context": "## useState# 标题## 标题\n\n`useState` 是最常用的 Hook。\n\n```jsx\nconst [count, setCount] = useState(0)\n```\n\n## useEffect\n\n用于处理副作用。\n\n```jsx\nuseEffect(() => {\n  document.title = `You clicked ${count} times`\n}, [count])\n\n\n```\n\n清理函数（可选）：\n```jsx\nreturn () => {\n  // 在组件卸载或依赖变化前执行清理操作\n}\n```"
+        },
+        "webhookUrl": "http://a.ssfxx.cloud:5678/webhook/english/analyze",
+        "executionMode": "production"
+      }
+    ],
+    "笔记自动补全 Webhook": [
+      {
+        "headers": {
+          "host": "a.ssfxx.cloud:5678",
+          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+          "content-length": "170",
+          "accept": "application/json, text/plain, */*",
+          "accept-encoding": "gzip, deflate",
+          "accept-language": "zh,zh-CN;q=0.9",
+          "content-type": "application/json",
+          "origin": "http://localhost:5174",
+          "referer": "http://localhost:5174/"
+        },
+        "params": {},
+        "query": {},
+        "body": {
+          "context": "\n```\n\n清理函数（可选）：\n```jsx\nreturn () => {\n  // 在组件卸载或依赖变化前执行清理操作\n}\n```\n你好\n",
+          "cursorPosition": 70
+        },
+        "webhookUrl": "http://a.ssfxx.cloud:5678/webhook/note/autocomplete",
+        "executionMode": "production"
+      }
+    ]
+  },
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "1eed45ddd9333e8c5f9a70a2fae0ffba743218818c24507da9d021fdaa9893e1"
