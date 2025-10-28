@@ -17,6 +17,7 @@ function generateId(): string {
 export interface ResearchSession {
   id: string;
   topic?: string;
+  title?: string;  // 会话标题，由AI生成
   messages: ChatMessage[];
   createdAt: string;
   updatedAt: string;

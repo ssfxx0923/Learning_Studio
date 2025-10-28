@@ -117,6 +117,8 @@ export default function ResearchPage() {
       timestamp: new Date().toISOString(),
     }
 
+    const isFirstUserMessage = messages.filter(m => m.role === 'user').length === 0
+
     setMessages([...messages, userMessage])
     setInputMessage('')
     setIsTyping(true)
@@ -154,6 +156,11 @@ export default function ResearchPage() {
 
       // 更新会话列表
       setSessions(sessions.map((s) => (s.id === updatedSession.id ? updatedSession : s)))
+
+      // 如果是第一条用户消息，生成标题
+      if (isFirstUserMessage && !currentSession.title) {
+        generateSessionTitle(currentSession.id, userMessage.content)
+      }
     } catch (error) {
       console.error('发送消息失败:', error)
       const errorMessage: ChatMessage = {
@@ -164,6 +171,40 @@ export default function ResearchPage() {
       setMessages([...messages, errorMessage])
     } finally {
       setIsTyping(false)
+    }
+  }
+
+  // 生成会话标题
+  const generateSessionTitle = async (sessionId: string, firstMessage: string) => {
+    try {
+      // 使用n8n生成简短标题
+      const response: any = await n8nClient.post('/research/session/generate-title', {
+        sessionId,
+        firstMessage,
+      })
+
+      const title = response.title || response.output || firstMessage.slice(0, 30)
+
+      // 更新会话标题
+      const updatedSession = await backendAPI.getResearchSession(sessionId)
+      updatedSession.title = title
+      await backendAPI.updateResearchSession(sessionId, updatedSession)
+
+      // 更新本地状态
+      setCurrentSession(updatedSession)
+      await loadSessions()
+    } catch (error) {
+      console.error('生成标题失败:', error)
+      // 如果生成失败，使用消息前30个字符作为标题
+      try {
+        const updatedSession = await backendAPI.getResearchSession(sessionId)
+        updatedSession.title = firstMessage.slice(0, 30) + (firstMessage.length > 30 ? '...' : '')
+        await backendAPI.updateResearchSession(sessionId, updatedSession)
+        setCurrentSession(updatedSession)
+        await loadSessions()
+      } catch (err) {
+        console.error('设置默认标题失败:', err)
+      }
     }
   }
 
@@ -210,7 +251,7 @@ export default function ResearchPage() {
                     <div className="flex justify-between items-start gap-2">
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-sm truncate">
-                          {session.topic || `研究 ${new Date(session.createdAt).toLocaleDateString()}`}
+                          {session.title || session.topic || `研究 ${new Date(session.createdAt).toLocaleDateString()}`}
                         </h3>
                         <p className="text-xs text-muted-foreground">
                           {session.messages.length} 条消息
@@ -241,7 +282,7 @@ export default function ResearchPage() {
             <div className="border-b border-border bg-card p-4">
               <h1 className="text-2xl font-bold flex items-center gap-2">
                 <Lightbulb className="h-6 w-6 text-yellow-500" />
-                {currentSession.topic || '研究讨论'}
+                {currentSession.title || currentSession.topic || '研究讨论'}
               </h1>
               <p className="text-sm text-muted-foreground mt-1">
                 创建于 {new Date(currentSession.createdAt).toLocaleString()}

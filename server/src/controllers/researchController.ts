@@ -169,3 +169,44 @@ export async function addSessionMessage(req: Request, res: Response) {
     });
   }
 }
+
+/**
+ * 生成研究会话标题
+ */
+export async function generateSessionTitle(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const { firstMessage } = req.body;
+
+    if (!firstMessage) {
+      return res.status(400).json({
+        success: false,
+        error: 'firstMessage is required',
+      });
+    }
+
+    // 获取会话
+    const session = await researchService.getSession(id);
+    if (!session) {
+      return res.status(404).json({
+        success: false,
+        error: 'Research session not found',
+      });
+    }
+
+    // 返回生成标题的信息
+    // 实际标题生成由前端调用n8n完成
+    res.json({
+      success: true,
+      sessionId: id,
+      message: 'Title generation request received',
+    });
+  } catch (error: any) {
+    console.error('Failed to generate session title:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to generate session title',
+      details: error.message,
+    });
+  }
+}

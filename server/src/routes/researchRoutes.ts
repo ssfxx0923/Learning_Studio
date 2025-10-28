@@ -29,4 +29,7 @@ router.get('/:id/messages', researchController.getSessionMessages);
 // 添加消息到研究会话
 router.post('/:id/messages', researchController.addSessionMessage);
 
+// 生成研究会话标题
+router.post('/:id/generate-title', researchController.generateSessionTitle);
+
 export default router;
