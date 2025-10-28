@@ -1,0 +1,475 @@
+{
+  "name": "Research Multi-Agent Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "research/generate",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [2256, 3248],
+      "id": "webhook-entry",
+      "name": "Webhook - Research Entry",
+      "webhookId": "research-generate"
+    },
+    {
+      "parameters": {
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "你是一个智能任务分析专家和团队协调者。当用户提出一个研究问题时，你需要：\n\n1. **分析任务复杂度**：判断这个问题是否需要多角度分析\n2. **角色分配**：为3个专业Agent分配不同的角色和子任务\n3. **生成提示词**：为每个Agent创建详细的系统提示词\n4. **任务分解**：将用户的问题分解为3个具体的子任务\n\n输出格式（JSON）：\n{\n  \"needsMultiAgent\": true/false,\n  \"agents\": [\n    {\n      \"role\": \"角色名称\",\n      \"systemPrompt\": \"详细的系统提示词\",\n      \"task\": \"具体要完成的子任务\"\n    },\n    ...\n  ],\n  \"integrationPrompt\": \"给整合Agent的提示词\"\n}\n\n角色分配示例：\n- 理论研究专家：负责理论分析、概念解释\n- 实践应用专家：负责实际应用、案例分析\n- 批判性思维专家：负责问题挑战、风险分析\n\n确保：\n1. 角色不重复，各有侧重点\n2. 子任务明确具体\n3. 系统提示词专业详细"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [2544, 3248],
+      "id": "coordinator-agent",
+      "name": "Coordinator Agent - 任务协调者"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [2544, 3424],
+      "id": "llm-coordinator",
+      "name": "OpenAI - Coordinator",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"needsMultiAgent\": true,\n  \"agents\": [\n    {\n      \"role\": \"理论研究专家\",\n      \"systemPrompt\": \"你是一位理论研究专家...\",\n      \"task\": \"分析理论基础\"\n    },\n    {\n      \"role\": \"实践应用专家\",\n      \"systemPrompt\": \"你是一位实践应用专家...\",\n      \"task\": \"分析实践案例\"\n    },\n    {\n      \"role\": \"批判性思维专家\",\n      \"systemPrompt\": \"你是一位批判性思维专家...\",\n      \"task\": \"分析潜在问题\"\n    }\n  ],\n  \"integrationPrompt\": \"整合三位专家的分析...\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [2704, 3424],
+      "id": "output-parser",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.output.needsMultiAgent }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2848, 3248],
+      "id": "if-multi-agent",
+      "name": "需要多Agent协作?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "agent1-data",
+              "name": "agent1",
+              "value": "={{ $json.output.agents[0] }}",
+              "type": "object"
+            },
+            {
+              "id": "agent2-data",
+              "name": "agent2",
+              "value": "={{ $json.output.agents[1] }}",
+              "type": "object"
+            },
+            {
+              "id": "agent3-data",
+              "name": "agent3",
+              "value": "={{ $json.output.agents[2] }}",
+              "type": "object"
+            },
+            {
+              "id": "user-message",
+              "name": "userMessage",
+              "value": "={{ $('Webhook - Research Entry').item.json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "integration-prompt",
+              "name": "integrationPrompt",
+              "value": "={{ $json.output.integrationPrompt }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [3104, 3088],
+      "id": "set-agent-data",
+      "name": "准备Agent数据"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.agent1.task }}",
+        "options": {
+          "systemMessage": "={{ $json.agent1.systemPrompt }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [3504, 2880],
+      "id": "agent-1",
+      "name": "Research Agent 1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [3504, 3040],
+      "id": "llm-agent-1",
+      "name": "OpenAI - Agent 1",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.agent2.task }}",
+        "options": {
+          "systemMessage": "={{ $json.agent2.systemPrompt }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [3504, 3200],
+      "id": "agent-2",
+      "name": "Research Agent 2"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [3504, 3360],
+      "id": "llm-agent-2",
+      "name": "OpenAI - Agent 2",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.agent3.task }}",
+        "options": {
+          "systemMessage": "={{ $json.agent3.systemPrompt }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [3504, 3520],
+      "id": "agent-3",
+      "name": "Research Agent 3"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [3504, 3680],
+      "id": "llm-agent-3",
+      "name": "OpenAI - Agent 3",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [3856, 3040],
+      "id": "merge-agent-1-2",
+      "name": "合并Agent1和2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [4112, 3280],
+      "id": "merge-all-agents",
+      "name": "合并所有Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "agent1-result",
+              "name": "agent1Result",
+              "value": "={{ {\n  \"role\": $('准备Agent数据').item.json.agent1.role,\n  \"response\": $('Research Agent 1').item.json.output\n} }}",
+              "type": "object"
+            },
+            {
+              "id": "agent2-result",
+              "name": "agent2Result",
+              "value": "={{ {\n  \"role\": $('准备Agent数据').item.json.agent2.role,\n  \"response\": $('Research Agent 2').item.json.output\n} }}",
+              "type": "object"
+            },
+            {
+              "id": "agent3-result",
+              "name": "agent3Result",
+              "value": "={{ {\n  \"role\": $('准备Agent数据').item.json.agent3.role,\n  \"response\": $('Research Agent 3').item.json.output\n} }}",
+              "type": "object"
+            },
+            {
+              "id": "integration-prompt",
+              "name": "integrationPrompt",
+              "value": "={{ $('准备Agent数据').item.json.integrationPrompt }}",
+              "type": "string"
+            },
+            {
+              "id": "all-agent-results",
+              "name": "agentResults",
+              "value": "={{ [\n  $json.agent1Result,\n  $json.agent2Result,\n  $json.agent3Result\n] }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [4320, 3280],
+      "id": "prepare-integration",
+      "name": "准备整合数据"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=请整合以下三位专家的研究结果：\n\n{% for result in $json.agentResults %}\n## {{ result.role }}\n{{ result.response }}\n\n{% endfor %}\n\n请提供一个综合性的答案，整合所有观点，给出全面的分析和建议。",
+        "options": {
+          "systemMessage": "={{ $json.integrationPrompt }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [4512, 3280],
+      "id": "integration-agent",
+      "name": "Integration Agent - 整合者"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [4512, 3440],
+      "id": "llm-integration",
+      "name": "OpenAI - Integration",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \n  \"response\": $json.output, \n  \"mode\": \"multi-agent\",\n  \"agents\": [\n    {\n      \"role\": $('准备Agent数据').item.json.agent1.role,\n      \"response\": $('Research Agent 1').item.json.output\n    },\n    {\n      \"role\": $('准备Agent数据').item.json.agent2.role,\n      \"response\": $('Research Agent 2').item.json.output\n    },\n    {\n      \"role\": $('准备Agent数据').item.json.agent3.role,\n      \"response\": $('Research Agent 3').item.json.output\n    }\n  ]\n} }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [4720, 3280],
+      "id": "respond-multi",
+      "name": "返回整合结果"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook - Research Entry').item.json.body.message }}",
+        "options": {
+          "systemMessage": "你是一个专业的研究助手，能够深入分析和回答各类研究问题。请提供详细、准确的回答。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [3104, 3408],
+      "id": "simple-agent",
+      "name": "Simple Agent - 单一助手"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [3104, 3568],
+      "id": "llm-simple",
+      "name": "OpenAI - Simple",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ja1oOqdJYdJ0EpPS",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"response\": $json.output, \"mode\": \"simple\" } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [3376, 3408],
+      "id": "respond-simple",
+      "name": "返回简单结果"
+    }
+  ],
+  "connections": {
+    "Webhook - Research Entry": {
+      "main": [[{ "node": "Coordinator Agent - 任务协调者", "type": "main", "index": 0 }]]
+    },
+    "Coordinator Agent - 任务协调者": {
+      "main": [[{ "node": "需要多Agent协作?", "type": "main", "index": 0 }]]
+    },
+    "OpenAI - Coordinator": {
+      "ai_languageModel": [[{ "node": "Coordinator Agent - 任务协调者", "type": "ai_languageModel", "index": 0 }]]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [[{ "node": "Coordinator Agent - 任务协调者", "type": "ai_outputParser", "index": 0 }]]
+    },
+    "需要多Agent协作?": {
+      "main": [
+        [{ "node": "准备Agent数据", "type": "main", "index": 0 }],
+        [{ "node": "Simple Agent - 单一助手", "type": "main", "index": 0 }]
+      ]
+    },
+    "准备Agent数据": {
+      "main": [
+        [
+          { "node": "Research Agent 1", "type": "main", "index": 0 },
+          { "node": "Research Agent 2", "type": "main", "index": 0 },
+          { "node": "Research Agent 3", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Research Agent 1": {
+      "main": [[{ "node": "合并Agent1和2", "type": "main", "index": 0 }]]
+    },
+    "OpenAI - Agent 1": {
+      "ai_languageModel": [[{ "node": "Research Agent 1", "type": "ai_languageModel", "index": 0 }]]
+    },
+    "Research Agent 2": {
+      "main": [[{ "node": "合并Agent1和2", "type": "main", "index": 1 }]]
+    },
+    "OpenAI - Agent 2": {
+      "ai_languageModel": [[{ "node": "Research Agent 2", "type": "ai_languageModel", "index": 0 }]]
+    },
+    "Research Agent 3": {
+      "main": [[{ "node": "合并所有Agent", "type": "main", "index": 1 }]]
+    },
+    "OpenAI - Agent 3": {
+      "ai_languageModel": [[{ "node": "Research Agent 3", "type": "ai_languageModel", "index": 0 }]]
+    },
+    "合并Agent1和2": {
+      "main": [[{ "node": "合并所有Agent", "type": "main", "index": 0 }]]
+    },
+    "合并所有Agent": {
+      "main": [[{ "node": "准备整合数据", "type": "main", "index": 0 }]]
+    },
+    "准备整合数据": {
+      "main": [[{ "node": "Integration Agent - 整合者", "type": "main", "index": 0 }]]
+    },
+    "Integration Agent - 整合者": {
+      "main": [[{ "node": "返回整合结果", "type": "main", "index": 0 }]]
+    },
+    "OpenAI - Integration": {
+      "ai_languageModel": [[{ "node": "Integration Agent - 整合者", "type": "ai_languageModel", "index": 0 }]]
+    },
+    "Simple Agent - 单一助手": {
+      "main": [[{ "node": "返回简单结果", "type": "main", "index": 0 }]]
+    },
+    "OpenAI - Simple": {
+      "ai_languageModel": [[{ "node": "Simple Agent - 单一助手", "type": "ai_languageModel", "index": 0 }]]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1eed45ddd9333e8c5f9a70a2fae0ffba743218818c24507da9d021fdaa9893e1"
+  },
+  "tags": []
+}
