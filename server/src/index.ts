@@ -16,10 +16,7 @@ const indexWatcher = new IndexWatcher(CONFIG.storage.indexSyncInterval);
 app.use(helmet());
 
 // CORS 配置
-app.use(cors({
-  origin: CONFIG.cors.origin,
-  credentials: true,
-}));
+app.use(cors());
 
 // 日志中间件
 app.use(morgan(CONFIG.nodeEnv === 'development' ? 'dev' : 'combined'));
