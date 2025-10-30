@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// n8n Webhook 基础URL
-const N8N_BASE_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://localhost:5678/webhook'
+// n8n Webhook 基础URL（无环境变量时使用默认值）
+const N8N_BASE_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://now.ssfxx.cloud:5678/webhook'
 
 // 创建 n8n 专用的 axios 客户端
 const n8nClient = axios.create({

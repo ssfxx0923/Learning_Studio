@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// 配置基础URL，指向后端服务
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
+// 配置基础URL，指向后端服务（无环境变量时使用默认值）
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://now.ssfxx.cloud:3002'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
