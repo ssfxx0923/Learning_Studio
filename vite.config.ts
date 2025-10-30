@@ -12,6 +12,8 @@ export default defineConfig({
   },
   publicDir: 'public',
   server: {
+    host: true, // 监听 0.0.0.0，允许外部访问
+    allowedHosts: true, // 放行所有域名
     fs: {
       // 允许访问 data 目录
       allow: ['.'],
