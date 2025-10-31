@@ -69,22 +69,22 @@ export interface Note {
 export const backendAPI = {
   // 创建文章文件夹（为n8n写入准备）
   createArticleFolder: async (articleId: string) => {
-    return apiClient.post('/api/articles/create-folder', { articleId })
+    return apiClient.post('/articles/create-folder', { articleId })
   },
 
   // 获取文章列表
   getArticles: async () => {
-    return apiClient.get('/api/articles')
+    return apiClient.get('/articles')
   },
 
   // 删除文章
   deleteArticle: async (articleId: string) => {
-    return apiClient.delete(`/api/articles/${articleId}`)
+    return apiClient.delete(`/articles/${articleId}`)
   },
 
   // 健康检查
   healthCheck: async () => {
-    return apiClient.get('/api/health')
+    return apiClient.get('/health')
   },
 
   // ============================================
@@ -93,47 +93,47 @@ export const backendAPI = {
 
   // 获取所有计划
   getAllPlans: async (): Promise<Plan[]> => {
-    const response = await apiClient.get('/api/plans')
+    const response = await apiClient.get('/plans')
     return response.data
   },
 
   // 获取单个计划
   getPlan: async (planId: string): Promise<Plan> => {
-    const response = await apiClient.get(`/api/plans/${planId}`)
+    const response = await apiClient.get(`/plans/${planId}`)
     return response.data
   },
 
   // 创建计划
   createPlan: async (planData: Omit<Plan, 'id'>): Promise<Plan> => {
-    const response = await apiClient.post('/api/plans', planData)
+    const response = await apiClient.post('/plans', planData)
     return response.data
   },
 
   // 更新计划
   updatePlan: async (planId: string, planData: Plan): Promise<Plan> => {
-    const response = await apiClient.put(`/api/plans/${planId}`, planData)
+    const response = await apiClient.put(`/plans/${planId}`, planData)
     return response.data
   },
 
   // 删除计划
   deletePlan: async (planId: string): Promise<void> => {
-    await apiClient.delete(`/api/plans/${planId}`)
+    await apiClient.delete(`/plans/${planId}`)
   },
 
   // 同步计划索引
   syncPlansIndex: async () => {
-    return apiClient.post('/api/plans/sync-index')
+    return apiClient.post('/plans/sync-index')
   },
 
   // 获取聊天历史
   getChatHistory: async (planId: string): Promise<ChatHistory> => {
-    const response = await apiClient.get(`/api/plans/${planId}/chat-history`)
+    const response = await apiClient.get(`/plans/${planId}/chat-history`)
     return response.data
   },
 
   // 保存聊天消息
   saveChatMessage: async (planId: string, message: ChatMessage): Promise<void> => {
-    await apiClient.post(`/api/plans/${planId}/chat-message`, message)
+    await apiClient.post(`/plans/${planId}/chat-message`, message)
   },
 
   // ============================================
@@ -142,47 +142,47 @@ export const backendAPI = {
 
   // 获取所有会话
   getAllSessions: async (): Promise<MentalHealthSession[]> => {
-    const response = await apiClient.get('/api/mental-health')
+    const response = await apiClient.get('/mental-health')
     return response.data.data || response.data
   },
 
   // 获取单个会话
   getSession: async (sessionId: string): Promise<MentalHealthSession> => {
-    const response = await apiClient.get(`/api/mental-health/${sessionId}`)
+    const response = await apiClient.get(`/mental-health/${sessionId}`)
     return response.data.data || response.data
   },
 
   // 创建新会话
   createSession: async (): Promise<MentalHealthSession> => {
-    const response = await apiClient.post('/api/mental-health')
+    const response = await apiClient.post('/mental-health')
     return response.data.data || response.data
   },
 
   // 更新会话
   updateSession: async (sessionId: string, session: MentalHealthSession): Promise<MentalHealthSession> => {
-    const response = await apiClient.put(`/api/mental-health/${sessionId}`, session)
+    const response = await apiClient.put(`/mental-health/${sessionId}`, session)
     return response.data.data || response.data
   },
 
   // 删除会话
   deleteSession: async (sessionId: string): Promise<void> => {
-    await apiClient.delete(`/api/mental-health/${sessionId}`)
+    await apiClient.delete(`/mental-health/${sessionId}`)
   },
 
   // 获取会话的所有消息
   getSessionMessages: async (sessionId: string): Promise<MentalHealthMessage[]> => {
-    const response = await apiClient.get(`/api/mental-health/${sessionId}/messages`)
+    const response = await apiClient.get(`/mental-health/${sessionId}/messages`)
     return response.data.data || response.data
   },
 
   // 添加消息到会话
   addSessionMessage: async (sessionId: string, message: MentalHealthMessage): Promise<void> => {
-    await apiClient.post(`/api/mental-health/${sessionId}/messages`, message)
+    await apiClient.post(`/mental-health/${sessionId}/messages`, message)
   },
 
   // 同步会话索引
   syncSessionsIndex: async () => {
-    return apiClient.post('/api/mental-health/sync-index')
+    return apiClient.post('/mental-health/sync-index')
   },
 
   // ============================================
@@ -191,54 +191,54 @@ export const backendAPI = {
 
   // 获取所有笔记
   getAllNotes: async (): Promise<Note[]> => {
-    const response = await apiClient.get('/api/notes')
+    const response = await apiClient.get('/notes')
     return response.data.data || response.data
   },
 
   // 获取单个笔记
   getNote: async (noteId: string): Promise<Note> => {
-    const response = await apiClient.get(`/api/notes/${noteId}`)
+    const response = await apiClient.get(`/notes/${noteId}`)
     return response.data.data || response.data
   },
 
   // 创建笔记
   createNote: async (noteData: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>): Promise<Note> => {
-    const response = await apiClient.post('/api/notes', noteData)
+    const response = await apiClient.post('/notes', noteData)
     return response.data.data || response.data
   },
 
   // 更新笔记
   updateNote: async (noteId: string, noteData: Partial<Omit<Note, 'id' | 'createdAt'>>): Promise<Note> => {
-    const response = await apiClient.put(`/api/notes/${noteId}`, noteData)
+    const response = await apiClient.put(`/notes/${noteId}`, noteData)
     return response.data.data || response.data
   },
 
   // 删除笔记
   deleteNote: async (noteId: string): Promise<void> => {
-    await apiClient.delete(`/api/notes/${noteId}`)
+    await apiClient.delete(`/notes/${noteId}`)
   },
 
   // 搜索笔记
   searchNotes: async (query: string): Promise<Note[]> => {
-    const response = await apiClient.get(`/api/notes/search?q=${encodeURIComponent(query)}`)
+    const response = await apiClient.get(`/notes/search?q=${encodeURIComponent(query)}`)
     return response.data.data || response.data
   },
 
   // 根据标签获取笔记
   getNotesByTag: async (tag: string): Promise<Note[]> => {
-    const response = await apiClient.get(`/api/notes/tag/${encodeURIComponent(tag)}`)
+    const response = await apiClient.get(`/notes/tag/${encodeURIComponent(tag)}`)
     return response.data.data || response.data
   },
 
   // 根据分类获取笔记
   getNotesByCategory: async (category: string): Promise<Note[]> => {
-    const response = await apiClient.get(`/api/notes/category/${encodeURIComponent(category)}`)
+    const response = await apiClient.get(`/notes/category/${encodeURIComponent(category)}`)
     return response.data.data || response.data
   },
 
   // 同步笔记索引
   syncNotesIndex: async () => {
-    return apiClient.post('/api/notes/sync-index')
+    return apiClient.post('/notes/sync-index')
   },
 
   // ============================================
@@ -247,42 +247,42 @@ export const backendAPI = {
 
   // 获取所有研究会话
   getAllResearchSessions: async (): Promise<any[]> => {
-    const response = await apiClient.get('/api/research')
+    const response = await apiClient.get('/research')
     return response.data.data || response.data || []
   },
 
   // 获取单个研究会话
   getResearchSession: async (sessionId: string): Promise<any> => {
-    const response = await apiClient.get(`/api/research/${sessionId}`)
+    const response = await apiClient.get(`/research/${sessionId}`)
     return response.data.data || response.data
   },
 
   // 创建新研究会话
   createResearchSession: async (topic?: string): Promise<any> => {
-    const response = await apiClient.post('/api/research', { topic })
+    const response = await apiClient.post('/research', { topic })
     return response.data.data || response.data
   },
 
   // 更新研究会话
   updateResearchSession: async (sessionId: string, sessionData: any): Promise<any> => {
-    const response = await apiClient.put(`/api/research/${sessionId}`, sessionData)
+    const response = await apiClient.put(`/research/${sessionId}`, sessionData)
     return response.data.data || response.data
   },
 
   // 删除研究会话
   deleteResearchSession: async (sessionId: string): Promise<void> => {
-    await apiClient.delete(`/api/research/${sessionId}`)
+    await apiClient.delete(`/research/${sessionId}`)
   },
 
   // 获取研究会话的所有消息
   getResearchSessionMessages: async (sessionId: string): Promise<ChatMessage[]> => {
-    const response = await apiClient.get(`/api/research/${sessionId}/messages`)
+    const response = await apiClient.get(`/research/${sessionId}/messages`)
     return response.data.data || response.data || []
   },
 
   // 添加消息到研究会话
   addResearchSessionMessage: async (sessionId: string, message: ChatMessage): Promise<void> => {
-    await apiClient.post(`/api/research/${sessionId}/messages`, message)
+    await apiClient.post(`/research/${sessionId}/messages`, message)
   },
 }
 
