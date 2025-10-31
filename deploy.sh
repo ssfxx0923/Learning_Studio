@@ -17,7 +17,7 @@ echo "[1/10] System update and base tools..."
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -y
 apt-get install -y --no-install-recommends \
-  ca-certificates curl wget git unzip gnupg lsb-release software-properties-common
+  ca-certificates curl wget git unzip gnupg lsb-release software-properties-common nginx
 
 echo "[2/10] Install Docker and Compose if missing..."
 if ! command -v docker >/dev/null 2>&1; then
@@ -119,18 +119,30 @@ npm install
 cd server
 npm install
 
-echo "[8.5/10] Create .env files with auto-detected IP..."
+echo "[8.5/10] Create .env files with auto-detected IP/domain..."
 cd "${APP_DIR}"
-# Auto-detect server IP (prefer public IP, fallback to first non-localhost)
-SERVER_IP=$(hostname -I | awk '{print $1}' || curl -s ifconfig.me || echo "localhost")
 
-# Create .env file in project root with detected IP
+# Use domain if provided via environment variable, otherwise use IP
+DOMAIN="${APP_DOMAIN:-}"
+if [[ -n "${DOMAIN}" ]]; then
+  # Use relative path when Nginx reverse proxy is configured (no IP needed)
+  API_BASE_URL="/api"
+  WEBHOOK_URL="/webhook"
+else
+  # Auto-detect server IP only when not using reverse proxy
+  SERVER_IP=$(hostname -I | awk '{print $1}' || curl -s ifconfig.me || echo "localhost")
+  # Use full URL when accessing directly (no Nginx)
+  API_BASE_URL="http://${SERVER_IP}:3002"
+  WEBHOOK_URL="http://${SERVER_IP}:5678/webhook"
+fi
+
+# Create .env file in project root with detected IP/domain
 cat > .env <<EOF
 # AI学习平台环境变量配置
-VITE_API_BASE_URL=http://${SERVER_IP}:3002
-VITE_N8N_WEBHOOK_URL=http://${SERVER_IP}:5678/webhook
+VITE_API_BASE_URL=${API_BASE_URL}
+VITE_N8N_WEBHOOK_URL=${WEBHOOK_URL}
 EOF
-echo "Created .env in project root with detected IP: ${SERVER_IP}"
+echo "Created .env in project root with API URL: ${API_BASE_URL}"
 
 # Create .env file in server directory
 cat > server/.env <<EOF
@@ -152,10 +164,83 @@ pm2 start "npm run dev -- --host --port 5173" --name learning-frontend --cwd "${
 
 pm2 save
 
+echo "[11/11] Configure Nginx reverse proxy..."
+# Use domain if provided, otherwise skip Nginx config
+DOMAIN="${APP_DOMAIN:-}"
+if [[ -n "${DOMAIN}" ]]; then
+  # Create Nginx config for the domain
+  cat > "/etc/nginx/sites-available/${DOMAIN}" <<NGINX
+server {
+    listen 80;
+    server_name ${DOMAIN};
+
+    # Frontend proxy (Vite dev server on 5173)
+    location / {
+        proxy_pass http://127.0.0.1:5173;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        
+        # WebSocket support for Vite HMR
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 75s;
+    }
+
+    # Backend API proxy (Express server on 3002) - eliminates CORS
+    location /api/ {
+        proxy_pass http://127.0.0.1:3002/api/;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_read_timeout 300s;
+    }
+
+    # n8n Webhook proxy (n8n on 5678) - eliminates CORS
+    location /webhook/ {
+        proxy_pass http://127.0.0.1:5678/webhook/;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 75s;
+    }
+}
+NGINX
+
+  # Enable the site
+  ln -sf "/etc/nginx/sites-available/${DOMAIN}" "/etc/nginx/sites-enabled/${DOMAIN}"
+  
+  # Remove default nginx site if exists
+  rm -f /etc/nginx/sites-enabled/default
+  
+  # Test and reload Nginx
+  if nginx -t; then
+    systemctl reload nginx || systemctl restart nginx
+    echo "Nginx configured for domain: ${DOMAIN}"
+    echo "Access your app at: http://${DOMAIN} or https://${DOMAIN} (after SSL setup)"
+  else
+    echo "Warning: Nginx configuration test failed. Please check manually."
+  fi
+else
+  echo "Skipping Nginx config (no APP_DOMAIN set). To use domain, set APP_DOMAIN env var and re-run."
+fi
+
 echo "\nDeployment completed. Services:"
-echo "- Frontend:   http://<your-host>:5173"
-echo "- Backend:    http://<your-host>:3002"
-echo "- n8n:        http://<your-host>:5678"
+if [[ -n "${DOMAIN}" ]]; then
+  echo "- Frontend:   https://${DOMAIN}"
+  echo "- Backend:    https://${DOMAIN}/api"
+  echo "- n8n Webhook: https://${DOMAIN}/webhook"
+else
+  echo "- Frontend:   http://${SERVER_IP}:5173"
+  echo "- Backend:    http://${SERVER_IP}:3002"
+  echo "- n8n:        http://${SERVER_IP}:5678"
+fi
 echo "- gpt-load:   docker compose in ${GPTLOAD_DIR}"
 
 
