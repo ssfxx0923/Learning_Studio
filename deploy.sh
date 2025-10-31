@@ -119,6 +119,27 @@ npm install
 cd server
 npm install
 
+echo "[8.5/10] Create .env files with auto-detected IP..."
+cd "${APP_DIR}"
+# Auto-detect server IP (prefer public IP, fallback to first non-localhost)
+SERVER_IP=$(hostname -I | awk '{print $1}' || curl -s ifconfig.me || echo "localhost")
+
+# Create .env file in project root with detected IP
+cat > .env <<EOF
+# AI学习平台环境变量配置
+VITE_API_BASE_URL=http://${SERVER_IP}:3002
+VITE_N8N_WEBHOOK_URL=http://${SERVER_IP}:5678/webhook
+EOF
+echo "Created .env in project root with detected IP: ${SERVER_IP}"
+
+# Create .env file in server directory
+cat > server/.env <<EOF
+PORT=3002
+NODE_ENV=development
+ARTICLES_BASE_PATH=../public/data/english/artikel
+EOF
+echo "Created server/.env with backend configuration"
+
 echo "[9/10] Start backend (port 3002) with pm2..."
 pm2 delete learning-backend >/dev/null 2>&1 || true
 cd "${APP_DIR}/server"
